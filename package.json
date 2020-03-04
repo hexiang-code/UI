@@ -1,14 +1,19 @@
 {
-  "name": "hexiang-ui",
-  "version": "0.1.0",
-  "private": true,
+  "name": "codehe-ui",
+  "version": "1.1.7",
+  "private": false,
+  "main": "lib/vcolorpicker.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name vcolorpicker --dest lib packages/index.js"
   },
   "dependencies": {
     "core-js": "^3.4.4",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "scss-loader": "0.0.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -29,7 +34,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
