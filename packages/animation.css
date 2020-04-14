@@ -1,0 +1,13 @@
+.drawer-open-right-enter-active {
+  animation: open-translate .3s forwards;
+}
+
+.drawer-open-right-leave-active {
+  animation: open-translate .3s reverse forwards;
+}
+
+@keyframes open-translate {
+  to {
+    transform: translateX(-100%);
+  }
+}
