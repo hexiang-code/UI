@@ -1,21 +1,24 @@
 <template>
-  <div class="main">
-    <curtain :isShow.sync="isShowModal" v-if="isModal && isShowModal"></curtain>
-    <transition :name="transitonName">
-      <div :class="[drawerClass, 'main__content']">
-        <div class="main__title">
-          <slot name="title">
-            {{title}}
-          </slot>
-          <slot name="des"></slot>
-          <div class="main__des" v-if="des && !$slots.des">
-            {{des}}
+  <transition :name="transitonName">
+    <div class="main" v-if="isShow">
+      <curtain :isShow="isShow" v-if="isModal" @curtainClose="curtainClose"></curtain>
+        <div :class="[drawerClass, 'main__content']">
+          <div class="main__close-zone">
+            <svg t="1587392277086" @click="$emit('update:isShow', false)" class="main__close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3743" width="200" height="200"><path d="M340.688 830.24l11.312 11.328a16 16 0 0 0 22.624 0L685.76 530.448a16 16 0 0 0 0-22.64L374.624 196.688a16 16 0 0 0-22.624 0l-11.312 11.312a16 16 0 0 0 0 22.624l288.496 288.496-288.496 288.512a16 16 0 0 0 0 22.624z" p-id="3744"></path></svg>
           </div>
+          <div class="main__title">
+            <slot name="title">
+              {{title}}
+            </slot>
+            <slot name="des"></slot>
+            <div class="main__des" v-if="des && !$slots.des">
+              {{des}}
+            </div>
+          </div>
+          <slot></slot>
         </div>
-        <slot></slot>
-      </div>
-    </transition>
-  </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -87,7 +90,7 @@ export default {
 
   data() {
     return {
-      isShowModal: false // 是否需要幕布
+      // isShowModal: false // 是否需要幕布
     }
   },
 
@@ -96,7 +99,10 @@ export default {
   },
 
   methods: {
-  
+    // 背景幕布关闭
+    curtainClose () {
+      this.$emit('update:isShow', false)
+    }
   }
 
 }
@@ -109,42 +115,53 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    
       &__content {
+        position: relative;
+        z-index: 1001;
         padding: 20px;
-            &_right {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 20%;
-        height: 100%;
-        background-color: #fff;
-      }
-      
-      &_bottom {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 20%;
-        background-color: #fff;
-      }
+          &_right {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 20%;
+            height: 100%;
+            background-color: #fff;
+          }
 
-      &_left {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 20%;
-        background-color: #fff;
-      }
+          .main__close-zone {
+            position: relative;
+            text-align: right
+          }
 
-      &_top {
-        position: fixed;
-        left: 0;
-        top: 0;
-        height: 20%;
-        background-color: #fff;
-      }
+          .main__close-icon {
+            width: 30px;
+            height: 30px;
+          }
+          
+          &_bottom {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 20%;
+            background-color: #fff;
+          }
+
+          &_left {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 20%;
+            background-color: #fff;
+          }
+
+          &_top {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 20%;
+            background-color: #fff;
+          }
     }
 
     &__title {

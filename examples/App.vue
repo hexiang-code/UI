@@ -4,8 +4,9 @@
     <!-- <backgroundVideo :resource="require('./assets/start-background-video.mp4')"></backgroundVideo> -->
     <!-- <windowUtils title="你好" :isShowWindow.sync="visiable"></windowUtils> -->
     <drawer :isShow.sync="testDrawer" des="你好">
-      <tree :tree="tree"></tree>
+      <tree :tree="tree" :isExpandAll="true" :isModal="true"></tree>
     </drawer>
+    <button @click="testDrawer = true">开启</button>
     
   </div >
 </template>

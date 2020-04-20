@@ -3,6 +3,7 @@ import backgroundVideo from './background-video.vue'
 import windowUtils from './vague-window-utils'
 import drawer from './drawer.vue'
 import tree from './tree.vue'
+import './animation.css'
 const elementArray = [
   backgroundVideo,
   windowUtils,

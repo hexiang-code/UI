@@ -15,7 +15,7 @@ export default {
   methods: {
     // 关闭幕布
     closed () {
-      this.$emit('update:isShow', false)
+      this.$emit('curtainClose')
     }
   }
 }
