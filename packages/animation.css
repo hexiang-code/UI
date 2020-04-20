@@ -1,16 +1,71 @@
+/*  抽屉右边打开动画 */
 .drawer-open-right-enter-active {
-  animation: open-translate .3s forwards;
+  animation: open-translate-right .3s forwards;
 }
 
 .drawer-open-right-leave-active {
-  animation: open-translate .3s reverse forwards;
+  animation: open-translate-right .3s reverse forwards;
 }
 
-@keyframes open-translate {
+@keyframes open-translate-right {
   from {
     transform: translateX(100%);
   }
   to {
     transform: translateX(0);
+  }
+}
+
+/*  抽屉左边打开动画 */
+.drawer-open-left-enter-active {
+  animation: open-translate-left .3s forwards;
+}
+
+.drawer-open-left-leave-active {
+  animation: open-translate-left .3s reverse forwards;
+}
+
+@keyframes open-translate-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/*  抽屉上边打开动画 */
+.drawer-open-top-enter-active {
+  animation: open-translate-top .3s forwards;
+}
+
+.drawer-open-top-leave-active {
+  animation: open-translate-top .3s reverse forwards;
+}
+
+@keyframes open-translate-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/*  抽屉底边打开动画 */
+.drawer-open-bottom-enter-active {
+  animation: open-translate-right .3s forwards;
+}
+
+.drawer-open-bottom-leave-active {
+  animation: open-translate-bottom .3s reverse forwards;
+}
+
+@keyframes open-translate-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }

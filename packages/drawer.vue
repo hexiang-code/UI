@@ -48,7 +48,7 @@ export default {
       required: false
     }, // 自定义样式
     position: {
-      type: [Boolean, String],
+      type: [String],
       require: false,
       validator: (value) =>{
         return ['left', 'right', 'top', 'bottom'].indexOf(value) !== -1
@@ -119,6 +119,8 @@ export default {
         position: relative;
         z-index: 1001;
         padding: 20px;
+        height: 100%;
+        overflow: auto;
           &_right {
             position: fixed;
             top: 0;
@@ -150,8 +152,9 @@ export default {
           &_left {
             position: fixed;
             top: 0;
-            right: 0;
+            left: 0;
             width: 20%;
+            height: 100%;
             background-color: #fff;
           }
 
@@ -159,24 +162,25 @@ export default {
             position: fixed;
             left: 0;
             top: 0;
+            width: 100%;
             height: 20%;
             background-color: #fff;
           }
-    }
+        }
 
-    &__title {
-      position: relative;
-      margin-bottom: 30px;
-      border-bottom: 1px solid #f5f5f5;
-      font-weight: bold;
-      font-size: 24px;
-      text-align: left;
-    }
+      &__title {
+        position: relative;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #f5f5f5;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: left;
+      }
 
-    &__des {
-      padding: 5px 0 0 36px;
-      font-size: 18px;
-      font-weight: 300;
-    }
+      &__des {
+        padding: 5px 0 0 36px;
+        font-size: 18px;
+        font-weight: 300;
+      }
   }
 </style>
