@@ -26,14 +26,23 @@ const tree = {
         {
           label: 'css',
           href: 'https://www.jianshu.com/p/1614ef2b8bcb'
+        },
+        {
+          label: 'nodejs',
+          children: [
+            {
+              label: '你好,nodejs',
+              href: 'https://www.jianshu.com/p/1614ef2b8bcb'
+            }
+          ]
         }
       ]
     },
     {
-      label: '娱乐',
+      label: '娱乐娱乐娱乐',
       children: [
         {
-          label: 'B站',
+          label: 'B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站',
           href: 'https://www.bilibili.com'
         }
       ]
