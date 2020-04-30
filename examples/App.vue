@@ -3,8 +3,9 @@
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo :resource="require('./assets/start-background-video.mp4')"></backgroundVideo> -->
     <!-- <windowUtils title="你好" :isShowWindow.sync="visiable"></windowUtils> -->
-    <drawer :isShow.sync="testDrawer" des="你好">
-      <tree :tree="tree" :isExpandAll="true" :isModal="true"></tree>
+    <drawer :isShow.sync="testDrawer" des="你好" :isModal="true">
+      <input v-model="filterValue" @blur="blur"/>
+      <tree :tree="tree" :isExpandAll="true" ref="tree"></tree>
     </drawer>
     <button @click="testDrawer = true">开启</button>
     
@@ -44,6 +45,9 @@ const tree = {
         {
           label: 'B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站',
           href: 'https://www.bilibili.com'
+        },
+        {
+          label: '来啊nodejs'
         }
       ]
     }
@@ -56,7 +60,20 @@ export default {
     return {
       tree: tree,
       visiable: false,
-      testDrawer: true
+      testDrawer: true,
+      filterValue: ''
+    }
+  },
+
+  // watch: {
+  //   filterValue (value) {
+  //     this.$refs.tree.filterNode(value)
+  //   }
+  // },
+
+  methods: {
+    blur () {
+      this.$refs.tree.filterNode(this.filterValue)
     }
   }
 }
