@@ -3,12 +3,19 @@
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo :resource="require('./assets/start-background-video.mp4')"></backgroundVideo> -->
     <!-- <windowUtils title="你好" :isShowWindow.sync="visiable"></windowUtils> -->
-    <drawer :isShow.sync="testDrawer" des="你好" :isModal="true">
+    <drawer :isShow.sync="testDrawer" des="你好" :isModal="false">
       <input v-model="filterValue" @blur="blur"/>
-      <tree :tree="tree" :isExpandAll="true" ref="tree"></tree>
+      <tree :tree="tree" :isExpandAll="true" ref="tree" :isShowCheckBox="isShowCheckBox">
+        <template #operation="treeItem">
+          <div class="operation-btn">
+            <span>修改</span>
+            <span @click.stop="deleteBtn(treeItem)">删除</span>
+          </div>
+        </template>
+      </tree>
     </drawer>
     <button @click="testDrawer = true">开启</button>
-    
+    <button @click="checkbox">checkBox</button>
   </div >
 </template>
 
@@ -61,7 +68,8 @@ export default {
       tree: tree,
       visiable: false,
       testDrawer: true,
-      filterValue: ''
+      filterValue: '',
+      isShowCheckBox: false
     }
   },
 
@@ -74,6 +82,15 @@ export default {
   methods: {
     blur () {
       this.$refs.tree.filterNode(this.filterValue)
+    },
+
+    checkbox () {
+      this.isShowCheckBox = !this.isShowCheckBox
+      console.log(this.isShowCheckBox)
+    },
+
+    deleteBtn(item) {
+      console.log(item)
     }
   }
 }

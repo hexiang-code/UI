@@ -1,24 +1,24 @@
 <template>
-  <transition :name="transitonName">
-    <div class="main" v-if="isShow">
-      <curtain :isShow="isShow" v-if="isModal" @curtainClose="curtainClose"></curtain>
-        <div :class="[drawerClass, 'main__content']">
-          <div class="main__close-zone">
-            <svg t="1587392277086" @click="$emit('update:isShow', false)" class="main__close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3743" width="200" height="200"><path d="M340.688 830.24l11.312 11.328a16 16 0 0 0 22.624 0L685.76 530.448a16 16 0 0 0 0-22.64L374.624 196.688a16 16 0 0 0-22.624 0l-11.312 11.312a16 16 0 0 0 0 22.624l288.496 288.496-288.496 288.512a16 16 0 0 0 0 22.624z" p-id="3744"></path></svg>
-          </div>
-          <div class="main__title">
-            <slot name="title">
-              {{title}}
-            </slot>
-            <slot name="des"></slot>
-            <div class="main__des" v-if="des && !$slots.des">
-              {{des}}
-            </div>
-          </div>
-          <slot></slot>
+  <transition-group :name="transitonName">
+    <template v-if="isShow">
+      <curtain :isShow="isShow" v-if="isModal" @curtainClose="curtainClose" key="curtain"></curtain>
+      <div :class="[drawerClass, 'main__content']" key="content">
+        <div class="main__close-zone">
+          <svg t="1587392277086" @click="$emit('update:isShow', false)" class="main__close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3743" width="200" height="200"><path d="M340.688 830.24l11.312 11.328a16 16 0 0 0 22.624 0L685.76 530.448a16 16 0 0 0 0-22.64L374.624 196.688a16 16 0 0 0-22.624 0l-11.312 11.312a16 16 0 0 0 0 22.624l288.496 288.496-288.496 288.512a16 16 0 0 0 0 22.624z" p-id="3744"></path></svg>
         </div>
-    </div>
-  </transition>
+        <div class="main__title">
+          <slot name="title">
+            {{title}}
+          </slot>
+          <slot name="des"></slot>
+          <div class="main__des" v-if="des && !$slots.des">
+            {{des}}
+          </div>
+        </div>
+        <slot></slot>
+      </div>
+    </template>
+  </transition-group>
 </template>
 
 <script>
