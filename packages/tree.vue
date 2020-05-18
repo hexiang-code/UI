@@ -146,9 +146,10 @@
             fragment.appendChild(root.lastChild)
           }
         } else {
-          let firstChild
-          while (firstChild = root.firstChild) {
+          let firstChild = root.firstChild
+          while (firstChild) {
             fragment.appendChild(firstChild)
+            firstChild = root.firstChild
           }
         }
         return fragment
@@ -200,8 +201,8 @@
         }
         this.filterNodeNum ++
         const findNode  = (value, nodeList) => {
-          let firstChild, index = 0
-          while ((firstChild = nodeList[index]) && index <= nodeList.length) {
+          let index = 0, firstChild = nodeList[index]
+          while (firstChild && index <= nodeList.length) {
             index ++
             // 找到了关键字, 并且有子节点
             if (value && firstChild.innerText && firstChild.innerText.indexOf(value) > -1) {
@@ -220,6 +221,7 @@
               else firstChild.removeAttribute('style')
               if (firstChild.childNodes.length) findNode(firstChild.childNodes)
             }
+            firstChild = nodeList[index]
           }
         }
         findNode(value, fragment.childNodes)
