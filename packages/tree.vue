@@ -16,7 +16,7 @@
     name: 'treeBody',
     // functional: true,
     props: ['tree'],
-    render: function(h, context) {
+    render: function(h) {
       let { tree } = this
       return (
         <div class="tree-main__body">
