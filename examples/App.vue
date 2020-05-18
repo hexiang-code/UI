@@ -3,8 +3,11 @@
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo :resource="require('./assets/start-background-video.mp4')"></backgroundVideo> -->
     <!-- <windowUtils title="你好" :isShowWindow.sync="visiable"></windowUtils> -->
-    <drawer :isShow.sync="testDrawer" des="你好" :isModal="false">
+    <drawer :isShow.sync="testDrawer" des="" title='' :isModal="false">
       <input v-model="filterValue" @blur="blur"/>
+      <div class="bookmarks-header__search" @dblclick ="deleteBtn">
+        search
+      </div>
       <tree :tree="tree" :isExpandAll="true" ref="tree" :isShowCheckBox="isShowCheckBox">
         <template #operation="treeItem">
           <div class="operation-btn">
@@ -90,7 +93,7 @@ export default {
     },
 
     deleteBtn(item) {
-      console.log(item)
+      console.log('删除成功', item)
     }
   }
 }
@@ -104,5 +107,54 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.bookmarks-header__search {
+  position: relative;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  /* border-radius: 15px; */
+  /* background-color: #1296db; */
+  color: #1296db;
+  
+}
+
+.bookmarks-header__search:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: 2px solid #1296db;
+  animation: search-animation 1.5s infinite linear;
+}
+
+.bookmarks-header__search:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: 2px solid #1296db;
+  animation: search-animation 1s .5s linear infinite reverse;
+}
+
+@keyframes search-animation {
+  0%, 100% {
+    clip: rect(0, 60px, 22px, 0)
+  }
+  25% {
+    clip: rect(0, 102px, 22px, 60px)
+  }
+  50% {
+    clip: rect(20px, 102px, 40px, 60px)
+  }
+  75% {
+    clip: rect(22px, 40px, 40px, 0)
+  }
 }
 </style>
