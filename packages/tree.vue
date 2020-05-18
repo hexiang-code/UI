@@ -215,9 +215,9 @@
               // 找不到关键字
               firstChild.setAttribute('style', 'display: none')
             } else if (!value) {
-              let isExpand = item.getAttribute('style') == 'display: none'
-              if (!isExpand) item.setAttribute('style', 'display: none')
-              else item.removeAttribute('style')
+              let isExpand = firstChild.getAttribute('style') == 'display: none'
+              if (!isExpand) firstChild.setAttribute('style', 'display: none')
+              else firstChild.removeAttribute('style')
               if (firstChild.childNodes.length) findNode(firstChild.childNodes)
             }
           }
