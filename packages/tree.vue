@@ -120,7 +120,7 @@
       parentNodeClick ($event, nodeData) {
         this.$emit('nodeClick', nodeData)
         this.$emit('parentNodeClick', nodeData)
-        let iconClassList = $event.target.firstChild.classList
+        let iconClassList = $event.currentTarget.firstChild.classList
         if (iconClassList && iconClassList.contains('tree-main__icon_open')) {
           iconClassList.add('tree-main__icon_close')  
           iconClassList.remove('tree-main__icon_open')
@@ -128,14 +128,14 @@
           iconClassList.remove('tree-main__icon_close')
           iconClassList.add('tree-main__icon_open')
         }
-        let fragment = this.createFragment(false, $event.target.parentNode.nextElementSibling)
+        let fragment = this.createFragment(false, $event.currentTarget.parentNode.nextElementSibling)
         let nodes = [...fragment.children]
         nodes.forEach(item => {
           let isExpand = item.getAttribute('style') == 'display: none'
           if (!isExpand) item.setAttribute('style', 'display: none')
           else item.removeAttribute('style')
         })
-        $event.target.parentNode.nextElementSibling.appendChild(fragment)
+        $event.currentTarget.parentNode.nextElementSibling.appendChild(fragment)
       },
 
       // 创建文档碎片
