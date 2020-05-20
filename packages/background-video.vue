@@ -3,7 +3,7 @@
         <source :src="resource" type="video/mp4"/>
         <source :src="resource" type="video/ogg">
     </video>
-    <img v-else class="background-video" :src="resource" />
+    <img v-else class="background-video" :src="resource" @load="videoAlready" />
 </template>
 <script>
 export default {
