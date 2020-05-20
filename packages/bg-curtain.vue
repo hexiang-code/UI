@@ -1,5 +1,5 @@
 <template>
-  <div class="curtain" v-if="isShow" @click="closed"></div>
+  <div class="curtain" v-if="isShow" @click.stop="closed"></div>
 </template>
 
 <script>

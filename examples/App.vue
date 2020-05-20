@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <!-- <button @click="visiable = !visiable">1111</button> -->
-    <backgroundVideo :resource="require('./assets/background1.jpg')" :isImage="true"></backgroundVideo>
+    <!-- <backgroundVideo :resource="require('./assets/background1.jpg')" :isImage="true"></backgroundVideo> -->
+    <load-animation :isShow.sync="isShowLoadAnimation"></load-animation>
     <windowUtils title="你好" :isShowWindow.sync="visiable">
       <window-utils-item label="书签名">
         <input v-model="filterValue" type="text">
@@ -76,7 +77,8 @@ export default {
       visiable: false,
       testDrawer: true,
       filterValue: '',
-      isShowCheckBox: false
+      isShowCheckBox: false,
+      isShowLoadAnimation: true
     }
   },
 

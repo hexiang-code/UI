@@ -69,3 +69,50 @@
     transform: translateY(0);
   }
 }
+
+/* 聚光灯效果 */
+  /* 聚光灯效果 */
+  .condensation-light {
+    position: relative;
+  }
+  .condensation-light:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: 0;
+    background-color: pink;
+    border: 2px solid #fff;
+    opacity: .3;
+    animation: condensation-animation 1.5s infinite linear;
+  }
+
+  .border-animation::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    right: -2px;
+    left: -2px;
+    z-index: -1;
+    /* background-color: pink; */
+    background: linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
+    filter: blur(10px);
+    /* animation: condensation-animation 1.5s infinite linear; */
+  }
+
+  @keyframes condensation-animation {
+    0% {
+      width: 0%;
+    }
+
+    50% {
+      width: 90%;
+      opacity: 1;
+    }
+
+    100% {
+      width: 90%;
+      opacity: 0;
+    }
+  }

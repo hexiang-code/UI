@@ -4,13 +4,15 @@ import windowUtils from './vague-window-utils'
 import drawer from './drawer.vue'
 import tree from './tree.vue'
 import windowUtilsItem from './window-utils-item.vue'
+import loadAnimation from './load-animation.vue'
 import './animation.css'
 const elementArray = [
   backgroundVideo,
   windowUtils,
   drawer,
   tree,
-  windowUtilsItem
+  windowUtilsItem,
+  loadAnimation
 ]
 
 const install = function (vue) {
