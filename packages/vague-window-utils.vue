@@ -82,7 +82,7 @@ export default {
         align-items: center;
         border-radius: 10px;
         backdrop-filter: blur(10px) brightness(110%);
-        z-index: 1;
+        z-index: 1001;
         // transform: translateY(-100%);
     }
 
