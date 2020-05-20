@@ -3,12 +3,14 @@ import backgroundVideo from './background-video.vue'
 import windowUtils from './vague-window-utils'
 import drawer from './drawer.vue'
 import tree from './tree.vue'
+import windowUtilsItem from './window-utils-item.vue'
 import './animation.css'
 const elementArray = [
   backgroundVideo,
   windowUtils,
   drawer,
-  tree
+  tree,
+  windowUtilsItem
 ]
 
 const install = function (vue) {

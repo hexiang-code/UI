@@ -38,20 +38,13 @@ export default {
         }
     },
 
-    data () {
-        return {
-            isReady: false
-        }
-    },
     computed: {
         windowSizeText () {
             return `width: ${this.width};${this.height ? 'height: '+ this.height : ''};${this.top ? 'top: '+ this.top : ''}`
-        }
-    },
+        },
 
-    watch: {
-        isShowWindow() {
-            this.isReady = true
+        isReady () {
+            return this.isShowWindow
         }
     },
 

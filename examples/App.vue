@@ -2,7 +2,11 @@
   <div id="app">
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo :resource="require('./assets/start-background-video.mp4')"></backgroundVideo> -->
-    <!-- <windowUtils title="你好" :isShowWindow.sync="visiable"></windowUtils> -->
+    <windowUtils title="你好" :isShowWindow.sync="visiable">
+      <window-utils-item label="书签名">
+        <input v-model="filterValue" type="text">
+      </window-utils-item>
+    </windowUtils>
     <drawer :isShow.sync="testDrawer" des="" title='' :isModal="false">
       <input v-model="filterValue" @blur="blur"/>
       <div class="bookmarks-header__search" @dblclick ="deleteBtn">
@@ -17,7 +21,7 @@
         </template>
       </tree>
     </drawer>
-    <button @click="testDrawer = true">开启</button>
+    <button @click="visiable = !visiable">开启</button>
     <button @click="checkbox">checkBox</button>
   </div >
 </template>
