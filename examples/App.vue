@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <button @click="visiable = !visiable">1111</button> -->
-    <!-- <backgroundVideo :resource="require('./assets/start-background-video.mp4')"></backgroundVideo> -->
+    <backgroundVideo :resource="require('./assets/background1.jpg')" :isImage="true"></backgroundVideo>
     <windowUtils title="你好" :isShowWindow.sync="visiable">
       <window-utils-item label="书签名">
         <input v-model="filterValue" type="text">
