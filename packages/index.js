@@ -5,14 +5,18 @@ import drawer from './drawer.vue'
 import tree from './tree.vue'
 import windowUtilsItem from './window-utils-item.vue'
 import loadAnimation from './load-animation.vue'
-import './animation.css'
+import liveRem from './live-rem/live2d-rem.vue'
+import './css/animation.css'
+import './css/live2d.css'
+import './js/live2d'
 const elementArray = [
   backgroundVideo,
   windowUtils,
   drawer,
   tree,
   windowUtilsItem,
-  loadAnimation
+  loadAnimation,
+  liveRem
 ]
 
 const install = function (vue) {
@@ -26,6 +30,23 @@ const install = function (vue) {
     }
     document.addEventListener('click', fn, true)
     document.addEventListener('click', fn, true)
+  })
+  vue.directive('drag', 
+    {
+      bind: el => {
+        let disX, disY
+        el.onmousedown =  ($event) => {
+          disX = $event.pageX - el.offsetLeft
+          disY = $event.pageY - el.offsetTop
+          document.onmousemove = ($event) => {
+            el.style.left = $event.pageX - disX + 'px'
+            el.style.top = $event.pageY-disY + 'px'
+          }
+          document.onmouseup = () => {
+            document.onmousemove = null
+          }
+        }
+    }
   })
 }
 

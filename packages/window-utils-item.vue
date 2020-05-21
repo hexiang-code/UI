@@ -32,7 +32,7 @@ export default {
 
   computed: {
     labelIconSrc () {
-      return this.labelIcon ? this.labelIcon : require('../public/leimu-icon.png')
+      return this.labelIcon ? this.labelIcon : require('./image/leimu-icon.png')
     },
 
     labelWidthStyle () {

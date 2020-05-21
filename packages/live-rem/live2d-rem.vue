@@ -1,0 +1,293 @@
+<template>
+  <div v-drag class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
+    <transition-group name="liveRem__slow-in">
+      <div class="message" key="message" v-if="message.length > 0" v-html="message"></div>
+      <canvas id="live2d" key="live2d" width="500" height="560" class="live2d"></canvas>
+      <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
+        <div class="live-rem__name">
+          <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />
+        </div>
+        <div class="live-rem__talk-box">
+          <input name="talk" type="text" class="live-rem__name-input live-rem__talk-input" autocomplete="off" placeholder="要和我聊什么呀？"/>
+          <div class="live-rem__send-tips">发送</div>
+        </div>
+      </div>
+      <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
+      <div class="live-rem__icon-list" key="live-rem__icon-list">
+        <img class="live-rem__icon" id="liveRemInfo" src="../image/info.png" />
+        <img class="live-rem__icon" id="liveRemTalk" @click.stop="isTalk = !isTalk" src="../image/talk.png"/>
+        <img class="live-rem__icon" id="liveRemMusic" src="../image/music.png"/>
+        <img class="live-rem__icon" id="liveRemGuiChu" @click.stop="isGuiChu = !isGuiChu" src="../image/youdu.png"/>
+        <img class="live-rem__icon" id="liveRemHide" src="../image/quite.png"/>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p4qbp15idv6bl55h381moha.mp3" type="hidden">
+        <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p8frrlmf1aled1e14m56una.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+      </div>
+    </transition-group>
+    <!-- <audio :src="`${homePath}live-model/rem/sound/lemm_welcome-back.mp3`" style="visibility: hidden" ref="audio"></audio> -->
+</div>
+</template>
+
+<script>
+import { IMAGESRCPATH, HOMEPATH, MESSAGE } from './config'
+export default {
+  name: 'liveRem',
+  props: {
+    toastTime: {
+      type: Number,
+      default: 3000
+    }
+  },
+  data () {
+    return {
+      isGuiChu: false, // 是否鬼畜
+      message: '', // toast 提示
+      isTalk: '', // 是否展示信息提示弹框
+      homePath: HOMEPATH
+    }
+  },
+  created () {
+    this.checkSleep()
+  },
+
+  mounted () {
+    this.initLiveRem()
+  }, 
+
+  methods: {
+
+    // 检测用户进入
+    checkSleep () {
+      let mp3 = new Audio(`${this.homePath}live-model/rem/sound/lemm_welcome-back.mp3`)
+      if(!document.visibilitychange) {
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState == 'visible') {
+            mp3.play()
+            this.showToast('你回来啦~', 10000)
+          }
+        })
+      }
+    },
+
+    // 初始化live2d
+    initLiveRem () {
+      const images = []
+      IMAGESRCPATH.forEach((item, index) => {
+        images[index] = new Image()
+        images[index].src = item
+        images[index].onload = () => {
+          loadlive2d("live2d", `${HOMEPATH}live-model/rem/rem.json`)
+        }
+      });
+    },
+
+    // 鼠标移动
+    liveRemMouseover ($event) {
+      let { mouseover: mouseoverMsg } = MESSAGE
+      if ($event.target && $event.target.id  && Array.isArray(mouseoverMsg)) {
+        let { text } = mouseoverMsg.find(item => item.selectorId == $event.target.id) || {}
+        this.showToast(text)
+      }
+    },
+
+    // 点击事件
+    liveRemClick($event) {
+      let { click } = MESSAGE
+      if ($event.target && $event.target.id  && Array.isArray(click)) {
+        let { text } = click.find(item => item.selectorId == $event.target.id) || {}
+        this.showToast(text)
+      }
+    },
+
+    // 展示信息
+    showToast (text, time = this.toastTime) {
+        if (text && Array.isArray(text)) {
+          let index = Math.round(Math.random() * text.length) - 1
+          index = index > 0 ? index : 0
+          this.message = text[index]
+        }
+        if (text && typeof text === 'string') this.message = text
+        setTimeout(() => {
+          this.message = ''
+        }, time)
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .live-rem {
+    position: fixed;
+    left: 10px;
+    bottom: 0;
+    z-index: 1001;
+    width: 250px;
+    height: 280px;
+  }
+
+  .liveRem__slow-in-enter-active {
+    animation: slow-in 1s forwards;
+  }
+
+  .liveRem__slow-in-leave-active {
+    animation: slow-in 1s forwards reverse;
+  }
+
+  .live2d {
+    position: relative;
+    z-index: 3;
+	  width: 250px;
+    height: 280px;
+  }
+
+  .live-rem__icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .live-rem__talk-body {
+    position:absolute;
+    bottom: 15px;
+    left: 0;
+    width: 250px;
+    z-index: 4;
+  }
+
+  .live-rem__name {
+    width: 70px;
+    box-sizing: border-box;
+    height: 24px;
+    border: 2px solid rgb(223, 179, 241);
+    border-radius: 5px;
+    background-color: rgba(74, 59, 114,0.9);
+  }
+
+  .live-rem__name-input {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 3px;
+    width: 66px;
+    height: 20px;
+    border: 0px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    outline: none;
+    background-color: transparent;
+    color: #E4E4E4;  
+  }
+
+  .live-rem__name-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #E4E4E4;  
+    opacity: 1;
+  }
+  
+  .live-rem__name-input::-moz-placeholder {  /* Mozilla Firefox 19+*/ 
+    color: #E4E4E4;
+    opacity: 1;
+  }
+  
+  .live-rem__name-input:-ms-input-placeholder {
+    color: #E4E4E4;
+  }
+  
+  .live-rem__name-input::-webkit-input-placeholder {
+    color: #E4E4E4;
+  }
+
+  .live-rem__talk-input {
+    flex: 1;
+    height: 24px;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  .live-rem__talk-box {
+    display: flex;
+    justify-content: space-between;
+    width: 260px;
+    height: 28px;
+    box-sizing: border-box;
+    border: 2px solid rgb(223, 179, 241);
+    border-radius: 5px;
+    background-color: rgba(74, 59, 114,0.9);
+  }
+  
+  .live-rem__send-tips {
+    position: relative;
+    width: 40px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+    color: #fff;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .live-rem__send-tips::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #fff;
+  }
+
+  .live-rem__icon-list {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    z-index: 5;
+    width: 15px;
+    opacity: 0.9;
+  }
+
+  .guiChu {
+    -webkit-animation-name: shake-little;
+    -ms-animation-name: shake-little;
+    animation-name: shake-little;
+    -webkit-animation-duration: 100ms;
+    -ms-animation-duration: 100ms;
+    animation-duration: 100ms;
+    -webkit-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    -ms-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-delay: 0s;
+    -ms-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-play-state: running;
+    -ms-animation-play-state: running;
+    animation-play-state: running;
+  }
+
+  .guiChu2 {
+    animation: shake-it .5s reverse infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+
+  .message {
+    position: absolute;
+    left: 0;
+    bottom: 280px;
+    box-sizing: border-box;
+    margin: auto;
+    padding: 7px;
+    width: 250px;
+    height: auto;
+    text-align: center;
+    border: 2px solid rgba(75,127,199,0.9);
+    border-radius: 5px;
+    font-size: 13px;
+    background-color: rgba(74, 59, 114,0.9);
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    overflow: hidden;
+    color: #fff;
+  }
+</style>

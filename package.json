@@ -1,6 +1,6 @@
 {
   "name": "codehe-ui",
-  "version": "1.1.22",
+  "version": "1.1.23",
   "private": false,
   "main": "lib/vcolorpicker.umd.min.js",
   "scripts": {

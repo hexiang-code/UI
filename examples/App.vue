@@ -22,9 +22,11 @@
         </template>
       </tree>
     </drawer>
-    <button @click="visiable = !visiable">开启</button>
+    <button @click="visiable = !visiable" v-drag>开启</button>
     <button @click="checkbox">checkBox</button>
+    <live-rem ref="rem"></live-rem>
   </div >
+  
 </template>
 
 <script>
@@ -75,10 +77,10 @@ export default {
     return {
       tree: tree,
       visiable: false,
-      testDrawer: true,
+      testDrawer: false,
       filterValue: '',
       isShowCheckBox: false,
-      isShowLoadAnimation: true
+      isShowLoadAnimation: false
     }
   },
 
@@ -87,6 +89,9 @@ export default {
   //     this.$refs.tree.filterNode(value)
   //   }
   // },
+  mounted () {
+    this.$refs.rem.showToast('你好')
+  },
 
   methods: {
     blur () {
@@ -124,7 +129,6 @@ export default {
   /* border-radius: 15px; */
   /* background-color: #1296db; */
   color: #1296db;
-  
 }
 
 .bookmarks-header__search:after {
