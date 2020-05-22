@@ -25,6 +25,7 @@
     <button @click="visiable = !visiable" v-drag>开启</button>
     <button @click="checkbox">checkBox</button>
     <live-rem ref="rem"></live-rem>
+    <!-- <canvas-bg></canvas-bg> -->
   </div >
   
 </template>
@@ -90,7 +91,7 @@ export default {
   //   }
   // },
   mounted () {
-    this.$refs.rem.showToast('你好')
+    // this.$refs.rem.showToast('你好')
   },
 
   methods: {

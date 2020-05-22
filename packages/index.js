@@ -9,6 +9,8 @@ import liveRem from './live-rem/live2d-rem.vue'
 import './css/animation.css'
 import './css/live2d.css'
 import './js/live2d'
+import '../public/live-model/rem/rem.json'
+import canvasBg from './canvas-bg/canvas-bg.vue'
 const elementArray = [
   backgroundVideo,
   windowUtils,
@@ -16,7 +18,8 @@ const elementArray = [
   tree,
   windowUtilsItem,
   loadAnimation,
-  liveRem
+  liveRem,
+  canvasBg
 ]
 
 const install = function (vue) {

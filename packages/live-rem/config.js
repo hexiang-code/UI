@@ -1,8 +1,8 @@
 const HOMEPATH = document.location.protocol +'//' + window.document.location.hostname +':' + window.document.location.port +'/'
 
-const IMAGESRCPATH = [
-  require('../../public/live-model/rem/remu2048/texture_00.png')
-]
+// const IMAGESRCPATH = [
+//   require('../../public/live-model/rem/remu2048/texture_00.png')
+// ]
 
 const MESSAGE = {
   "mouseover": [
@@ -44,7 +44,7 @@ const MESSAGE = {
 }
 
 export {
-  IMAGESRCPATH,
+//   IMAGESRCPATH,
   HOMEPATH,
   MESSAGE
 }

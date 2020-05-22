@@ -1,6 +1,6 @@
 <template>
   <div v-drag class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
-    <transition-group name="liveRem__slow-in">
+    <transition-group name="liveRem__slow-in" tag="div" v-show="isShowLeimu">
       <div class="message" key="message" v-if="message.length > 0" v-html="message"></div>
       <canvas id="live2d" key="live2d" width="500" height="560" class="live2d"></canvas>
       <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
@@ -18,7 +18,7 @@
         <img class="live-rem__icon" id="liveRemTalk" @click.stop="isTalk = !isTalk" src="../image/talk.png"/>
         <img class="live-rem__icon" id="liveRemMusic" src="../image/music.png"/>
         <img class="live-rem__icon" id="liveRemGuiChu" @click.stop="isGuiChu = !isGuiChu" src="../image/youdu.png"/>
-        <img class="live-rem__icon" id="liveRemHide" src="../image/quite.png"/>
+        <img class="live-rem__icon" id="liveRemHide" @click="isShowLeimu = false" src="../image/quite.png"/>
         <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
         <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
         <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p4qbp15idv6bl55h381moha.mp3" type="hidden">
@@ -26,18 +26,34 @@
         <input id="duType" value="douqilai,l2d_caihong" type="hidden">
       </div>
     </transition-group>
-    <!-- <audio :src="`${homePath}live-model/rem/sound/lemm_welcome-back.mp3`" style="visibility: hidden" ref="audio"></audio> -->
+    <div v-if="!isShowLeimu" class="live-rem__call" @click="isShowLeimu = true">
+      <div class="live-rem__call-text">召唤蕾姆</div>
+    </div>
 </div>
 </template>
 
 <script>
-import { IMAGESRCPATH, HOMEPATH, MESSAGE } from './config'
+import { IMAGESRCPATH, MESSAGE } from './config'
 export default {
   name: 'liveRem',
   props: {
     toastTime: {
       type: Number,
       default: 3000
+    },
+    modelPath: {
+      type: String,
+      default: '/live-model/rem/rem.json'
+    },
+    texturePathArray: {
+      type: Array,
+      default: () => {
+        return ['/live-model/rem/remu2048/texture_00.png']
+      }
+    },
+    welcomeBackpath: {
+      type: String,
+      default: '/live-model/rem/sound/lemm_welcome-back.mp3'
     }
   },
   data () {
@@ -45,7 +61,7 @@ export default {
       isGuiChu: false, // 是否鬼畜
       message: '', // toast 提示
       isTalk: '', // 是否展示信息提示弹框
-      homePath: HOMEPATH
+      isShowLeimu: true // 是否展示蕾姆
     }
   },
   created () {
@@ -60,7 +76,7 @@ export default {
 
     // 检测用户进入
     checkSleep () {
-      let mp3 = new Audio(`${this.homePath}live-model/rem/sound/lemm_welcome-back.mp3`)
+      let mp3 = new Audio(this.welcomeBackpath)
       if(!document.visibilitychange) {
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState == 'visible') {
@@ -73,14 +89,23 @@ export default {
 
     // 初始化live2d
     initLiveRem () {
-      const images = []
-      IMAGESRCPATH.forEach((item, index) => {
-        images[index] = new Image()
-        images[index].src = item
-        images[index].onload = () => {
-          loadlive2d("live2d", `${HOMEPATH}live-model/rem/rem.json`)
-        }
-      });
+      // let images = []
+      // let textureArr = []
+      // if (this.texturePathArray && this.texturePathArray.length > 0) {
+      //   textureArr = this.texturePathArray
+      // }
+      // if (textureArr.length == 0) {
+      //   this.showToast('未获取到纹理')
+      //   return
+      // }
+      // textureArr.forEach((item, index) => {
+      //   images[index] = new Image()
+      //   images[index].src = item
+      //   images[index].onload = () => {
+          // loadlive2d("live2d", `${HOMEPATH}live-model/rem/rem.json`)
+          loadlive2d("live2d", this.modelPath)
+      //   }
+      // });
     },
 
     // 鼠标移动
@@ -290,4 +315,21 @@ export default {
     overflow: hidden;
     color: #fff;
   }
+
+  .live-rem__call {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid rgba(75,127,199,0.9);
+    border-radius: 2px;
+    background-color: rgba(74, 59, 114,0.9);
+    color:#fff;
+    cursor: pointer;
+  }
+
 </style>
