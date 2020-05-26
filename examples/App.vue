@@ -24,7 +24,7 @@
     </drawer>
     <button @click="visiable = !visiable" v-drag>开启</button>
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem"></live-rem>
+    <live-rem ref="rem" @liveRemTalk="liveRemTalk"></live-rem>
     <!-- <canvas-bg></canvas-bg> -->
   </div >
   
@@ -106,6 +106,9 @@ export default {
 
     deleteBtn(item) {
       console.log('删除成功', item)
+    },
+    liveRemTalk(msg) {
+      console.log(msg)
     }
   }
 }

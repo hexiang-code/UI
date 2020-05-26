@@ -8,8 +8,8 @@
           <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />
         </div>
         <div class="live-rem__talk-box">
-          <input name="talk" type="text" class="live-rem__name-input live-rem__talk-input" autocomplete="off" placeholder="要和我聊什么呀？"/>
-          <div class="live-rem__send-tips">发送</div>
+          <input v-model="talkAbout" name="talk" type="text" class="live-rem__name-input live-rem__talk-input" autocomplete="off" placeholder="要和我聊什么呀？"/>
+          <div class="live-rem__send-tips" @click="liveRemTalk">发送</div>
         </div>
       </div>
       <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
@@ -61,7 +61,8 @@ export default {
       isGuiChu: false, // 是否鬼畜
       message: '', // toast 提示
       isTalk: '', // 是否展示信息提示弹框
-      isShowLeimu: true // 是否展示蕾姆
+      isShowLeimu: true, // 是否展示蕾姆
+      talkAbout: '' // 聊天内容
     }
   },
   created () {
@@ -137,6 +138,12 @@ export default {
         setTimeout(() => {
           this.message = ''
         }, time)
+    },
+
+    // 与蕾姆交流
+    liveRemTalk () {
+      this.$emit('liveRemTalk', this.talkAbout)
+      this.talkAbout = ''
     }
   }
 }
