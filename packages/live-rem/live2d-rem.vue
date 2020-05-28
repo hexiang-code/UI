@@ -62,7 +62,8 @@ export default {
       message: '', // toast 提示
       isTalk: '', // 是否展示信息提示弹框
       isShowLeimu: true, // 是否展示蕾姆
-      talkAbout: '' // 聊天内容
+      talkAbout: '', // 聊天内容
+      setIn: '' // 循环定时器
     }
   },
   created () {
@@ -73,6 +74,10 @@ export default {
     this.initLiveRem()
   }, 
 
+  destroyed() {
+    clearInterval(this.setIn)
+  },
+
   methods: {
 
     // 检测用户进入
@@ -82,7 +87,7 @@ export default {
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState == 'visible') {
             mp3.play()
-            this.showToast('你回来啦~', 10000)
+            this.showToast('你回来啦~')
           }
         })
       }
@@ -105,6 +110,7 @@ export default {
       //   images[index].onload = () => {
           // loadlive2d("live2d", `${HOMEPATH}live-model/rem/rem.json`)
           loadlive2d("live2d", this.modelPath)
+          this.lovelyRemind()
       //   }
       // });
     },
@@ -129,21 +135,47 @@ export default {
 
     // 展示信息
     showToast (text, time = this.toastTime) {
-        if (text && Array.isArray(text)) {
-          let index = Math.round(Math.random() * text.length) - 1
-          index = index > 0 ? index : 0
-          this.message = text[index]
-        }
-        if (text && typeof text === 'string') this.message = text
-        setTimeout(() => {
-          this.message = ''
-        }, time)
+      if (text && Array.isArray(text)) {
+        let index = Math.round(Math.random() * text.length) - 1
+        index = index > 0 ? index : 0
+        this.message = text[index]
+      }
+      if (text && typeof text === 'string') this.message = text
+      setTimeout(() => {
+        this.message = ''
+      }, time)
     },
 
     // 与蕾姆交流
     liveRemTalk () {
       this.$emit('liveRemTalk', this.talkAbout)
       this.talkAbout = ''
+    },
+
+    lovelyRemind () {
+      let curS = new Date().getSeconds()
+      let curM = new Date().getMinutes()
+      let delay = 60 * 60 * 1000 - (curM * 60 * 1000 +  curS * 1000)
+      const remindFn = () => {
+          let curhours = new Date().getHours()
+          let curMinutes = new Date().getMinutes()
+          if (curhours % 1 === 0 && curMinutes == 0) {
+            this.showToast(`${curhours}点了哟，休息一下保护下眼睛吧`)
+          }
+          if (curhours == 9 && curMinutes == 0) {
+            this.showToast('亲爱哒，到上班时间咯，要好好加油哟')
+          } else if (curhours == 12 && curMinutes == 0) {
+            this.showToast('亲爱哒，午休啦，要好好吃饭哟')
+          } else if (curhours == 18 && curMinutes == 0) {
+            this.showToast('亲爱哒，下班啦，回家路上注意安全哟')
+          }
+      }
+      setTimeout(() => { 
+        remindFn()
+        this.setIn = setInterval(() => {
+          remindFn()
+        }, 60 * 60 * 1000)
+      }, delay)
     }
   }
 }
