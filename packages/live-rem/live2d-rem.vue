@@ -126,7 +126,6 @@ export default {
 
     // 展示信息
     showToast ({text, time = this.toastTime, type='normal'}) {
-      debugger
       if (text && Array.isArray(text)) {
         this.message = this.getRandomItem(text)
       }
