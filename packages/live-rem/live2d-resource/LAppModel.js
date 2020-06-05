@@ -289,9 +289,11 @@ LAppModel.prototype.setRandomExpression = function () {
 
 
 LAppModel.prototype.startRandomMotion = function (name, priority) {
-  var max = this.modelSetting.getMotionNum(name);
-  var no = parseInt(Math.random() * max);
-  this.startMotion(name, no, priority);
+  if (LAppDefine.IS_ALLOW_RANDOM) {
+    var max = this.modelSetting.getMotionNum(name);
+    var no = parseInt(Math.random() * max);
+    this.startMotion(name, no, priority);
+  }
 }
 
 
@@ -387,11 +389,11 @@ LAppModel.prototype.draw = function (gl) {
 
 
 LAppModel.prototype.hitTest = function (id, testX, testY) {
-  var len = this.modelSetting.getHitAreaNum();
-  for (var i = 0; i < len; i++) {
+  let len = this.modelSetting.getHitAreaNum();
+  for (let i = 0; i < len; i++) {
     if (id == this.modelSetting.getHitAreaName(i)) {
-      var drawID = this.modelSetting.getHitAreaID(i);
-
+      let drawID = this.modelSetting.getHitAreaID(i);
+      L2DBaseModel.prototype.live2DModel = this.live2DModel
       return this.hitTestSimple(drawID, testX, testY);
     }
   }

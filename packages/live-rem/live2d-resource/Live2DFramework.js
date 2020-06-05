@@ -274,7 +274,8 @@ L2DBaseModel.prototype.loadPhysics = function (path/*String*/) {
 //    L2DBaseModel # hitTestSimple()
 //============================================================
 L2DBaseModel.prototype.hitTestSimple = function (drawID, testX, testY) {
-  var drawIndex = this.live2DModel.getDrawDataIndex(drawID);
+  
+  let drawIndex = this.live2DModel.getDrawDataIndex(drawID)
 
   if (drawIndex < 0) return false;
 

@@ -202,6 +202,113 @@
 			{
 				"file": "motions/Live2D_remu20.mtn"
 			}
+		],
+		"remindAction": [
+			{
+				"file": "motions/Live2D_remu01.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu02.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu03.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu04.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu05.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu06.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu07.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu08.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu09.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu10.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu11.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu12.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu13.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu14.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu15.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu16.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu17.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu18.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu19.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu20.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu21.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu22.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu23.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu24.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu25.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu26.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu27.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu28.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu29.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu30.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu31.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu32.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu33.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu34.mtn"
+			},
+			{
+				"file": "motions/Live2D_remu_idle.mtn"
+			}
 		]
 	}
 }
