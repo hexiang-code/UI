@@ -24,7 +24,7 @@
     </drawer>
     <button @click="visiable = !visiable" v-drag>开启</button>
     <button @click="checkbox">checkBox</button> -->
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk"></live-rem>
+    <live-rem ref="rem" @liveRemTalk="liveRemTalk" modelPath="/live-model/rem/rem.json" :texturePathArray="['/live-model/rem/remu2048/texture_00.png']" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
     <!-- <canvas-bg></canvas-bg> -->
   </div >
   

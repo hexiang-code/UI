@@ -44,21 +44,23 @@ export default {
     },
     modelPath: {
       type: String,
-      default: '/live-model/rem/rem.json'
+      required: true
     },
     texturePathArray: {
       type: Array,
-      default: () => {
-        return ['/live-model/rem/remu2048/texture_00.png']
-      }
+      required: true,
     },
-    welcomeBackpath: {
-      type: String,
-      default: '/live-model/rem/sound/lemm_welcome-back.mp3'
+    welcomeBack: {
+      type: Object,
+      default: () => {
+        return {
+          text: '你回来啦~'
+        }
+      }
     },
 
     toastAction: {
-      type: Array,
+      type: Object,
       default: () => toastAction
     }
   },
@@ -88,12 +90,16 @@ export default {
 
     // 检测用户进入
     checkSleep () {
-      let mp3 = new Audio(this.welcomeBackpath)
+      let mp3, text
+      if (this.welcomeBack) {
+        if (this.welcomeBack.audioSrc) mp3 = new Audio(this.welcomeBack.audioSrc)
+        if (this.welcomeBack.text) text = this.welcomeBack.text
+      }
       if(!document.visibilitychange) {
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState == 'visible') {
-            mp3.play()
-            this.showToast({text: '你回来啦~'})
+            mp3 && mp3.play()
+            text && this.showToast({text: '你回来啦~'})
           }
         })
       }
@@ -128,7 +134,7 @@ export default {
         this.message = this.getRandomItem(text)
       }
       if (text && typeof text === 'string') this.message = text
-      if (Array.isArray(toastAction) && toastAction.length > 0) {
+      if (Object.prototype.toString.call(this.toastAction) === "[object Object]" && this.toastAction.length > 0) {
         let curAction = this.toastAction[type]
         let actionRes
         if (Array.isArray(curAction)) {
@@ -139,6 +145,7 @@ export default {
           console.warn('toastAction不符合规范')
           return
         }
+        console.log(actionRes)
         actionRes && loadAction(actionRes)
       }
       setTimeout(() => {

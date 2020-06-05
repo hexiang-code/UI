@@ -156,7 +156,7 @@ LAppLive2DManager.prototype.tapEvent = function (x, y) {
           }
       }
       */
-  console.log("this.models.length" + this.models.length);
+  // console.log("this.models.length" + this.models.length);
 
   for (var i = 0; i < this.models.length; i++) {
     if (this.models[i].hitTest(LAppDefine.HIT_AREA_HEAD, x, y)) {
