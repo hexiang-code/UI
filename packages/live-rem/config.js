@@ -43,8 +43,37 @@ const MESSAGE = {
   ]
 }
 
+const toastAction = {
+    normal: {
+        name: 'remindAction',
+        index: 12,
+        priority: 4
+    },
+
+    lovely: {
+        name: 'remindAction',
+        index: 16
+    },
+
+    error: {
+        name: 'remindAction',
+        index: 21
+    },
+
+    success: {
+        name: 'remindAction',
+        index: 25
+    },
+
+    smail: {
+        name: 'remindAction',
+        index: 33
+    }
+}
+
 export {
 //   IMAGESRCPATH,
   HOMEPATH,
-  MESSAGE
+  MESSAGE,
+  toastAction
 }

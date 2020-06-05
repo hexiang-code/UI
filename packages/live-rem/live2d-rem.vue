@@ -33,7 +33,8 @@
 </template>
 
 <script>
-import { IMAGESRCPATH, MESSAGE } from './config'
+import { IMAGESRCPATH, MESSAGE, toastAction } from './config'
+import { startLive2d, loadAction } from './live2d-resource/startLive2d'
 export default {
   name: 'liveRem',
   props: {
@@ -54,6 +55,11 @@ export default {
     welcomeBackpath: {
       type: String,
       default: '/live-model/rem/sound/lemm_welcome-back.mp3'
+    },
+
+    toastAction: {
+      type: Array,
+      default: () => toastAction
     }
   },
   data () {
@@ -87,7 +93,7 @@ export default {
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState == 'visible') {
             mp3.play()
-            this.showToast('你回来啦~')
+            this.showToast({text: '你回来啦~'})
           }
         })
       }
@@ -95,24 +101,7 @@ export default {
 
     // 初始化live2d
     initLiveRem () {
-      // let images = []
-      // let textureArr = []
-      // if (this.texturePathArray && this.texturePathArray.length > 0) {
-      //   textureArr = this.texturePathArray
-      // }
-      // if (textureArr.length == 0) {
-      //   this.showToast('未获取到纹理')
-      //   return
-      // }
-      // textureArr.forEach((item, index) => {
-      //   images[index] = new Image()
-      //   images[index].src = item
-      //   images[index].onload = () => {
-          // loadlive2d("live2d", `${HOMEPATH}live-model/rem/rem.json`)
-          loadlive2d("live2d", this.modelPath)
-          this.lovelyRemind()
-      //   }
-      // });
+      startLive2d('live2d', this.modelPath)
     },
 
     // 鼠标移动
@@ -120,7 +109,7 @@ export default {
       let { mouseover: mouseoverMsg } = MESSAGE
       if ($event.target && $event.target.id  && Array.isArray(mouseoverMsg)) {
         let { text } = mouseoverMsg.find(item => item.selectorId == $event.target.id) || {}
-        this.showToast(text)
+        this.showToast({text})
       }
     },
 
@@ -129,21 +118,40 @@ export default {
       let { click } = MESSAGE
       if ($event.target && $event.target.id  && Array.isArray(click)) {
         let { text } = click.find(item => item.selectorId == $event.target.id) || {}
-        this.showToast(text)
+        this.showToast({ text })
       }
     },
 
     // 展示信息
-    showToast (text, time = this.toastTime) {
+    showToast ({text, time = this.toastTime, type='normal'}) {
       if (text && Array.isArray(text)) {
-        let index = Math.round(Math.random() * text.length) - 1
-        index = index > 0 ? index : 0
-        this.message = text[index]
+        this.message = this.getRandomItem(text)
       }
       if (text && typeof text === 'string') this.message = text
+      if (Array.isArray(toastAction) && toastAction.length > 0) {
+        let curAction = this.toastAction[type]
+        let actionRes
+        if (Array.isArray(curAction)) {
+          actionRes = this.getRandomItem(curAction)
+        } else if (Object.prototype.toString.call(curAction) === "[object Object]") {
+          actionRes = curAction
+        } else {
+          console.warn('toastAction不符合规范')
+          return
+        }
+        actionRes && loadAction(actionRes)
+      }
       setTimeout(() => {
         this.message = ''
       }, time)
+    },
+
+    // 随机获取数组中的一项
+    getRandomItem (array) {
+      if (!Array.isArray(array)) return false
+      let index = Math.round(Math.random() * array.length) - 1
+      index = index > 0 ? index : 0
+      return array[index]
     },
 
     // 与蕾姆交流
@@ -160,14 +168,26 @@ export default {
           let curhours = new Date().getHours()
           let curMinutes = new Date().getMinutes()
           if (curhours % 1 === 0 && curMinutes == 0) {
-            this.showToast(`${curhours}点了哟，休息一下保护下眼睛吧`)
+            this.showToast({
+              text: `${curhours}点了哟，休息一下保护下眼睛吧`,
+              type: 'lovely'
+            })
           }
           if (curhours == 9 && curMinutes == 0) {
-            this.showToast('亲爱哒，到上班时间咯，要好好加油哟')
+            this.showToast({
+              text: '亲爱哒，到上班时间咯，要好好加油哟',
+              type: 'lovely'
+            })
           } else if (curhours == 12 && curMinutes == 0) {
-            this.showToast('亲爱哒，午休啦，要好好吃饭哟')
+            this.showToast({
+              text: '亲爱哒，午休啦，要好好吃饭哟',
+              type: 'lovely'
+            })
           } else if (curhours == 18 && curMinutes == 0) {
-            this.showToast('亲爱哒，下班啦，回家路上注意安全哟')
+            this.showToast({
+              text: '亲爱哒，下班啦，回家路上注意安全哟',
+              type: 'lovely'
+            })
           }
       }
       setTimeout(() => { 

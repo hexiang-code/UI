@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo :resource="require('./assets/background1.jpg')" :isImage="true"></backgroundVideo> -->
-    <load-animation :isShow.sync="isShowLoadAnimation"></load-animation>
+    <!-- <load-animation :isShow.sync="isShowLoadAnimation"></load-animation>
     <windowUtils title="你好" :isShowWindow.sync="visiable">
       <window-utils-item label="书签名">
         <input v-model="filterValue" type="text">
@@ -23,7 +23,7 @@
       </tree>
     </drawer>
     <button @click="visiable = !visiable" v-drag>开启</button>
-    <button @click="checkbox">checkBox</button>
+    <button @click="checkbox">checkBox</button> -->
     <live-rem ref="rem" @liveRemTalk="liveRemTalk"></live-rem>
     <!-- <canvas-bg></canvas-bg> -->
   </div >

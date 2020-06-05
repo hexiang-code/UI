@@ -8,8 +8,7 @@ import loadAnimation from './load-animation.vue'
 import liveRem from './live-rem/live2d-rem.vue'
 import './css/animation.css'
 import './css/live2d.css'
-import './js/live2d'
-import '../public/live-model/rem/rem.json'
+// import '../public/live-model/rem/rem.json'
 import canvasBg from './canvas-bg/canvas-bg.vue'
 const elementArray = [
   backgroundVideo,
