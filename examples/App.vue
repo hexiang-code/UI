@@ -91,7 +91,7 @@ export default {
   //   }
   // },
   mounted () {
-    // this.$refs.rem.showToast('你好')
+    // this.$refs.rem.showToast({text: '你好'})
   },
 
   methods: {

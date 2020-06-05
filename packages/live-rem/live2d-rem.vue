@@ -46,10 +46,6 @@ export default {
       type: String,
       required: true
     },
-    texturePathArray: {
-      type: Array,
-      required: true,
-    },
     welcomeBack: {
       type: Object,
       default: () => {
@@ -130,6 +126,7 @@ export default {
 
     // 展示信息
     showToast ({text, time = this.toastTime, type='normal'}) {
+      debugger
       if (text && Array.isArray(text)) {
         this.message = this.getRandomItem(text)
       }
@@ -145,7 +142,6 @@ export default {
           console.warn('toastAction不符合规范')
           return
         }
-        console.log(actionRes)
         actionRes && loadAction(actionRes)
       }
       setTimeout(() => {
