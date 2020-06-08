@@ -10,6 +10,7 @@ import './css/animation.css'
 import './css/live2d.css'
 // import '../public/live-model/rem/rem.json'
 import canvasBg from './canvas-bg/canvas-bg.vue'
+import { createMouseAnimation } from './js/mouse-animtion/mouse-animation'
 const elementArray = [
   backgroundVideo,
   windowUtils,
@@ -50,6 +51,7 @@ const install = function (vue) {
         }
     }
   })
+  createMouseAnimation()
 }
 
 if (!window && typeof window.Vue !== 'undefined' ) install(window.Vue)
@@ -68,5 +70,7 @@ const hasParent = (curNode, parent) => {
   }
   return false;
 }
+
+
 
 export default install
