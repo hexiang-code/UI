@@ -2,13 +2,19 @@
   <div id="app">
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo :resource="require('./assets/background1.jpg')" :isImage="true"></backgroundVideo> -->
-    <!-- <load-animation :isShow.sync="isShowLoadAnimation"></load-animation>
+    <!-- <load-animation :isShow.sync="isShowLoadAnimation"></load-animation> -->
     <windowUtils title="你好" :isShowWindow.sync="visiable">
-      <window-utils-item label="书签名">
-        <input v-model="filterValue" type="text">
-      </window-utils-item>
+      <template>
+        <window-utils-item label="书签名">
+          <input v-model="filterValue" type="text">
+        </window-utils-item>
+        <window-utils-item label="书签名">
+          <input v-model="filterValue" type="text">
+        </window-utils-item>
+        <input />
+      </template>
     </windowUtils>
-    <drawer :isShow.sync="testDrawer" des="" title='' :isModal="false">
+    <!-- <drawer :isShow.sync="testDrawer" des="" title='' :isModal="false">
       <input v-model="filterValue" @blur="blur"/>
       <div class="bookmarks-header__search" @dblclick ="deleteBtn">
         search
@@ -21,9 +27,10 @@
           </div>
         </template>
       </tree>
-    </drawer>
+    </drawer> -->
     <button @click="visiable = !visiable" v-drag>开启</button>
-    <button @click="checkbox">checkBox</button> -->
+    <input />
+    <button @click="checkbox">checkBox</button>
     <live-rem ref="rem" @liveRemTalk="liveRemTalk" modelPath="/live-model/rem/rem.json" :texturePathArray="['/live-model/rem/remu2048/texture_00.png']" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
     <!-- <canvas-bg></canvas-bg> -->
   </div >

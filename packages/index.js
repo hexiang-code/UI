@@ -51,7 +51,7 @@ const install = function (vue) {
         }
     }
   })
-  createMouseAnimation()
+  // createMouseAnimation()
 }
 
 if (!window && typeof window.Vue !== 'undefined' ) install(window.Vue)

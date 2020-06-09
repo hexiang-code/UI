@@ -1,5 +1,5 @@
 <template>
-  <div class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
+  <div v-drag class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
     <transition-group name="liveRem__slow-in" tag="div" v-show="isShowLeimu">
       <div class="message" key="message" v-if="message.length > 0" v-html="message"></div>
       <canvas id="live2d" key="live2d" width="250px" height="280px" class="live2d"></canvas>

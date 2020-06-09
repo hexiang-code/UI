@@ -49,11 +49,11 @@ function initL2dCanvas(canvasId) {
     thisRef.canvas.addEventListener("mousewheel", mouseEvent, false);
     // thisRef.canvas.addEventListener("click", mouseEvent, false);
 
-    document.addEventListener("mousedown", mouseEvent, true);
-    document.addEventListener("mousemove", mouseEvent, true);
+    thisRef.canvas.addEventListener("mousedown", mouseEvent, false);
+    thisRef.canvas.addEventListener("mousemove", mouseEvent, false);
 
-    document.addEventListener("mouseup", mouseEvent, true);
-    document.addEventListener("mouseout", mouseEvent, true);
+    thisRef.canvas.addEventListener("mouseup", mouseEvent, false);
+    thisRef.canvas.addEventListener("mouseout", mouseEvent, false);
     thisRef.canvas.addEventListener("contextmenu", mouseEvent, false);
 
 

@@ -36,7 +36,7 @@ export default {
     },
 
     labelWidthStyle () {
-      return this.labelWidth ? `width: ${labelWidth};` : ''
+      return this.labelWidth ? `width: ${this.labelWidth};` : ''
     }
   }
 }
