@@ -1,13 +1,13 @@
 let LAppDefine = {
 
 
-  DEBUG_LOG: true,
+  DEBUG_LOG: false,
   DEBUG_MOUSE_LOG: false,
-  DEBUG_DRAW_HIT_AREA : true, 
+  DEBUG_DRAW_HIT_AREA : false, 
   DEBUG_DRAW_ALPHA_MODEL : false, 
 
 
-  IS_ALLOW_RANDOM: false,
+  IS_ALLOW_RANDOM: true,
 
   VIEW_MAX_SCALE: 2,
   VIEW_MIN_SCALE: 0.8,
@@ -49,7 +49,7 @@ let LAppDefine = {
   
 
   // MODEL_MURAKUMO : "murakumo/murakumo.model.json",
-  // MODEL_MURAKUMO: "/live-model/rem/rem.json",
+  MODEL_MURAKUMO: "/live-model/rem/rem.json",
 
   MOTION_GROUP_IDLE: "idle",
   MOTION_GROUP_TAP: "tap",

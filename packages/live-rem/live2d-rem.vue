@@ -1,8 +1,8 @@
 <template>
-  <div v-drag class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
+  <div class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
     <transition-group name="liveRem__slow-in" tag="div" v-show="isShowLeimu">
       <div class="message" key="message" v-if="message.length > 0" v-html="message"></div>
-      <canvas id="live2d" key="live2d" width="500" height="560" class="live2d"></canvas>
+      <canvas id="live2d" key="live2d" width="250px" height="280px" class="live2d"></canvas>
       <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
         <div class="live-rem__name">
           <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />

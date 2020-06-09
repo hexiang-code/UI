@@ -140,10 +140,10 @@ LAppLive2DManager.prototype.tapEvent = function (x, y) {
               
               if (LAppDefine.DEBUG_LOG)
                   console.log("Tap face.");
-  
-              this.models[i].setRandomExpression();
+                  this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_FLICK_HEAD,
+                    LAppDefine.PRIORITY_NORMAL);
           }
-          else if (this.models[i].hitTest(LAppDefine.HIT_AREA_BODY, x, y))
+          else if (this.models[i].hitTest(LAppDefine.HIT_AREA_BODY, x, y)) 
           {
               
               if (LAppDefine.DEBUG_LOG)
@@ -155,41 +155,41 @@ LAppLive2DManager.prototype.tapEvent = function (x, y) {
       }
   // console.log("this.models.length" + this.models.length);
 
-  for (var i = 0; i < this.models.length; i++) {
-    if (this.models[i].hitTest(LAppDefine.HIT_AREA_HEAD, x, y)) {
+  // for (var i = 0; i < this.models.length; i++) {
+  //   if (this.models[i].hitTest(LAppDefine.HIT_AREA_HEAD, x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
-        console.log("Tap face.");
+  //     if (LAppDefine.DEBUG_LOG)
+  //       console.log("Tap face.");
 
-      this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP,
-        LAppDefine.PRIORITY_NORMAL);
-      // console.log("face motion");
-    }
-    else if (this.models[i].hitTest(LAppDefine.HIT_AREA_EAR_L, x, y)) {
+  //     this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP,
+  //       LAppDefine.PRIORITY_NORMAL);
+  //     // console.log("face motion");
+  //   }
+  //   else if (this.models[i].hitTest(LAppDefine.HIT_AREA_EAR_L, x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
-        console.log("Tap body." + " models[" + i + "]");
+  //     if (LAppDefine.DEBUG_LOG)
+  //       console.log("Tap body." + " models[" + i + "]");
 
-      this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_EAR,
-        LAppDefine.PRIORITY_NORMAL);
-    }
-    else if (this.models[i].hitTest(LAppDefine.HIT_AREA_EAR_R, x, y)) {
+  //     this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_EAR,
+  //       LAppDefine.PRIORITY_NORMAL);
+  //   }
+  //   else if (this.models[i].hitTest(LAppDefine.HIT_AREA_EAR_R, x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
-        console.log("Tap body." + " models[" + i + "]");
+  //     if (LAppDefine.DEBUG_LOG)
+  //       console.log("Tap body." + " models[" + i + "]");
 
-      this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_EAR,
-        LAppDefine.PRIORITY_NORMAL);
-    }
-    else if (this.models[i].hitTest(LAppDefine.HIT_AREA_BUST, x, y)) {
+  //     this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_EAR,
+  //       LAppDefine.PRIORITY_NORMAL);
+  //   }
+  //   else if (this.models[i].hitTest(LAppDefine.HIT_AREA_BUST, x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
-        // console.log("Tap body." + " models[" + i + "]");
+  //     if (LAppDefine.DEBUG_LOG)
+  //       // console.log("Tap body." + " models[" + i + "]");
 
-      this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_BUST,
-        LAppDefine.PRIORITY_NORMAL);
-    }
-  }
+  //     this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_BUST,
+  //       LAppDefine.PRIORITY_NORMAL);
+  //   }
+  // }
 
   return true;
 };
