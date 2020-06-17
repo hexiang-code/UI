@@ -2,7 +2,7 @@
   <div v-drag class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
     <transition-group name="liveRem__slow-in" tag="div" v-show="isShowLeimu">
       <div class="message" key="message" v-if="message.length > 0" v-html="message"></div>
-      <canvas id="live2d" key="live2d" width="250px" height="280px" class="live2d"></canvas>
+      <canvas id="live2d" key="live2d" width="250" height="280" class="live2d" ref="canvasRem"></canvas>
       <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
         <div class="live-rem__name">
           <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />
@@ -14,7 +14,7 @@
       </div>
       <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
       <div class="live-rem__icon-list" key="live-rem__icon-list">
-        <img class="live-rem__icon" id="liveRemInfo" src="../image/info.png" />
+        <img class="live-rem__icon" id="liveRemInfo" @click="changeTexture" src="../image/info.png" />
         <img class="live-rem__icon" id="liveRemTalk" @click.stop="isTalk = !isTalk" src="../image/talk.png"/>
         <img class="live-rem__icon" id="liveRemMusic" src="../image/music.png"/>
         <img class="live-rem__icon" id="liveRemGuiChu" @click.stop="isGuiChu = !isGuiChu" src="../image/youdu.png"/>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { IMAGESRCPATH, MESSAGE, toastAction } from './config'
+import { MESSAGE, textureConfig } from './config'
 import { startLive2d, loadAction } from './live2d-resource/startLive2d'
 export default {
   name: 'liveRem',
@@ -41,10 +41,6 @@ export default {
     toastTime: {
       type: Number,
       default: 3000
-    },
-    modelPath: {
-      type: String,
-      required: true
     },
     welcomeBack: {
       type: Object,
@@ -55,9 +51,10 @@ export default {
       }
     },
 
-    toastAction: {
-      type: Object,
-      default: () => toastAction
+    // 模型配置
+    textureConfig: {
+      type: Array,
+      default: () => textureConfig
     }
   },
   data () {
@@ -67,7 +64,8 @@ export default {
       isTalk: '', // 是否展示信息提示弹框
       isShowLeimu: true, // 是否展示蕾姆
       talkAbout: '', // 聊天内容
-      setIn: '' // 循环定时器
+      setIn: '', // 循环定时器
+      curTexture: {} // 当前皮肤信息
     }
   },
   created () {
@@ -103,7 +101,8 @@ export default {
 
     // 初始化live2d
     initLiveRem () {
-      startLive2d('live2d', this.modelPath)
+      this.curTexture = this.textureConfig[0]
+      startLive2d('live2d', this.curTexture.texture)
     },
 
     // 鼠标移动
@@ -130,8 +129,9 @@ export default {
         this.message = this.getRandomItem(text)
       }
       if (text && typeof text === 'string') this.message = text
-      if (Object.prototype.toString.call(this.toastAction) === "[object Object]" && this.toastAction.length > 0) {
-        let curAction = this.toastAction[type]
+      const { toastAction } = this.curTexture
+      if (toastAction && Object.prototype.toString.call(toastAction) === "[object Object]" && toastAction.length > 0) {
+        let curAction = toastAction[type]
         let actionRes
         if (Array.isArray(curAction)) {
           actionRes = this.getRandomItem(curAction)
@@ -198,6 +198,29 @@ export default {
           remindFn()
         }, 60 * 60 * 1000)
       }, delay)
+    },
+
+    // 切换纹理
+    changeTexture () {
+      this.isShowLeimu = false
+      setTimeout(() => {
+        this.showToast({text: '换好啦', type: 'lovely'})
+        this.isShowLeimu = true
+      }, 1000)
+      let textureLen = this.textureConfig.length // 纹理总数
+      let curIndex = this.textureConfig.findIndex(item => item.id == this.curTexture.id)
+      curIndex ++
+      if (curIndex > textureLen - 1) curIndex = 0
+      this.curTexture = this.textureConfig[curIndex]
+      let { width, height, texture } = this.textureConfig[curIndex]
+      if (width) {
+        this.$refs.canvasRem.setAttribute('width', width) 
+      }
+      if (height) {
+        this.$refs.canvasRem.setAttribute('height', height)
+      }
+      this.$refs.canvasRem.setAttribute('style', `${width ? 'width:' + width + 'px' : ''}; ${height ? 'height:' + height + 'px' : ''};`)
+      startLive2d('live2d', texture)
     }
   }
 }

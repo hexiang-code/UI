@@ -8,7 +8,7 @@ const MESSAGE = {
   "mouseover": [
       {
           "selectorId": "liveRemInfo",
-          "text": ["查看最新吐槽和站内信息"]
+          "text": ["想看换装play嘛？"]
       },
       {
           "selectorId": "liveRemTalk",
@@ -43,37 +43,60 @@ const MESSAGE = {
   ]
 }
 
-const toastAction = {
-    normal: {
-        name: 'remindAction',
-        index: 12,
-        priority: 4
-    },
 
-    lovely: {
-        name: 'remindAction',
-        index: 16
-    },
+const textureConfig = [
+    {   
+        id: 1,
+        name: 'normal',
+        texture: '/live-model/rem/rem.json',
+        width: '250',
+        height: '280',
+        toastAction: {
+            normal: {
+                name: 'remindAction',
+                index: 12,
+                priority: 4
+            },
+        
+            lovely: {
+                name: 'remindAction',
+                index: 16
+            },
+        
+            error: {
+                name: 'remindAction',
+                index: 21
+            },
+        
+            success: {
+                name: 'remindAction',
+                index: 25
+            },
+        
+            smail: {
+                name: 'remindAction',
+                index: 33
+            },
 
-    error: {
-        name: 'remindAction',
-        index: 21
+            sad: {
+                name: 'remindAction',
+                index: 21 // 带寻找悲伤的表情动作
+            }
+        }
     },
-
-    success: {
-        name: 'remindAction',
-        index: 25
-    },
-
-    smail: {
-        name: 'remindAction',
-        index: 33
+    {
+        id: 2,
+        name: 'swim',
+        width: 250,
+        height: 350,
+        texture: '/live-model/rem-swim/neko.model.json'
     }
-}
+]
+
 
 export {
 //   IMAGESRCPATH,
   HOMEPATH,
   MESSAGE,
-  toastAction
+  textureConfig
 }

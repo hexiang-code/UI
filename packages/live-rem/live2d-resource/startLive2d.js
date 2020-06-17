@@ -375,8 +375,18 @@ const loadAction = ({name, index, priority = LAppDefine.PRIORITY_FORCE + 1}) => 
   }
 }
 
+/**
+ * 加载指定模型
+ * @param {String} modelPath 模型路径 
+ */
+const loadModel = modelPath => {
+  let [curModel] = thisRef.live2DMgr.models
+  curModel.load(thisRef.gl, modelPath)
+}
+
 export { 
   startLive2d,
   getWebGLContext,
-  loadAction
+  loadAction,
+  loadModel
 }
