@@ -87,8 +87,8 @@ const textureConfig = [
     {
         id: 2,
         name: 'swim',
-        width: 250,
-        height: 350,
+        width: 290,
+        height: 380,
         texture: '/live-model/rem-swim/neko.model.json'
     }
 ]
