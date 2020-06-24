@@ -9,7 +9,7 @@ window.onerror = function (msg, url, line) {
   l2dError(errmsg);
 }
 
-function startLive2d(canvasId, modelPath) {
+function startLive2d(canvas, modelPath) {
   if (modelPath) changeModelPath(modelPath)
   thisRef.platform = window.navigator.platform.toLowerCase();
 
@@ -34,15 +34,15 @@ function startLive2d(canvasId, modelPath) {
   thisRef.isModelShown = false;
 
 
-  initL2dCanvas.call(window, canvasId);
+  initL2dCanvas.call(window, canvas);
 
 
   init.call(window)
 }
 
-function initL2dCanvas(canvasId) {
+function initL2dCanvas(canvas) {
 
-  thisRef.canvas = document.getElementById(canvasId);
+  thisRef.canvas = canvas instanceof HTMLElement ? canvas : document.getElementById(canvasId)
 
 
   if (thisRef.canvas.addEventListener) {
@@ -66,17 +66,17 @@ function initL2dCanvas(canvasId) {
 
 
 function init() {
-  var width = thisRef.canvas.width;
-  var height = thisRef.canvas.height;
+  let width = thisRef.canvas.width;
+  let height = thisRef.canvas.height;
 
   thisRef.dragMgr = new L2DTargetPoint();
 
 
-  var ratio = height / width;
-  var left = LAppDefine.VIEW_LOGICAL_LEFT;
-  var right = LAppDefine.VIEW_LOGICAL_RIGHT;
-  var bottom = -ratio;
-  var top = ratio;
+  let ratio = height / width;
+  let left = LAppDefine.VIEW_LOGICAL_LEFT;
+  let right = LAppDefine.VIEW_LOGICAL_RIGHT;
+  let bottom = -ratio;
+  let top = ratio;
 
   thisRef.viewMatrix = new L2DViewMatrix();
 
@@ -123,7 +123,7 @@ function startDraw() {
     (function tick() {
       draw();
 
-      var requestAnimationFrame =
+      let requestAnimationFrame =
         window.requestAnimationFrame ||
         window.mozRequestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
@@ -380,7 +380,7 @@ const loadAction = ({name, index, priority = LAppDefine.PRIORITY_FORCE + 1}) => 
  */
 const loadModel = modelPath => {
   let [curModel] = thisRef.live2DMgr.models
-  curModel.load(thisRef.gl, modelPath)
+  curModel && curModel.load(thisRef.gl, modelPath)
 }
 
 export { 

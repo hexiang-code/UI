@@ -19,7 +19,7 @@ function LAppModel() {
 
 LAppModel.prototype = new L2DBaseModel();
 
-
+let testGl
 LAppModel.prototype.load = function (gl, modelSettingPath, callback) {
   this.setUpdating(true);
   this.setInitialized(false);

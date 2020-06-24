@@ -33,7 +33,7 @@ LAppLive2DManager.prototype.changeModel = function (gl) {
     var no = parseInt(this.count % 4);
     switch (no) {
       case 0:
-        this.releaseModel(1, gl);
+        // this.releaseModel(1, gl);
         this.releaseModel(0, gl);
         this.createModel();
         this.models[0].load(gl, LAppDefine.MODEL_MURAKUMO);

@@ -49,8 +49,8 @@ const textureConfig = [
         id: 1,
         name: 'normal',
         texture: '/live-model/rem/rem.json',
-        width: '250',
-        height: '280',
+        width: 250,
+        height: 280,
         toastAction: {
             normal: {
                 name: 'remindAction',
@@ -88,7 +88,7 @@ const textureConfig = [
         id: 2,
         name: 'swim',
         width: 250,
-        height: 330,
+        height: 325,
         texture: '/live-model/rem-swim/neko.model.json'
     }
 ]

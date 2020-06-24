@@ -1,30 +1,30 @@
 <template>
-  <div v-drag class="live-rem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
-    <transition-group name="liveRem__slow-in" tag="div" v-show="isShowLeimu">
-      <div class="message" key="message" v-if="message.length > 0" v-html="message"></div>
-      <canvas id="live2d" key="live2d" width="250" height="280" class="live2d" ref="canvasRem"></canvas>
-      <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
-        <div class="live-rem__name">
-          <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />
+  <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
+    <transition-group name="liveRem__slow-in" tag="div">
+        <div class="message" key="message" v-show="isShowLeimu && message.length > 0" v-html="message"></div>
+        <!-- <canvas id="live2d" key="live2d" class="live2d" ref="canvasRem" v-show="isShowLeimu"></canvas> -->
+        <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
+          <div class="live-rem__name">
+            <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />
+          </div>
+          <div class="live-rem__talk-box">
+            <input v-model="talkAbout" name="talk" type="text" class="live-rem__name-input live-rem__talk-input" autocomplete="off" placeholder="要和我聊什么呀？"/>
+            <div class="live-rem__send-tips" @click="liveRemTalk">发送</div>
+          </div>
         </div>
-        <div class="live-rem__talk-box">
-          <input v-model="talkAbout" name="talk" type="text" class="live-rem__name-input live-rem__talk-input" autocomplete="off" placeholder="要和我聊什么呀？"/>
-          <div class="live-rem__send-tips" @click="liveRemTalk">发送</div>
+        <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
+        <div class="live-rem__icon-list" key="live-rem__icon-list" v-show="isShowLeimu">
+          <img class="live-rem__icon" id="liveRemInfo" @click="changeTexture" src="../image/info.png" />
+          <img class="live-rem__icon" id="liveRemTalk" @click.stop="isTalk = !isTalk" src="../image/talk.png"/>
+          <img class="live-rem__icon" id="liveRemMusic" src="../image/music.png"/>
+          <img class="live-rem__icon" id="liveRemGuiChu" @click.stop="isGuiChu = !isGuiChu" src="../image/youdu.png"/>
+          <img class="live-rem__icon" id="liveRemHide" @click="isShowLeimu = false" src="../image/quite.png"/>
+          <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+          <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+          <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p4qbp15idv6bl55h381moha.mp3" type="hidden">
+          <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p8frrlmf1aled1e14m56una.mp3" type="hidden">
+          <input id="duType" value="douqilai,l2d_caihong" type="hidden">
         </div>
-      </div>
-      <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
-      <div class="live-rem__icon-list" key="live-rem__icon-list">
-        <img class="live-rem__icon" id="liveRemInfo" @click="changeTexture" src="../image/info.png" />
-        <img class="live-rem__icon" id="liveRemTalk" @click.stop="isTalk = !isTalk" src="../image/talk.png"/>
-        <img class="live-rem__icon" id="liveRemMusic" src="../image/music.png"/>
-        <img class="live-rem__icon" id="liveRemGuiChu" @click.stop="isGuiChu = !isGuiChu" src="../image/youdu.png"/>
-        <img class="live-rem__icon" id="liveRemHide" @click="isShowLeimu = false" src="../image/quite.png"/>
-        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
-        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
-        <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p4qbp15idv6bl55h381moha.mp3" type="hidden">
-        <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p8frrlmf1aled1e14m56una.mp3" type="hidden">
-        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
-      </div>
     </transition-group>
     <div v-if="!isShowLeimu" class="live-rem__call" @click="isShowLeimu = true">
       <div class="live-rem__call-text">召唤蕾姆</div>
@@ -35,6 +35,8 @@
 <script>
 import { MESSAGE, textureConfig } from './config'
 import { startLive2d, loadAction } from './live2d-resource/startLive2d'
+let messageTimer // 提示计时器
+let canvas // live2d画布
 export default {
   name: 'liveRem',
   props: {
@@ -126,6 +128,7 @@ export default {
 
     // 展示信息
     showToast ({text, time = this.toastTime, type='normal'}) {
+      messageTimer && clearTimeout(messageTimer)
       if (text && Array.isArray(text)) {
         this.message = this.getRandomItem(text)
       }
@@ -144,7 +147,7 @@ export default {
         }
         actionRes && loadAction(actionRes)
       }
-      setTimeout(() => {
+      messageTimer = setTimeout(() => {
         this.message = ''
       }, time)
     },
@@ -202,29 +205,26 @@ export default {
     },
 
     // 切换纹理
-    changeTexture () {
+    async changeTexture () {
       this.isShowLeimu = false
       setTimeout(() => {
         this.showToast({text: '换好啦', type: 'lovely'})
+        this.$refs.liveRem.appendChild(canvas)
         this.isShowLeimu = true
-      }, 1000)
+      }, 1500)
       let textureLen = this.textureConfig.length // 纹理总数
       let curIndex = this.textureConfig.findIndex(item => item.id == this.curTexture.id)
       curIndex ++
       if (curIndex > textureLen - 1) curIndex = 0
       this.curTexture = this.textureConfig[curIndex]
       let { width, height, texture } = this.textureConfig[curIndex]
-      if (width) {
-        this.$refs.canvasRem.setAttribute('width', width) 
-      }
-      if (height) {
-        this.$refs.canvasRem.setAttribute('height', height)
-      }
-      this.$refs.canvasRem.setAttribute('style', `${width ? 'width:' + width + 'px' : ''}; ${height ? 'height:' + height + 'px' : ''};`)
-      this.$nextTick(() => {
-        startLive2d('live2d', texture)
-      })
-      
+      if (canvas) this.$refs.liveRem.removeChild(canvas)
+      canvas = document.createElement('canvas')
+      canvas.setAttribute('id', 'live2d')
+      canvas.setAttribute('class', 'live2d')
+      if (width) canvas.width = width
+      if (height) canvas.height = height
+      startLive2d(canvas, texture)
     }
   }
 }
@@ -237,21 +237,20 @@ export default {
     bottom: 0;
     z-index: 10001;
     width: 250px;
+    padding-top: 52px;
   }
 
   .liveRem__slow-in-enter-active {
     animation: slow-in 1s forwards;
   }
 
-  .liveRem__slow-in-leave-active {
-    animation: slow-in 1s forwards reverse;
-  }
+  // .liveRem__slow-in-leave-active {
+  //   animation: slow-in 1s forwards reverse;
+  // }
 
   .live2d {
     position: relative;
     z-index: 3;
-	  width: 250px;
-    height: 280px;
   }
 
   .live-rem__icon {
@@ -352,7 +351,7 @@ export default {
   .live-rem__icon-list {
     position: absolute;
     right: 0;
-    top: 10px;
+    top: 62px;
     z-index: 5;
     width: 15px;
     opacity: 0.9;
@@ -385,14 +384,13 @@ export default {
 
   .message {
     position: absolute;
-    left: 0;
-    // bottom: 280px;
     top: 0;
+    left: 0;
     box-sizing: border-box;
     margin: auto;
-    padding: 7px;
+    padding: 5px;
     width: 250px;
-    height: auto;
+    max-height: 52px;
     text-align: center;
     border: 2px solid rgba(75,127,199,0.9);
     border-radius: 5px;
