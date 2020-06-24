@@ -1,4 +1,6 @@
 import { randomColor } from './config'
+
+const animationDestence = 30 // 动画距离点击的位置
 /**
  * 创建鼠标点击动画
  */
@@ -20,6 +22,7 @@ const createMouseAnimation = () => {
     lovelyIcon.appendChild(iconRight)
     lovelyIcon.appendChild(iconCenter)
     let { clientX, clientY } = $event
+    clientY = clientY - animationDestence
     lovelyIcon.setAttribute('style', `left: ${clientX}px; top: ${clientY}px;`)
     document.body.appendChild(lovelyIcon)
     setTimeout(() => {

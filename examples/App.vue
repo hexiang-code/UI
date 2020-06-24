@@ -28,7 +28,7 @@
         </template>
       </tree>
     </drawer> -->
-    <button @click="visiable = !visiable" v-drag>开启</button>
+    <button @dblclick="visiable = !visiable" v-drag>开启</button>
     <input />
     <button @click="checkbox">checkBox</button>
     <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>

@@ -1,25 +1,35 @@
 <template>
-    <div v-if="isReady" class="window-utils" 
-        :class="{ 'window-utils_open': isShowWindow, 'window-utils_closed': !isShowWindow }"
-        :style="windowSizeText">
-        <slot name="windowTitle">
-            <div class="window-title" v-if="!$slots.windowTitle">{{title}}</div>
-        </slot>
-        <slot></slot>
-        <slot name="windowFoot">
-            <div class="window-foot" v-if="!$slots.windowFoot">
-                <button @click="comfirm">confirm</button>
-                <button @click="cancel">cancel</button>
-            </div>
-        </slot>
+    <div>
+        <curtain v-if="curtain" :isShow="isShowWindow"></curtain>
+        <div v-if="isReady" class="window-utils" 
+            :class="{ 'window-utils_open': isShowWindow, 'window-utils_closed': !isShowWindow }"
+            :style="windowSizeText">
+            
+            <slot name="windowTitle">
+                <div class="window-title" v-if="!$slots.windowTitle">{{title}}</div>
+            </slot>
+            <slot></slot>
+            <slot name="windowFoot">
+                <div class="window-foot" v-if="!$slots.windowFoot">
+                    <button @click="comfirm">confirm</button>
+                    <button @click="cancel">cancel</button>
+                </div>
+            </slot>
+        </div>
     </div>
 </template>
 <script>
+import curtain from './bg-curtain'
 export default {
     name: 'windowUtils',
     props: {
-        isShowWindow: Boolean,
-        width: { // 窗口宽度
+        // 是否开启弹框
+        isShowWindow: {
+           type: Boolean,
+           default: false
+        },
+        // 宽度
+        width: { 
             type: String,
             default: '30%'
         },
@@ -35,6 +45,12 @@ export default {
         top: { // 窗口距离顶部的高度
             type: String,
             default: ''
+        },
+        
+        // 是否需要遮罩层
+        curtain: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -46,6 +62,10 @@ export default {
         isReady () {
             return this.isShowWindow
         }
+    },
+
+    components: {
+        curtain
     },
 
     methods: {
