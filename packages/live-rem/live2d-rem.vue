@@ -101,8 +101,9 @@ export default {
 
     // 初始化live2d
     initLiveRem () {
-      this.curTexture = this.textureConfig[0]
-      startLive2d('live2d', this.curTexture.texture)
+      // this.curTexture = this.textureConfig[0]
+      // startLive2d('live2d', this.curTexture.texture)]
+      this.changeTexture()
     },
 
     // 鼠标移动
@@ -220,7 +221,10 @@ export default {
         this.$refs.canvasRem.setAttribute('height', height)
       }
       this.$refs.canvasRem.setAttribute('style', `${width ? 'width:' + width + 'px' : ''}; ${height ? 'height:' + height + 'px' : ''};`)
-      startLive2d('live2d', texture)
+      this.$nextTick(() => {
+        startLive2d('live2d', texture)
+      })
+      
     }
   }
 }
@@ -233,7 +237,6 @@ export default {
     bottom: 0;
     z-index: 10001;
     width: 250px;
-    height: 280px;
   }
 
   .liveRem__slow-in-enter-active {
@@ -383,7 +386,8 @@ export default {
   .message {
     position: absolute;
     left: 0;
-    bottom: 280px;
+    // bottom: 280px;
+    top: 0;
     box-sizing: border-box;
     margin: auto;
     padding: 7px;

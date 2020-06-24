@@ -88,12 +88,6 @@ export default {
     }
   },
 
-  data() {
-    return {
-      // isShowModal: false // 是否需要幕布
-    }
-  },
-
   components:{
     curtain
   },

@@ -66,7 +66,6 @@ function initL2dCanvas(canvasId) {
 
 
 function init() {
-
   var width = thisRef.canvas.width;
   var height = thisRef.canvas.height;
 
@@ -344,7 +343,7 @@ function getWebGLContext() {
       if (ctx) return ctx;
     }
     catch (e) {
-      console.log(e)
+      console.error(e)
      }
   }
   return null;
