@@ -103,8 +103,6 @@ export default {
 
     // 初始化live2d
     initLiveRem () {
-      // this.curTexture = this.textureConfig[0]
-      // startLive2d('live2d', this.curTexture.texture)]
       this.changeTexture()
     },
 
@@ -207,8 +205,10 @@ export default {
     // 切换纹理
     async changeTexture () {
       this.isShowLeimu = false
+      let { curTextureId } = this.curTexture
       setTimeout(() => {
-        this.showToast({text: '换好啦', type: 'lovely'})
+        // 第一次加载模型时不要换装提示
+        if (curTextureId) this.showToast({text: '换好啦', type: 'lovely'})
         this.$refs.liveRem.appendChild(canvas)
         this.isShowLeimu = true
       }, 1500)
