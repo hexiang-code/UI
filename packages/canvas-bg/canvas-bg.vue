@@ -74,7 +74,7 @@ export default {
       if (curHz >= 60) curHz = 0
       let { width, height } = canvas
       canvasCtx.clearRect(0, 0, width, height)
-      cycleArray.forEach((item, index) => {
+      cycleArray.forEach(item => {
         if (curHz % (this.cycleTime / baseHz) === 0) item.R ++
         if (curHz % 6 === 0) item.alpha = item.alpha - 0.1 > 0 ? item.alpha - 0.1 : 0 
         if (item.R >= this.maxR) Object.assign(item, this.newCycle())
