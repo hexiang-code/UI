@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <!-- <button @click="visiable = !visiable">1111</button> -->
-    <!-- <backgroundVideo :resource="require('./assets/background1.jpg')" :isImage="true"></backgroundVideo> -->
-    <!-- <load-animation :isShow.sync="isShowLoadAnimation"></load-animation> -->
+    <!-- <backgroundVideo resource="https://api.hexiangzone.cn/assets/kafeidou/start-background-video.mp4" poster="https://api.hexiangzone.cn/assets/kafeidou/startBg.png" @videoLoaded="isShowLoadAnimation = false" @posterLoaded="isShowLoadAnimation = false"></backgroundVideo> -->
+    <load-animation :isShow.sync="isShowLoadAnimation"></load-animation>
     <windowUtils title="你好" :isShowWindow.sync="visiable">
       <template>
         <window-utils-item label="书签名">
@@ -31,8 +31,8 @@
     <button @dblclick="visiable = !visiable" v-drag>开启</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
-    <canvas-bg></canvas-bg>
+    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
+    <canvas-bg></canvas-bg> -->
   </div >
   
 </template>
@@ -88,7 +88,7 @@ export default {
       testDrawer: false,
       filterValue: '',
       isShowCheckBox: false,
-      isShowLoadAnimation: false
+      isShowLoadAnimation: true
     }
   },
 

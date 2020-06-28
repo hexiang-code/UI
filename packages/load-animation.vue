@@ -1,11 +1,12 @@
 <template>
-  <div v-if="isShow" class="load-animation" @click.capture="curtainClose">
-    <curtain :isShow="isShow" v-if="isModal" @curtainClose="curtainClose" key="curtain"></curtain>
-    <div class="load-animtion__border border-animation">
-      <div class="load-animation__content condensation-light"> watting... </div>
+  <transition name="baiyechuang">
+    <div v-if="isShow" class="load-animation" @click.capture="curtainClose">
+      <curtain :isShow="isShow" v-if="isModal" @curtainClose="curtainClose" key="curtain"></curtain>
+      <div class="load-animtion__border border-animation" v-if="isShow">
+        <div class="load-animation__content condensation-light"> watting... </div>
+      </div>
     </div>
-    
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -47,7 +48,11 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: -1;
+    z-index: 100000;
+  }
+
+  .curtain {
+    opacity: 1;
   }
 
   .load-animation__content {
@@ -57,7 +62,7 @@ export default {
     font-size: 20px;
     color: #ffffff;
     font-weight: bold;
-    background-color: #000;
+    // background-color: #000;
   }
 
   .load-animtion__border {

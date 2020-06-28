@@ -1,9 +1,13 @@
 <template>
-    <video v-if="!isImage" muted autoplay loop class="background-video" @play="videoAlready">
+<div>
+    <img v-if="isImageBg" class="background-video" :src="resource" @load="posterAlready" />
+    <img v-if="isPoster && poster" :src="poster" class="background-video" @load="posterAlready" />
+    <video v-if="loadVideo && !isImageBg" muted autoplay loop class="background-video" @loadeddata="videoAlready">
         <source :src="resource" type="video/mp4"/>
         <source :src="resource" type="video/ogg">
     </video>
-    <img v-else class="background-video" :src="resource" @load="videoAlready" />
+</div>
+
 </template>
 <script>
 export default {
@@ -14,16 +18,48 @@ export default {
             required: true,
             default: ''
         },
-        isImage: {
+        isImageBg: {
             type: Boolean,
             default: false
+        },
+        poster: {
+            type: String,
+            default: ''
         }
     },
 
-    methods: {
-        videoAlready () {
-            this.$emit('videoAlready')
+    data () {
+        return {
+            loadVideo: false, // 视频是否加载完成
+            isPoster: false // 是否展示海报
         }
+    },
+
+    created () {
+        this.initPoster()
+    },
+
+    watch: {
+        poster () {
+            this.initPoster()
+        },
+    },
+
+    methods: {
+        initPoster () {
+            this.isPoster = !! this.poster
+            if (!this.poster) this.loadVideo = true
+        },
+
+        posterAlready () {
+          this.$emit('posterLoaded')
+          this.loadVideo = true
+        },
+
+        videoAlready () {
+            this.isPoster = false
+            this.$emit('videoLoaded')
+        },
     }
 }
 </script>
