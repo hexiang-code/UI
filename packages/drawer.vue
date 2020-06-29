@@ -26,27 +26,28 @@ import curtain from './bg-curtain'
 export default {
   name: 'drawer',
   props:{
+    // 标题
     title: {
       type: String,
       default: '加油呀'
-    }, // 标题
+    }, 
+    // 描述
     des: {
       type: String,
       default: ''
-    }, // 描述
+    }, 
+    // 是否开启组件 
     isShow: {
       type: Boolean,
       required: true,
       default: false
-    }, // 是否开启组件 
+    }, 
+    // 是否需要幕布背景
     isModal: {
       type: Boolean,
       default: true
-    },  // 是否需要幕布背景
-    drawerStyle: {
-      type: String,
-      required: false
-    }, // 自定义样式
+    },  
+    // 抽屉出现的位置
     position: {
       type: [String],
       require: false,

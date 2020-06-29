@@ -390,7 +390,7 @@ export default {
     margin: auto;
     padding: 5px;
     width: 250px;
-    max-height: 52px;
+    max-height: 100px;
     text-align: center;
     border: 2px solid rgba(75,127,199,0.9);
     border-radius: 5px;

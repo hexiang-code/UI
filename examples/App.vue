@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo resource="https://api.hexiangzone.cn/assets/kafeidou/start-background-video.mp4" poster="https://api.hexiangzone.cn/assets/kafeidou/startBg.png" @videoLoaded="isShowLoadAnimation = false" @posterLoaded="isShowLoadAnimation = false"></backgroundVideo> -->
-    <load-animation :isShow.sync="isShowLoadAnimation"></load-animation>
+    <!-- <load-animation :isShow.sync="isShowLoadAnimation"></load-animation> -->
     <windowUtils title="你好" :isShowWindow.sync="visiable">
       <template>
         <window-utils-item label="书签名">
@@ -14,12 +14,12 @@
         <input />
       </template>
     </windowUtils>
-    <!-- <drawer :isShow.sync="testDrawer" des="" title='' :isModal="false">
+    <drawer :isShow.sync="testDrawer" des="" title='' :isModal="false">
       <input v-model="filterValue" @blur="blur"/>
       <div class="bookmarks-header__search" @dblclick ="deleteBtn">
         search
       </div>
-      <tree :tree="tree" :isExpandAll="true" ref="tree" :isShowCheckBox="isShowCheckBox">
+      <tree :tree="tree" :isExpandAll="true" ref="tree" :isShowCheckBox="isShowCheckBox" @nodeChange="nodeChange">
         <template #operation="treeItem">
           <div class="operation-btn">
             <span>修改</span>
@@ -27,12 +27,12 @@
           </div>
         </template>
       </tree>
-    </drawer> -->
+    </drawer>
     <button @dblclick="visiable = !visiable" v-drag>开启</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
-    <canvas-bg></canvas-bg> -->
+    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
+    <canvas-bg></canvas-bg>
   </div >
   
 </template>
@@ -44,19 +44,24 @@ const tree = {
     {
       label: '前端',
       href: '',
+      id: 1,
       children: [
         {
+          id: 2,
           label: 'javaScript',
           href: 'https://www.baidu.com'
         },
         {
+          id: 3,
           label: 'css',
           href: 'https://www.jianshu.com/p/1614ef2b8bcb'
         },
         {
+          id: 4,
           label: 'nodejs',
           children: [
             {
+              id: 5,
               label: '你好,nodejs',
               href: 'https://www.jianshu.com/p/1614ef2b8bcb'
             }
@@ -65,13 +70,16 @@ const tree = {
       ]
     },
     {
+      id: 6,
       label: '娱乐娱乐娱乐',
       children: [
         {
+          id: 7,
           label: 'B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站B站',
           href: 'https://www.bilibili.com'
         },
         {
+          id: 8,
           label: '来啊nodejs'
         }
       ]
@@ -116,6 +124,10 @@ export default {
     },
     liveRemTalk(msg) {
       console.log(msg)
+    },
+
+    nodeChange (node) {
+      // console.log(node)
     }
   }
 }

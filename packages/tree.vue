@@ -17,10 +17,9 @@
     // functional: true,
     props: ['tree'],
     render: function(h) {
-      let { tree } = this
       return (
         <div class="tree-main__body">
-          {this.$parent.createTree(h, tree.children)}
+          {this.$parent.createTree(h, this.tree.children)}
         </div> 
       )
     }
@@ -46,7 +45,6 @@
           return {
             label: 'label',
             children: 'children',
-            href: 'href'
           }
         }
       }, 
@@ -74,7 +72,7 @@
         let { isExpandAll } = this
         let treeStr = list && list.map(item => {
           if (item[children] && item[children].length > 0) {
-            return  this.createParendNode(h, item)
+            return this.createParendNode(h, item)
           } else {
             return this.createChildNode(h, item, isExpandAll)
           }
@@ -171,7 +169,8 @@
                 this.isShowCheckBox ? 
                 <span class={ childData['isCheck'] ? 
                   'tree-main__check-box tree-main__check-box_checked' : 
-                  'tree-main__check-box' }>
+                  'tree-main__check-box' }
+                  onClick={() => this.checkBoxClick(childData)}>
                 </span> :
                 '' 
               }
@@ -228,9 +227,31 @@
         this.$refs.treeBody.$el.appendChild(fragment)
       },
 
-      // 点击复选框实践
+      // 点击复选框事件
       checkBoxClick (parentData) {
-        this.$emit('nodeChange', parentData)
+        // 父节点选中时，子节点全部同步父节点选中状态
+        let parentIsCheck = parentData.isCheck
+        // 收集选中子树的id
+        let selIdArray = []
+        const selectFn = (nodeData) => {
+          this.$set(nodeData, 'isCheck', !parentIsCheck)
+          parentIsCheck && nodeData.id && selIdArray.push({
+            isPNode: true,
+            id: nodeData.id
+          })
+          if (nodeData.children && nodeData.children.length > 0) {
+            nodeData.children.forEach(item => {
+              this.$set(item, 'isCheck', !parentIsCheck)
+              parentIsCheck && item.id && selIdArray.push({
+                isPNode: false,
+                id: item.id
+              })
+              if (item.children && item.children.length > 0) selectFn(item)
+            })
+          }
+        }
+        selectFn(parentData)
+        this.$emit('nodeChange', parentData, selIdArray)
       }
     }
   }
