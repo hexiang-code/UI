@@ -30,6 +30,7 @@ cycleTime | 小球从创建到消散经历了多少hz | Number | - | 120 (已60h
 toastTime | 文字提示的持续时间(ms) | Number | - | 3000 | 否
 welcomeBack | 欢迎回家提示 | Object | - | 配置选项，具体看下表 | 否
 textureConfig | 纹理配置 | Array | - | 配置选项，具体看下表 | 是
+manualLoad | 是否手动加载模型，如是则调用组件方法initLiveRem()来手动加载模型 | Boolean | true/false | false | 否
 ###### welcomeBack
 参数|说明|类型|可选值|默认值
 --|:--:|:--:|--:|:--

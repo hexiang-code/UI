@@ -57,6 +57,11 @@ export default {
     textureConfig: {
       type: Array,
       default: () => textureConfig
+    },
+    // 手动加载模型
+    manualLoad: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -75,7 +80,7 @@ export default {
   },
 
   mounted () {
-    this.initLiveRem()
+    !this.manualLoad && this.initLiveRem()
   }, 
 
   destroyed() {

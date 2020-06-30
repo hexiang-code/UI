@@ -31,7 +31,7 @@
     <button @dblclick="visiable = !visiable" v-drag>开启</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
+    <live-rem ref="rem" :manualLoad="true" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
     <canvas-bg></canvas-bg>
   </div >
   
@@ -107,6 +107,7 @@ export default {
   // },
   mounted () {
     // this.$refs.rem.showToast({text: '你好'})
+    
   },
 
   methods: {
