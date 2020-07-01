@@ -60,7 +60,7 @@ const textureConfig = [
         
             lovely: {
                 name: 'remindAction',
-                index: 16
+                index: 17
             },
         
             error: {
@@ -81,6 +81,11 @@ const textureConfig = [
             sad: {
                 name: 'remindAction',
                 index: 21 // 带寻找悲伤的表情动作
+            },
+
+            shy: {
+                name: 'remindAction',
+                index: 16
             }
         }
     },

@@ -137,7 +137,7 @@ export default {
       }
       if (text && typeof text === 'string') this.message = text
       const { toastAction } = this.curTexture
-      if (toastAction && Object.prototype.toString.call(toastAction) === "[object Object]" && toastAction.length > 0) {
+      if (toastAction && Object.prototype.toString.call(toastAction) === "[object Object]") {
         let curAction = toastAction[type]
         let actionRes
         if (Array.isArray(curAction)) {
@@ -148,7 +148,8 @@ export default {
           console.warn('toastAction不符合规范')
           return
         }
-        actionRes && loadAction(actionRes)
+        let { index, name, priority } = actionRes
+        actionRes &&  loadAction({ name, priority, index: --index })
       }
       messageTimer = setTimeout(() => {
         this.message = ''
