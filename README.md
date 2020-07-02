@@ -237,10 +237,24 @@ name | 说明
 windowTitle | 窗口顶部插槽
 windowFoot | 窗口底部插槽
 
-
+*********
 #### window-utils-item：单个表单控件
 参数|说明|类型|可选值|默认值|是否必填
 --|:--:|:--:|--:|:--:|:--
 label | 表单标签 | String | - | - | 是
 labelWidth | 标签宽度 | String | - | - | 否
 labelIcon | 标签图标地址 | String | - | - | 否 
+
+*********
+#### hxSwitch：开关
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+value / v-model | 	绑定值 | Boolean | - | false | 否
+activeColor | 开启时背景颜色 | String | - | - | 否
+inactiveColor | 关闭时背景颜色 | String | - | - | 否 
+
+##### slot
+name | 说明
+--|:--:|:--
+switchLeft | 开关左边插槽
+switchRight | 开关右边插槽

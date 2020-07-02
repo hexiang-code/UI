@@ -6,6 +6,7 @@ const animationDestence = 30 // 动画距离点击的位置
  */
 const createMouseAnimation = () => {
   document.addEventListener('click', $event => {
+    console.log($event)
     const color = randomColor()
     let lovelyIcon = document.createElement('div') 
     lovelyIcon.setAttribute('class', 'lovely-icon')

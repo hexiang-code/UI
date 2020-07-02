@@ -6,6 +6,7 @@ import tree from './tree.vue'
 import windowUtilsItem from './window-utils-item.vue'
 import loadAnimation from './load-animation.vue'
 import liveRem from './live-rem/live2d-rem.vue'
+import hxSwitch from './switch.vue'
 import './css/animation.css'
 import './css/live2d.css'
 // import '../public/live-model/rem/rem.json'
@@ -19,7 +20,8 @@ const elementArray = [
   windowUtilsItem,
   loadAnimation,
   liveRem,
-  canvasBg
+  canvasBg,
+  hxSwitch
 ]
 
 const install = function (vue) {
@@ -32,7 +34,7 @@ const install = function (vue) {
       if (res) vnode.context[binding.expression] = false
     }
     document.addEventListener('click', fn, true)
-    document.addEventListener('click', fn, true)
+    // document.addEventListener('click', fn, true)
   })
   vue.directive('drag', 
     {
