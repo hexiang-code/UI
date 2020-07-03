@@ -258,3 +258,13 @@ name | 说明
 --|:--:|:--
 switchLeft | 开关左边插槽
 switchRight | 开关右边插槽
+
+******
+#### hxSlider：滑块组件
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+value / v-model | 	绑定值 | Number | - | - | 是
+max | 最大值 | Number | - | - | 是
+min | 最小值 | String | - | - | 是
+
+

@@ -38,6 +38,8 @@
         <span slot="switchRight">11</span>
         <span slot="switchLeft">你好</span>
       </hx-switch>
+      <hx-slider v-model="sliderVal" :max="10" :min="0"></hx-slider>
+      {{sliderVal}}
     </div>
   </div >
   
@@ -103,7 +105,8 @@ export default {
       filterValue: '',
       isShowCheckBox: false,
       isShowLoadAnimation: true,
-      switchVal: false
+      switchVal: false,
+      sliderVal: 3
     }
   },
 
@@ -114,8 +117,6 @@ export default {
   // },
   mounted () {
     // this.$refs.rem.showToast({text: '你好'})
-    window.liveRem = this.$refs.rem
-    console.log(window.liveRem)
   },
 
   methods: {

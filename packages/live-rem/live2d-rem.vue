@@ -228,8 +228,14 @@ export default {
       canvas = document.createElement('canvas')
       canvas.setAttribute('id', 'live2d')
       canvas.setAttribute('class', 'live2d')
-      if (width) canvas.width = width
-      if (height) canvas.height = height
+      if (width) {
+        canvas.width = width
+        this.$refs.liveRem.style.width = `${width}px`
+      }
+      if (height) {
+        canvas.height = height
+        this.$refs.liveRem.style.height = `${height}px`
+      }
       startLive2d(canvas, texture)
     }
   }
@@ -240,7 +246,6 @@ export default {
   .live-rem {
     position: fixed;
     left: 10px;
-    bottom: 0;
     z-index: 10001;
     width: 250px;
     padding-top: 52px;
