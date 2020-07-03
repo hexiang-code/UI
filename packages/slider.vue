@@ -24,6 +24,10 @@ export default {
       required: true,
       type: Number,
       default: 0
+    },
+    toFixed: {
+      type: Number,
+      default: 2
     }
   },
   data () {
@@ -41,14 +45,14 @@ export default {
 
   mounted () {
     let sliderW = (this.$refs.slider.clientWidth + this.$refs.slider.clientLeft) - (this.$refs.sliderBlock.clientWidth + this.$refs.sliderBlock.clientLeft)
-    this.initOffSet = sliderW * (this.value / (this.max - this.min))
+    this.initOffSet = sliderW * ((this.value -this.min) / (this.max - this.min))
   },
 
   methods: {
     // 滑块移动的回调函数
     moveCb ({x}) {
       let sliderW = (this.$refs.slider.clientWidth + this.$refs.slider.clientLeft) - (this.$refs.sliderBlock.clientWidth + this.$refs.sliderBlock.clientLeft)
-      this.percent = Math.round((x/sliderW) * (this.max - this.min))  + this.min
+      this.percent = Number(new Number((x/sliderW) * (this.max - this.min)).toFixed(this.toFixed))  + this.min
     }
   }
 }
