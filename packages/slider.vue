@@ -1,6 +1,7 @@
 <template>
-  <div class="slider" ref="slider">
-    <div ref="sliderBlock" class="slider-block" v-drag:X="{moveCb: this.moveCb, initX: initOffSet}"></div>
+  <div class="slider" ref="slider" @click.stop="clickSlider($event)">
+    <div class="slider-bar" ref="sliderBar"></div>
+    <div ref="sliderBlock" class="slider-block" @click.stop v-drag:X="{moveCb: this.moveCb, initX: initOffSet}"></div>
   </div>
 </template>
 
@@ -46,6 +47,7 @@ export default {
   mounted () {
     let sliderW = (this.$refs.slider.clientWidth + this.$refs.slider.clientLeft) - (this.$refs.sliderBlock.clientWidth + this.$refs.sliderBlock.clientLeft)
     this.initOffSet = sliderW * ((this.value -this.min) / (this.max - this.min))
+    this.computeOffset(this.initOffSet)
   },
 
   methods: {
@@ -53,6 +55,19 @@ export default {
     moveCb ({x}) {
       let sliderW = (this.$refs.slider.clientWidth + this.$refs.slider.clientLeft) - (this.$refs.sliderBlock.clientWidth + this.$refs.sliderBlock.clientLeft)
       this.percent = Number(new Number((x/sliderW) * (this.max - this.min)).toFixed(this.toFixed))  + this.min
+      this.computeOffset(x)
+    },
+
+    // 点击滑动轨迹
+    clickSlider ($event) {
+      this.initOffSet = $event.offsetX
+      this.computeOffset(this.initOffSet)
+      console.log($event)
+    },
+
+    // 滑块偏移量
+    computeOffset (moveX) {
+      this.$refs.sliderBar.style.width = `${moveX}px`
     }
   }
 }
@@ -62,18 +77,24 @@ export default {
   .slider {
     position: relative;
     width: 150px;
-    height: 4px;
-    border-radius: 2px;
+    height: 6px;
+    border-radius: 3px;
     background-color: #e5e5e5;
 
     .slider-block {
       position: absolute;
-      top: -9px;
+      top: -7px;
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      border: 2px solid red;
+      border: 2px solid #33B5E5;
       background-color: #fff;
+    }
+
+    .slider-bar {
+      height: 6px;
+      border-radius: 3px;
+      background-color: #33B5E5;
     }
   }
 </style>
