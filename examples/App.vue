@@ -45,7 +45,11 @@
     <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList">
     </hx-album>
 
-    <hx-pagination :total="100" :page-size="10" :current-page.sync="currentPage" @current-change="currentPageChange"></hx-pagination>
+    <hx-pagination 
+      :total="100" :page-size="10" 
+      :current-page.sync="currentPage" 
+      @current-change="currentPageChange">
+    </hx-pagination>
   </div >
   
 </template>

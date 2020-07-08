@@ -1,25 +1,3 @@
-<!--
-<template>
-  <div class="pagination">
-    <i class="iconfont up-icon pagination-icon" @click="currentPageChange(1)">&#xe697;</i>
-    <div :class="[
-      'pagination-item',
-      `${currentPage == index ? 'selected' : ''}`
-      ]" 
-      v-for="index in pageTotal" :key="index"
-      @click="$emit('update:current-page', index)">
-      {{index}}
-    </div>
-    <i class="iconfont up-icon pagination-icon" @click="currentPageChange(2)">&#xe629;</i>
-    <span class="run-target">
-      前往
-      <input type="number" v-model="targetPage" :min="1" :max="pageTotal">
-      页
-    </span>
-    <span class="total-number">共{{total}}条</span>
-  </div>
-</template>
--->
 <script>
 const layoutString = 'prev, pager, next, jumper, total'
 const template = {
@@ -28,12 +6,13 @@ const template = {
   pager: function (h) { 
     return (
       Array.apply(null, {length: this.pageTotal}).map((item, index) => {
+        index ++
         return (
           <div class={[
           'pagination-item',
           `${this.currentPage == index ? 'selected' : ''}`
           ]}
-          onClick={ () => this.$emit('update:current-page', index) }>
+          onClick={ () => this.currentPageChange(3, index) }>
           {index}
         </div>
         )
@@ -80,6 +59,11 @@ export default {
     }
   },
 
+  watch: {
+    targetPage (newVal) {
+      this.currentPageChange(3, Number(newVal))
+    }
+  },
   computed: {
     // 总页数
     pageTotal () {
@@ -108,15 +92,18 @@ export default {
   methods: {
     /**
      * 切换当前页
-     * @param {Number} type 1: 上一页 2: 下一页
+     * @param {Number} type 1: 上一页 2: 下一页 3:指定页面
+     * @param {Number} pageCode 指定页面页码
      */
-    currentPageChange (type = 1) {
+    currentPageChange (type = 1, pageCode) {
       let { currentPage } = this
       if (type == 1) currentPage = -- currentPage
       if (type == 2) currentPage = ++ currentPage
-      if (currentPage > 1 && currentPage <= this.pageTotal) {
+      if (type == 3) currentPage = pageCode
+      if (currentPage >= 1 && currentPage <= this.pageTotal) {
         this.$emit('update:current-page', currentPage)
         this.$emit('current-change', currentPage)
+        this.targetPage = currentPage
       }
     }
   }
