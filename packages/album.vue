@@ -42,6 +42,7 @@
 <script>
 import windowUtils from './vague-window-utils'
 import imagePreview from './image-preview'
+import { debounce } from './js/utils'
 export default {
   name: 'hxAlbum',
   components: {
@@ -79,8 +80,8 @@ export default {
   },
 
   watch: {
-    type () {
-      this.$emit('classChange', this.type)
+    classId () {
+      this.$emit('classChange', this.classId)
     },
 
     classList: {
@@ -91,6 +92,17 @@ export default {
     }
   },
 
+  created () {
+    // 双击选中图片
+    this.selImage = debounce((imageItem, type) => {
+      if (type == 2) this.$set(imageItem, 'selected', !imageItem.selected)
+      if (type == 1) {
+        this.curImage = imageItem 
+        this.imagePreviewVisible = true
+      }
+    }, 200, this)
+  },
+
   methods: {
     // 选择文件
     selImageChange (event) {
@@ -98,13 +110,13 @@ export default {
     },
 
     // 双击图片选中
-    selImage (imageItem, type) {
-      if (type == 2) this.$set(imageItem, 'selected', !imageItem.selected)
-      if (type == 1) {
-        this.curImage = imageItem 
-        this.imagePreviewVisible = true
-      }
-    },
+    // selImage (imageItem, type) {
+    //   if (type == 2) this.$set(imageItem, 'selected', !imageItem.selected)
+    //   if (type == 1) {
+    //     this.curImage = imageItem 
+    //     this.imagePreviewVisible = true
+    //   }
+    // },
 
     // 删除图片
     deleteImage () {

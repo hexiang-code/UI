@@ -9,6 +9,7 @@ import liveRem from './live-rem/live2d-rem.vue'
 import hxSwitch from './switch.vue'
 import slider from './slider.vue'
 import album from './album.vue'
+import pagination from './pagination.vue'
 import './css/animation.css'
 import './css/live2d.css'
 import './css/globalStyle.scss'
@@ -28,7 +29,8 @@ const elementArray = [
   canvasBg,
   hxSwitch,
   slider,
-  album
+  album,
+  pagination
 ]
 
 const install = function (vue) {

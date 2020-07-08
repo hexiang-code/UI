@@ -44,6 +44,8 @@
 
     <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList">
     </hx-album>
+
+    <hx-pagination :total="100" :page-size="10" :current-page.sync="currentPage" @current-change="currentPageChange"></hx-pagination>
   </div >
   
 </template>
@@ -160,9 +162,10 @@ export default {
       isShowLoadAnimation: true,
       switchVal: false,
       sliderVal: 9,
-      albumVisible: true,
+      albumVisible: false,
       imageList: imageList.concat(imageList),
-      classList
+      classList,
+      currentPage: 1
     }
   },
 
@@ -194,6 +197,10 @@ export default {
 
     nodeChange (node) {
       console.log(node)
+    },
+
+    currentPageChange (curPage) {
+      console.log(`当前在第${curPage}页`)
     }
   }
 }

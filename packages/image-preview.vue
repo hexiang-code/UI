@@ -134,8 +134,8 @@ export default {
     }
 
     .up-image:active, .down-image:active  {
-      width: 200px;
-      transition: width .5s;
+      transform: scale(1.5);
+      transition: transform .5s;
     }
     .down-image {
       position: absolute;
