@@ -266,5 +266,52 @@ switchRight | 开关右边插槽
 value / v-model | 	绑定值 | Number | - | - | 是
 max | 最大值 | Number | - | - | 是
 min | 最小值 | String | - | - | 是
+-----------
+#### hxAlbum： 相册组件
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+visible | 	开关（支持.sync） | Boolean | true/false | - | 否
+ismodal | 是否需要幕布背景 | Boolean | true/false  | - | 否
+imageList | 图片或视频信息数组(imageItem见下表) | Array | - | - | 是
+accept | 文件上传是接收的文件烈性 | String | - | image/jpeg,image/png,video/mp4
+classList | 相册分类数组(classItem 见下表) | Array | - | - | 是
+###### imageItem
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+id | 资源id | Number | - | - | 是
+type | 资源类型 | String | image/video | - | 是
+recourseName | 资源名称 | String | - | - | 是
+recourseUrl | 资源地址 | String | - | - | 是
 
+###### classList
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+id | 分类id | Number | - | - | 是
+className | 分类名称 | String | - | - | 是
+
+##### event
+事件名|说明|参数|返回值类型
+--|:--:|:--:|--:
+classChange | 相册分类切换事件 | 相册分类id | void
+fileChange | 上传文件时文件列表 |文件数据 | void
+deleteImage | 删除图片回调 | 当前选中图片数组 | void
+confirm | 确认选中的图片 | 当前选中图片数组 | void
+
+##### slot
+name | 说明
+--|:--:|:--
+albumFooter | 相册底部按钮区域插槽
+
+-----------
+#### hxImagePreview:全屏预览图片
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+visible | 	开关（支持.sync） | Boolean | true/false | - | 否
+resource | 当前展示的图片或视频 | Object | - | - | 是
+resourceList | 当前资源列表 | Array | - | - | 否
+
+##### event
+事件名|说明|参数|返回值类型
+--|:--:|:--:|--:
+previewImageChange | 当前图片改变事件 | 新的资源信息 | void
 

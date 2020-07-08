@@ -1,6 +1,6 @@
 {
   "name": "codehe-ui",
-  "version": "1.1.65",
+  "version": "1.1.71",
   "private": false,
   "main": "lib/codeheUi.umd.min.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "core-js": "^3.4.4",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "scss-loader": "0.0.1",
     "vue": "^2.6.10"

@@ -1,0 +1,51 @@
+  @import './_globalStyle';
+  ::-webkit-scrollbar {
+    width: 10px; /*对垂直流动条有效*/
+    height: 10px; /*对水平流动条有效*/
+  }
+  
+  /*定义滚动条的轨道颜色、内阴影及圆角*/
+  ::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 3px;
+  }
+  
+  
+  /*定义滑块颜色、内阴影及圆角*/
+  ::-webkit-scrollbar-thumb{
+    border-radius: 7px;
+    background-color: $theme-color;
+  }
+  
+  /*定义两端按钮的样式*/
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  /*定义右下角汇合处的样式*/
+  ::-webkit-scrollbar-corner {
+    background:khaki;
+  }
+
+  body {
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+  }
+
+
+
+  /* 动画 */
+
+  @keyframes twinkle {
+    0%, 100% {
+      transform: scale(1);
+      opacity: .6;
+    }
+
+    50% {
+      transform: scale(1.5);
+      opacity: 1;
+    }
+  }

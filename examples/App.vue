@@ -41,6 +41,9 @@
       <hx-slider v-model="sliderVal" :toFixed="1" :max="10" :min="8"></hx-slider>
       {{sliderVal}}
     </div>
+
+    <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList">
+    </hx-album>
   </div >
   
 </template>
@@ -94,6 +97,56 @@ const tree = {
     }
   ]
 }
+
+const imageList = [
+          {
+            id: 1,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+          },
+          {
+            id: 2,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'http://localhost:3000/assets/kafeidou/songshu.jpg'
+          },
+          {
+            id: 3,
+            type: 'video',
+            resourceName: '测试图片',
+            resourceUrl: 'http://localhost:3000/assets/kafeidou/start-background-video.mp4'
+          },
+          {
+            id: 4,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+          },
+          {
+            id: 5,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+          },
+          {
+            id: 6,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+          }
+        ]
+
+const classList = [
+  {
+    id: 1,
+    className: '图片'
+  },
+  {
+    id: 2,
+    className: '视频'
+  }
+]
 // import backgroundVideo from 'backgroundVideo'
 export default {
   name: 'app',
@@ -106,7 +159,10 @@ export default {
       isShowCheckBox: false,
       isShowLoadAnimation: true,
       switchVal: false,
-      sliderVal: 9
+      sliderVal: 9,
+      albumVisible: true,
+      imageList: imageList.concat(imageList),
+      classList
     }
   },
 
@@ -137,7 +193,7 @@ export default {
     },
 
     nodeChange (node) {
-      // console.log(node)
+      console.log(node)
     }
   }
 }
