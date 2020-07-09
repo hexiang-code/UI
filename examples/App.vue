@@ -42,11 +42,11 @@
       {{sliderVal}}
     </div>
 
-    <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList">
+    <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList" @onReachBottom="albumReachBottom">
     </hx-album>
 
     <hx-pagination 
-      :total="100" :page-size="10" 
+      :total="totalPage" :page-size="10" 
       :current-page.sync="currentPage" 
       @current-change="currentPageChange">
     </hx-pagination>
@@ -166,10 +166,11 @@ export default {
       isShowLoadAnimation: true,
       switchVal: false,
       sliderVal: 9,
-      albumVisible: false,
+      albumVisible: true,
       imageList: imageList.concat(imageList),
       classList,
-      currentPage: 1
+      currentPage: 1,
+      totalPage: 10
     }
   },
 
@@ -205,6 +206,10 @@ export default {
 
     currentPageChange (curPage) {
       console.log(`当前在第${curPage}页`)
+    },
+    
+    albumReachBottom () {
+      console.log('图片库要到底啦')
     }
   }
 }

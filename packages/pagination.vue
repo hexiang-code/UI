@@ -5,15 +5,14 @@ const template = {
   prev: function (h) { return <i class="iconfont up-icon pagination-icon" onClick={() => this.currentPageChange(1)}>&#xe697;</i> },
   pager: function (h) { 
     return (
-      Array.apply(null, {length: this.pageTotal}).map((item, index) => {
-        index ++
+      this.pagerList.map((item, index) => {
         return (
           <div class={[
           'pagination-item',
-          `${this.currentPage == index ? 'selected' : ''}`
+          `${this.currentPage == item ? 'selected' : ''}`
           ]}
-          onClick={ () => this.currentPageChange(3, index) }>
-          {index}
+          onClick={ () => this.currentPageChange(3, item, index) }>
+          {item}
         </div>
         )
       })
@@ -24,7 +23,7 @@ const template = {
     return (
       <span class="run-target">
         前往&nbsp;
-        <input type="number" vModel={this.targetPage} min={1} max={this.pageTotal} />
+        <input type="number" value={this.targetPage} onInput={val => this.currentPageChange(3, Number(val))} min={1} max={this.pagerTotal} />
         &nbsp;页
       </span>
     )
@@ -56,20 +55,58 @@ export default {
         return layoutArray instanceof Array && layoutArray.every(item => layoutString.indexOf(item) > -1)
       },
       default: layoutString
-    }
-  },
+    },
 
-  watch: {
-    targetPage (newVal) {
-      this.currentPageChange(3, Number(newVal))
+    pagerCount: {
+      type: Number,
+      validator: function (value) {
+        return value >=5 && value <= 21 && value % 2 === 1
+      }, 
+      default: 5,
     }
   },
   computed: {
     // 总页数
-    pageTotal () {
+    pagerTotal () {
       return Math.ceil(this.total / this.pageSize)
     },
 
+    // 页码列表
+    pagerList () {
+      return this.getPagerList()
+      // get () {
+      //   let pagerList = Array.apply(null, {length: Math.ceil(this.total / this.pageSize)}).map((item, index) => ++index)
+      //   let lastPager = pagerList[pagerList.length - 1]
+      //   let firstPager = pagerList[0]
+      //   let { pagerCount, currentPage } = this
+      //   let offset = (pagerCount - 1) / 2
+      //   let offsetLeftVal = currentPage - offset > firstPager ? currentPage - offset : firstPager
+      //   let offsetRightVal = currentPage + offset > lastPager ? lastPager : currentPage + offset
+      //   let pagers = pagerList
+      //   const getIndex = val => pagerList.findIndex(item => item == val)
+      //   if (pagerList.length <= pagerCount) return pagerList
+      //   if (offsetLeftVal > pagerList[2] && offsetRightVal < pagerList[pagerList.length - 2]) {
+      //     pagers = pagerList.slice(getIndex(offsetLeftVal), offsetRightVal)
+      //     pagers.unshift('...')
+      //     pagers.unshift(1)
+      //     pagers.push('...')
+      //     pagers.push(lastPager)
+      //   }
+      //   if (offsetLeftVal < pagerList[2] && lastPager > currentPage + offsetRightVal) {
+      //     pagers = pagerList.slice(0, pagerCount)
+      //     pagers.push('...')
+      //     pagers.push(lastPager)
+      //   }
+      //   if ((offsetRightVal) >= pagerList[pagerList.length - 2] && firstPager < currentPage - offsetLeftVal) {
+      //     pagers = pagerList.slice(getIndex(lastPager - pagerCount))
+      //     pagers.unshift('...')
+      //     pagers.unshift(1)
+      //   }
+      //   return pagers
+      // }
+    },
+
+    // 分页布局
     layoutArray () {
       return this.layout.split(',')
     }
@@ -95,16 +132,70 @@ export default {
      * @param {Number} type 1: 上一页 2: 下一页 3:指定页面
      * @param {Number} pageCode 指定页面页码
      */
-    currentPageChange (type = 1, pageCode) {
-      let { currentPage } = this
+    currentPageChange (type = 1, pageCode, index) {
+      let { currentPage, pagerCount } = this
       if (type == 1) currentPage = -- currentPage
       if (type == 2) currentPage = ++ currentPage
-      if (type == 3) currentPage = pageCode
-      if (currentPage >= 1 && currentPage <= this.pageTotal) {
+      if (type == 3) {
+        if (pageCode !== '...') currentPage = pageCode
+        if (pageCode == '...') {
+          let currentPageIndex = this.pagerList.findIndex(item => item == currentPage)
+          if (index > currentPageIndex) currentPage = currentPage + pagerCount
+          if (index < currentPageIndex) currentPage = currentPage - pagerCount
+        }
+      }
+      if (currentPage >= 1 && currentPage <= this.pagerTotal) {
         this.$emit('update:current-page', currentPage)
         this.$emit('current-change', currentPage)
         this.targetPage = currentPage
+        // this.limitPagerCount()
       }
+    },
+
+    // 计算页码列表
+    getPagerList () {
+      let pagerList = Array.apply(null, {length: Math.ceil(this.total / this.pageSize)}).map((item, index) => ++index)
+      let { pagerCount, currentPage } = this
+      let currentPageIndex = pagerList.findIndex(item => item == currentPage)
+      // const getIndex = value => pagerList.findIndex(item => item == value)
+      let firstPager = pagerList[0], 
+          lastPager = pagerList[pagerList.length - 1]
+          // lastPagerIndex = getIndex(lastPager),
+          // firstPagerIndex = getIndex(firstPager)
+      let offset = (pagerCount - 1) / 2 // 偏移量
+      // let offsetLeftIndex = currentPageIndex - offset > firstPagerIndex ? currentPageIndex - offset : firstPagerIndex
+      // let offsetRightIndex = currentPageIndex + offset > lastPagerIndex ? lastPagerIndex : currentPageIndex + offset
+      let offsetLeftIndex = currentPageIndex - offset
+      let offsetRightIndex = currentPageIndex + offset
+
+      // let pages = pagerList.slice(offsetLeftIndex, pagerCount + 1)
+      let pages
+      if (offsetLeftIndex <= 0 && offsetRightIndex > pagerList.length - 1) {
+        pages = pagerList.slice(0)
+      } else if (offsetLeftIndex <= 0 && offsetRightIndex <= pagerList.length - 1) { 
+        pages = pagerList.slice(0, pagerCount + 1)
+      } else if (offsetLeftIndex > 0 && offsetRightIndex > pagerList.length - 1) {
+        pages = pagerList.slice(pagerList.length - 1 - pagerCount, pagerList.length)
+      } else if (offsetLeftIndex > 0 && offsetRightIndex < pagerList.length) {
+        pages = pagerList.slice(offsetLeftIndex, offsetRightIndex + 1)
+      }
+
+
+      if (pages[0] > firstPager + 1) {
+        pages.unshift('...')
+        pages.unshift(firstPager)
+      }
+      if (pages[0] == firstPager + 1) {
+        pages.unshift(firstPager)
+      }
+      if (pages[pages.length - 1] < lastPager - 1) {
+        pages.push('...')
+        pages.push(lastPager) 
+      }
+      if (pages[pages.length - 1] == lastPager - 1) {
+        pages.push(lastPager)
+      }
+      return pages
     }
   }
 }
@@ -125,6 +216,7 @@ export default {
       border-radius: 2px;
       background-color: #f4f4f5;
       font-weight: 700;
+      cursor: pointer;
     }
 
     .pagination-icon {

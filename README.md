@@ -275,6 +275,8 @@ ismodal | 是否需要幕布背景 | Boolean | true/false  | - | 否
 imageList | 图片或视频信息数组(imageItem见下表) | Array | - | - | 是
 accept | 文件上传是接收的文件烈性 | String | - | image/jpeg,image/png,video/mp4
 classList | 相册分类数组(classItem 见下表) | Array | - | - | 是
+multiple | 是否允许多选文件 | Boolean | true/false | false
+reachBottomRate | 触底比例（大于0 小于1） | Number | - | -
 ###### imageItem
 参数|说明|类型|可选值|默认值|是否必填
 --|:--:|:--:|--:|:--:|:--
@@ -296,11 +298,13 @@ classChange | 相册分类切换事件 | 相册分类id | void
 fileChange | 上传文件时文件列表 |文件数据 | void
 deleteImage | 删除图片回调 | 当前选中图片数组 | void
 confirm | 确认选中的图片 | 当前选中图片数组 | void
-
+onReachBottom | 触底函数 | - | void
+ 
 ##### slot
 name | 说明
 --|:--:|:--
 albumFooter | 相册底部按钮区域插槽
+pagination | 分页插槽
 
 -----------
 #### hxImagePreview:全屏预览图片
@@ -314,4 +318,17 @@ resourceList | 当前资源列表 | Array | - | - | 否
 事件名|说明|参数|返回值类型
 --|:--:|:--:|--:
 previewImageChange | 当前图片改变事件 | 新的资源信息 | void
+----------
+#### pagination: 分页组件
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+page-size | 	分页数量 | Number | - | 10 | 否
+current-page | 当前页（支持.sync） | Number | - | 1 | 否
+total | 资源总数 | Number | - | 1 | 否
+layout | 组件布局，子组件名用逗号分隔 | String | prev/pager/next/jumper/total | prev, pager, next, jumper, total | 否
+pager-count | 页码按钮的数量，当总页数超过该值时会折叠 | Number | - | 5 | 否
 
+##### event
+事件名|说明|参数|返回值类型
+--|:--:|:--:|--:
+current-change | 当前页码改变事件 | 新的页码 | void

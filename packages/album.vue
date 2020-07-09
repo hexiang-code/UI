@@ -5,7 +5,7 @@
         <div class="left">
           <div :class="classId == item.id ? 'selected' : ''" @click="classId = item.id" v-for="item in classList" :key="item.id">{{item.className}}</div>
         </div>
-        <div class="right">
+        <div class="right" @scroll="albumScroll" ref="albumList">
           <div class="image-item" title="单击预览，双击选中图片" v-for="(item, index) in imageList" :key="index" @click="selImage(item, 1)" @dblclick="selImage(item, 2)">
             <img v-if="item.type == 'image'" :src="item.resourceUrl">
             <video
@@ -18,6 +18,7 @@
             <p>{{item.resourceName}}</p>
             <i class="iconfont sel-icon selected" v-show="item.selected">&#xe8aa;</i>
           </div>
+          <slot name="pagination"></slot>
         </div>
       </div>
       <template #windowFoot>
@@ -27,7 +28,7 @@
           <button @click="deleteImage">删除</button>
           <div class="insert-image">
             <button @click="$refs.selImage.click()">上传文件</button>
-            <input ref="selImage" v-show="false" type="file" @change="selImageChange($event)" :accept="accept" />
+            <input ref="selImage" v-show="false" type="file" @change="selImageChange($event)" :accept="accept" :multiple="multiple"/>
           </div>
         </div>
         </slot>
@@ -42,7 +43,7 @@
 <script>
 import windowUtils from './vague-window-utils'
 import imagePreview from './image-preview'
-import { debounce } from './js/utils'
+import { debounce, throttle } from './js/utils'
 export default {
   name: 'hxAlbum',
   components: {
@@ -69,6 +70,17 @@ export default {
     classList: {
       type: Array,
       required: true
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    reachBottomRate: {
+      type: Number,
+      validator: function (value) {
+        return value > 0 && value < 1
+      },
+      default: 0.1
     }
   },
   data () {
@@ -101,6 +113,14 @@ export default {
         this.imagePreviewVisible = true
       }
     }, 200, this)
+
+    // 监听窗口滚动事件
+    this.albumScroll = throttle($event => {
+      let { scrollTop, clientHeight, scrollHeight } = $event.target
+      if ((scrollTop + clientHeight) >= (1 - 0.1) * scrollHeight) {
+        this.$emit('onReachBottom')
+      }
+    }, 500, this)
   },
 
   methods: {
@@ -154,11 +174,12 @@ export default {
       height: 500px;
 
       .left {
-        width: 60px;
         height: 100%;
+        padding: 0 5px;
         border-right: 1px solid $theme-color;
 
         div {
+          width: 60px;
           padding: 5px;
           cursor: pointer;
           margin-top: 10px;
