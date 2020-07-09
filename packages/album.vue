@@ -152,6 +152,7 @@ export default {
     confirm () {
       let selectedImages = this.imageList.filter(item => item.selected)
       this.$emit('confirm', selectedImages)
+      this.$emit('update:visible', false)
     },
 
     // 预览图片切换
