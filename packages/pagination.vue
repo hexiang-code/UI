@@ -74,36 +74,6 @@ export default {
     // 页码列表
     pagerList () {
       return this.getPagerList()
-      // get () {
-      //   let pagerList = Array.apply(null, {length: Math.ceil(this.total / this.pageSize)}).map((item, index) => ++index)
-      //   let lastPager = pagerList[pagerList.length - 1]
-      //   let firstPager = pagerList[0]
-      //   let { pagerCount, currentPage } = this
-      //   let offset = (pagerCount - 1) / 2
-      //   let offsetLeftVal = currentPage - offset > firstPager ? currentPage - offset : firstPager
-      //   let offsetRightVal = currentPage + offset > lastPager ? lastPager : currentPage + offset
-      //   let pagers = pagerList
-      //   const getIndex = val => pagerList.findIndex(item => item == val)
-      //   if (pagerList.length <= pagerCount) return pagerList
-      //   if (offsetLeftVal > pagerList[2] && offsetRightVal < pagerList[pagerList.length - 2]) {
-      //     pagers = pagerList.slice(getIndex(offsetLeftVal), offsetRightVal)
-      //     pagers.unshift('...')
-      //     pagers.unshift(1)
-      //     pagers.push('...')
-      //     pagers.push(lastPager)
-      //   }
-      //   if (offsetLeftVal < pagerList[2] && lastPager > currentPage + offsetRightVal) {
-      //     pagers = pagerList.slice(0, pagerCount)
-      //     pagers.push('...')
-      //     pagers.push(lastPager)
-      //   }
-      //   if ((offsetRightVal) >= pagerList[pagerList.length - 2] && firstPager < currentPage - offsetLeftVal) {
-      //     pagers = pagerList.slice(getIndex(lastPager - pagerCount))
-      //     pagers.unshift('...')
-      //     pagers.unshift(1)
-      //   }
-      //   return pagers
-      // }
     },
 
     // 分页布局

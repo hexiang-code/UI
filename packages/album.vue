@@ -18,19 +18,23 @@
             <p>{{item.resourceName}}</p>
             <i class="iconfont sel-icon selected" v-show="item.selected">&#xe8aa;</i>
           </div>
-          <slot name="pagination"></slot>
         </div>
       </div>
       <template #windowFoot>
         <slot name="albumFooter">
-        <div class="album-buttom" v-if="!$slots.albumFooter">
-          <button @click="confirm">确认</button>
-          <button @click="deleteImage">删除</button>
-          <div class="insert-image">
-            <button @click="$refs.selImage.click()">上传文件</button>
-            <input ref="selImage" v-show="false" type="file" @change="selImageChange($event)" :accept="accept" :multiple="multiple"/>
+          <div class="album-buttom" v-if="!$slots.albumFooter">
+            <div class="left">
+              <slot name="pagination"></slot>
+            </div>
+            <div class="right">
+              <button @click="confirm">确认</button>
+              <button @click="deleteImage">删除</button>
+              <div class="insert-image">
+                <button @click="$refs.selImage.click()">上传文件</button>
+                <input ref="selImage" v-show="false" type="file" @change="selImageChange($event)" :accept="accept" :multiple="multiple"/>
+              </div>
+            </div>
           </div>
-        </div>
         </slot>
       </template>
     </window-utils>
@@ -214,6 +218,10 @@ export default {
           position: relative;
           width: 30%;
           padding-bottom: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           
           .selected {
             position: absolute;
@@ -240,18 +248,27 @@ export default {
 
     .album-buttom {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       margin-top: 20px;
-
-      button {
-        padding: 10px;
-        margin-right: 10px;
-        border-radius: 5px;
-        background-color: $theme-color;
-        border: none;
-        color: #fff;
-        outline: none;
+      .left {
+        flex-shrink: 0;
       }
+
+      .right {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        button {
+          padding: 10px;
+          margin-right: 10px;
+          border-radius: 5px;
+          background-color: $theme-color;
+          border: none;
+          color: #fff;
+          outline: none;
+        }
+      }
+      
     }
   }
 
