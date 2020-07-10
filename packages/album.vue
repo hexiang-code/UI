@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="album">
+  <div class="album">
     <window-utils :isShowWindow.sync="visible" title="相册" width="800px" :curtain="visible && ismodal" @curtainClose="$emit('update:visible', false)">
       <div class="album-main">
         <div class="left">
@@ -133,15 +133,6 @@ export default {
       this.$emit('fileChange', event.target.files)
     },
 
-    // 双击图片选中
-    // selImage (imageItem, type) {
-    //   if (type == 2) this.$set(imageItem, 'selected', !imageItem.selected)
-    //   if (type == 1) {
-    //     this.curImage = imageItem 
-    //     this.imagePreviewVisible = true
-    //   }
-    // },
-
     // 删除图片
     deleteImage () {
       let selectedImages = this.imageList.filter(item => item.selected)
@@ -218,7 +209,7 @@ export default {
         .image-item {
           position: relative;
           width: 30%;
-          padding-bottom: 20px;
+          padding-bottom: 30px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -236,12 +227,15 @@ export default {
           }
 
           p {
+            position: absolute;
+            bottom: 10px;
             margin: 0;
             padding: 0;
+            width: 100%;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-            font-size: 14px;
+            font-size: 14px; 
           }
         }
       }

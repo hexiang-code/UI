@@ -1,24 +1,21 @@
 <template>
-  <div class="window" v-if="isShowWindow">
-    <curtain v-if="curtain" :isShow="isShowWindow" @curtainClose="$emit('curtainClose')"></curtain>
-    <div
-      v-if="isReady"
-      class="window-utils"
-      :class="{ 'window-utils_open': isShowWindow, 'window-utils_closed': !isShowWindow }"
-      :style="windowSizeText"
-    >
-      <slot name="windowTitle">
-        <div class="window-title" v-if="!$slots.windowTitle">{{title}}</div>
-      </slot>
-      <slot></slot>
-      <slot name="windowFoot">
-        <div class="window-foot" v-if="!$slots.windowFoot">
-          <button @click="comfirm">confirm</button>
-          <button @click="cancel">cancel</button>
-        </div>
-      </slot>
+  <transition name="window">
+    <div class="window" v-if="isShowWindow">
+      <curtain v-if="curtain" :isShow="isShowWindow" @curtainClose="$emit('curtainClose')"></curtain>
+      <div class="window-utils" :style="windowSizeText">
+        <slot name="windowTitle">
+          <div class="window-title" v-if="!$slots.windowTitle">{{title}}</div>
+        </slot>
+        <slot></slot>
+        <slot name="windowFoot">
+          <div class="window-foot" v-if="!$slots.windowFoot">
+            <button @click="comfirm">confirm</button>
+            <button @click="cancel">cancel</button>
+          </div>
+        </slot>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 <script>
 import curtain from "./bg-curtain";
@@ -63,10 +60,6 @@ export default {
       return `width: ${this.width};${
         this.height ? "height: " + this.height : ""
       };${this.top ? "top: " + this.top : ""}`;
-    },
-
-    isReady() {
-      return this.isShowWindow;
     }
   },
 
@@ -85,20 +78,20 @@ export default {
       this.$emit("update:isShowWindow", false);
     }
   }
-};
+}
 </script>
 <style scoped lang="scss">
 @import './css/_globalStyle.scss';
 .window {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1001;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .window-title {
   height: 40px;
@@ -109,66 +102,21 @@ export default {
 
 .window-utils {
   position: relative;
-  visibility: hidden;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-//   align-items: center;
   border-radius: 10px;
   backdrop-filter: blur(10px) brightness(110%);
   z-index: 1001;
-  // transform: translateY(-100%);
 }
 
-.window-utils_open {
-  visibility: visible;
-  animation: open-animation 1s ease-out forwards;
-
-  @keyframes open-animation {
-    0% {
-      opacity: 0;
-      transform: translateY(-100%);
-    }
-
-    30% {
-      opacity: 0.5;
-      transform: translateY(-60%);
-    }
-
-    50% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    70% {
-      opacity: 1;
-      transform: translateY(-15%);
-    }
-
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+.window-enter-active {
+  animation: dialog-open 1s ease-out forwards;
 }
 
-.window-utils_closed {
-  visibility: visible;
-  animation: close-animation 0.5s ease-in forwards;
-
-  @keyframes close-animation {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translateY(-100%);
-      opacity: 0;
-      visibility: hidden;
-    }
-  }
+.window-leave-active {
+  animation: dialog-close 0.5s ease-in forwards;
 }
 
 .window-foot {

@@ -3,7 +3,7 @@
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo resource="https://api.hexiangzone.cn/assets/kafeidou/start-background-video.mp4" poster="https://api.hexiangzone.cn/assets/kafeidou/startBg.png" @videoLoaded="isShowLoadAnimation = false" @posterLoaded="isShowLoadAnimation = false"></backgroundVideo> -->
     <!-- <load-animation :isShow.sync="isShowLoadAnimation"></load-animation> -->
-    <windowUtils title="你好" :isShowWindow.sync="visiable">
+    <windowUtils title="你好" :isShowWindow.sync="visiable" :curtain="true">
       <template>
         <window-utils-item label="书签名">
           <input v-model="filterValue" type="text">
@@ -28,7 +28,8 @@
         </template>
       </tree>
     </drawer>
-    <button @dblclick="visiable = !visiable" v-drag>开启</button>
+    <button @click="visiable = !visiable" v-drag>弹框</button>
+    <button @click="albumVisible = !albumVisible" v-drag>相册</button>
     <input />
     <button @click="checkbox">checkBox</button>
     <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem> -->
@@ -108,7 +109,7 @@ const imageList = [
           {
             id: 1,
             type: 'image',
-            resourceName: '测试图片',
+            resourceName: '测试图片测试图片测试图片测试图片测试图片测试图片测试图片测试图片测试图片测试图片',
             resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
           },
           {
@@ -166,7 +167,7 @@ export default {
       isShowLoadAnimation: true,
       switchVal: false,
       sliderVal: 9,
-      albumVisible: true,
+      albumVisible: false,
       imageList: imageList.concat(imageList),
       classList,
       currentPage: 1,
