@@ -104,8 +104,9 @@ export default {
       bottom: 100px;
       left: 0;
       width: 100%;
-      height: 100px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       img, video {
         width: 100px;

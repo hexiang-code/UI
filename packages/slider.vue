@@ -18,12 +18,18 @@ export default {
     max: {
       required: true,
       type: Number,
+      validator: function (value) {
+        return value > 0
+      }, 
       default: 100
     },
 
     min: {
       required: true,
       type: Number,
+      validator: function (value) {
+        return value > 0
+      },
       default: 0
     },
     toFixed: {
@@ -33,41 +39,53 @@ export default {
   },
   data () {
     return {
-      percent: 0, // 百分比
-      initOffSet: 0 // 滑块初始化距离
+      sliderWidth: 0, // 滑块轨道总宽度
+      sliderBlockWidth: 0 // 滑块宽度
     }
   },
 
-  watch: {
-    percent () {
-      this.$emit('input', this.percent)
+
+  computed: {
+    initOffSet: {
+      get () {
+        let initOffSet = 0
+        let sliderW = this.sliderWidth - this.sliderBlockWidth
+        initOffSet = sliderW * ((this.value -this.min) / (this.max - this.min))
+        this.computeOffset(initOffSet)
+        return initOffSet
+      },
+
+      set (val) {
+        this.computeOffset(val)
+      }
     }
   },
 
   mounted () {
-    let sliderW = (this.$refs.slider.clientWidth + this.$refs.slider.clientLeft) - (this.$refs.sliderBlock.clientWidth + this.$refs.sliderBlock.clientLeft)
-    this.initOffSet = sliderW * ((this.value -this.min) / (this.max - this.min))
+    this.sliderWidth = this.$refs.slider.clientWidth + this.$refs.slider.clientLeft
+    this.sliderBlockWidth = this.$refs.sliderBlock.clientWidth + this.$refs.sliderBlock.clientLeft
     this.computeOffset(this.initOffSet)
   },
 
   methods: {
     // 滑块移动的回调函数
     moveCb ({x}) {
-      let sliderW = (this.$refs.slider.clientWidth + this.$refs.slider.clientLeft) - (this.$refs.sliderBlock.clientWidth + this.$refs.sliderBlock.clientLeft)
-      this.percent = Number(new Number((x/sliderW) * (this.max - this.min)).toFixed(this.toFixed))  + this.min
-      this.computeOffset(x)
+      this.initOffSet = x
     },
 
     // 点击滑动轨迹
     clickSlider ($event) {
       this.initOffSet = $event.offsetX
-      this.computeOffset(this.initOffSet)
-      console.log($event)
     },
 
     // 滑块偏移量
     computeOffset (moveX) {
-      this.$refs.sliderBar.style.width = `${moveX}px`
+      if (this.$refs.sliderBar) this.$refs.sliderBar.style.width = `${moveX}px`
+      let sliderW = this.sliderWidth - this.sliderBlockWidth
+      let percent = Number(new Number((moveX/sliderW) * (this.max - this.min) + this.min).toFixed(this.toFixed))
+      percent = percent >= this.min ? percent : this.min 
+      percent = percent <= this.max ? percent : this.max 
+      this.$emit('input', percent)
     }
   }
 }

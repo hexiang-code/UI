@@ -38,7 +38,7 @@
         <span slot="switchRight">11</span>
         <span slot="switchLeft">你好</span>
       </hx-switch>
-      <hx-slider v-model="sliderVal" :toFixed="1" :max="10" :min="8"></hx-slider>
+      <hx-slider v-model="sliderVal" :toFixed="2" :max="1" :min="0.8"></hx-slider>
       {{sliderVal}}
     </div>
 
