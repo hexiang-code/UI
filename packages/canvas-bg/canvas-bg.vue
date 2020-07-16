@@ -6,7 +6,7 @@
 
 <script>
 let canvasCtx, canvas, cycleArray
-let curHz = 0, baseHz = 60
+let curHz = 0, baseHz = 60, animation
 export default {
   name: 'CanvasBg',
   props: {
@@ -83,7 +83,7 @@ export default {
           this.drawCycle(randomX, randomY, R, color, alpha)
         }
       })
-      requestAnimationFrame(this.update)
+      animation = requestAnimationFrame(this.update)
     },
 
     // 新建圆形配置
@@ -119,6 +119,10 @@ export default {
     randomColor () {
       return this.colorArray[this.random(this.colorArray)] || '#000'
     }
+  },
+
+  destroyed () {
+    cancelAnimationFrame(animation)
   }
 }
 </script>

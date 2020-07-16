@@ -30,10 +30,11 @@
     </drawer>
     <button @click="visiable = !visiable" v-drag>弹框</button>
     <button @click="albumVisible = !albumVisible" v-drag>相册</button>
+    <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
     <input />
     <button @click="checkbox">checkBox</button>
     <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem> -->
-    <!-- <canvas-bg></canvas-bg> -->
+    <canvas-bg v-if="canvasVisiable"></canvas-bg>
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
         <span slot="switchRight">11</span>
@@ -171,7 +172,8 @@ export default {
       imageList: imageList.concat(imageList),
       classList,
       currentPage: 1,
-      totalPage: 10
+      totalPage: 10,
+      canvasVisiable: true
     }
   },
 

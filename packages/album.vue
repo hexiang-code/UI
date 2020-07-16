@@ -235,7 +235,8 @@ export default {
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-            font-size: 14px; 
+            font-size: 14px;
+            text-align: center;
           }
         }
       }
