@@ -1,7 +1,7 @@
 <template>
   <transition name="window">
     <div class="window" v-if="isShowWindow">
-      <curtain v-if="curtain" :isShow="isShowWindow" @curtainClose="$emit('curtainClose')"></curtain>
+      <curtain v-if="curtain" :isShow="isShowWindow" @curtainClose="cancel"></curtain>
       <div class="window-utils" :style="windowSizeText">
         <slot name="windowTitle">
           <div class="window-title" v-if="!$slots.windowTitle">{{title}}</div>
@@ -92,6 +92,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: auto;
 }
 .window-title {
   height: 40px;
