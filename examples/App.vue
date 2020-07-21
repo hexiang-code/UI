@@ -33,8 +33,8 @@
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem> -->
-    <canvas-bg v-if="canvasVisiable"></canvas-bg>
+    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
+    <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
         <span slot="switchRight">11</span>
@@ -52,6 +52,12 @@
       :current-page.sync="currentPage" 
       @current-change="currentPageChange">
     </hx-pagination>
+
+    <!-- <div class="menu">
+      <ul class="menu-list" >
+        <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
+      </ul>
+    </div> -->
   </div >
   
 </template>
@@ -155,6 +161,17 @@ const classList = [
     className: '视频'
   }
 ]
+const meauList = [
+  {
+    name: '回到顶部'
+  },
+  {
+    name: '你好'
+  },
+  {
+    name: '测试'
+  }
+]
 // import backgroundVideo from 'backgroundVideo'
 export default {
   name: 'app',
@@ -173,7 +190,8 @@ export default {
       classList,
       currentPage: 1,
       totalPage: 10,
-      canvasVisiable: true
+      canvasVisiable: true,
+      meauList
     }
   },
 
@@ -218,7 +236,21 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+
+@mixin cycle ($rotate: 1) {
+  animation: cycle-#{$rotate} .5s linear forwards;
+  @keyframes cycle-#{$rotate} {
+    from {
+      opacity: 0;
+      transform: rotate(0);
+    }
+    to {
+      opacity: 1;
+      transform: rotate(($rotate - 1) * 30deg);
+    }
+  }
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -275,4 +307,71 @@ export default {
     clip: rect(22px, 40px, 40px, 0)
   }
 }
+
+.menu {
+  position: fixed;
+  top: 300px;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  margin-left: -250px;
+
+  .menu-list {
+    list-style: none;
+
+    li {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      padding: 5px;
+      border-radius: 50%;
+      background-color: #91bef0;
+      color: #fff;
+      transform-origin: 0 200px;
+    }
+    li:nth-child(1) {
+      @include cycle(1);
+    }
+    li:nth-child(2) {
+      @include cycle(2);
+    }
+    li:nth-child(3) {
+      @include cycle(3);
+    }
+    li:nth-child(4) {
+      @include cycle(4);
+    }
+    li:nth-child(5) {
+      @include cycle(5);
+    }
+    li:nth-child(6) {
+      @include cycle(6);
+    }
+    li:nth-child(7) {
+      @include cycle(7);
+    }
+    li:nth-child(8) {
+      @include cycle(8);
+    }
+    li:nth-child(9) {
+      @include cycle(9);
+    }
+    li:nth-child(10) {
+      @include cycle(10);
+    }
+    li:nth-child(11) {
+      @include cycle(11);
+    }
+    li:nth-child(12) {
+      @include cycle(12);
+    }
+  }
+}
+
+
+
+
 </style>

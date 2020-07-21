@@ -1,5 +1,5 @@
 <template>
-  <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="liveRemMouseover">
+  <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="meauListVisibel = true" @mouseleave="meauListVisibel = false">
     <transition-group name="liveRem__slow-in" tag="div">
         <div class="message" key="message" v-show="isShowLeimu && message.length > 0" v-html="message"></div>
         <!-- <canvas id="live2d" key="live2d" class="live2d" ref="canvasRem" v-show="isShowLeimu"></canvas> -->
@@ -13,7 +13,7 @@
           </div>
         </div>
         <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
-        <div class="live-rem__icon-list" key="live-rem__icon-list" v-show="isShowLeimu">
+        <!-- <div class="live-rem__icon-list" key="live-rem__icon-list" v-show="isShowLeimu">
           <img class="live-rem__icon" id="liveRemInfo" @click="changeTexture" src="../image/info.png" />
           <img class="live-rem__icon" id="liveRemTalk" @click.stop="isTalk = !isTalk" src="../image/talk.png"/>
           <img class="live-rem__icon" id="liveRemMusic" src="../image/music.png"/>
@@ -24,7 +24,12 @@
           <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p4qbp15idv6bl55h381moha.mp3" type="hidden">
           <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p8frrlmf1aled1e14m56una.mp3" type="hidden">
           <input id="duType" value="douqilai,l2d_caihong" type="hidden">
-        </div>
+        </div> -->
+        <ul class="menu-list" key="meauList" v-show="meauListVisibel">
+          <li v-for="item in meaus" :key="item.id" :title="item.name" @click.stop="menuClick(item)">
+            <i v-html="item.icon" class="iconfont menu-icon"></i>
+          </li>
+        </ul>
     </transition-group>
     <div v-if="!isShowLeimu" class="live-rem__call" @click="isShowLeimu = true">
       <div class="live-rem__call-text">召唤蕾姆</div>
@@ -33,7 +38,7 @@
 </template>
 
 <script>
-import { MESSAGE, textureConfig } from './config'
+import { MESSAGE, textureConfig, meauList } from './config'
 import { startLive2d, loadAction } from './live2d-resource/startLive2d'
 let messageTimer // 提示计时器
 let canvas // live2d画布
@@ -62,6 +67,12 @@ export default {
     manualLoad: {
       type: Boolean,
       default: false
+    },
+
+    // 菜单
+    meauList: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
@@ -72,7 +83,14 @@ export default {
       isShowLeimu: true, // 是否展示蕾姆
       talkAbout: '', // 聊天内容
       setIn: '', // 循环定时器
-      curTexture: {} // 当前皮肤信息
+      curTexture: {}, // 当前皮肤信息
+      meauListVisibel: false // 菜单列表展示开关
+    }
+  },
+
+  computed: {
+    meaus () {
+      return this.meauList.concat(meauList)
     }
   },
   created () {
@@ -112,13 +130,13 @@ export default {
     },
 
     // 鼠标移动
-    liveRemMouseover ($event) {
-      let { mouseover: mouseoverMsg } = MESSAGE
-      if ($event.target && $event.target.id  && Array.isArray(mouseoverMsg)) {
-        let { text } = mouseoverMsg.find(item => item.selectorId == $event.target.id) || {}
-        this.showToast({text})
-      }
-    },
+    // liveRemMouseover () {
+    //   // let { mouseover: mouseoverMsg } = MESSAGE
+    //   // if ($event.target && $event.target.id  && Array.isArray(mouseoverMsg)) {
+    //   //   let { text } = mouseoverMsg.find(item => item.selectorId == $event.target.id) || {}
+    //   //   this.showToast({text})
+    //   // }
+    // },
 
     // 点击事件
     liveRemClick($event) {
@@ -237,12 +255,34 @@ export default {
         this.$refs.liveRem.style.height = `${height}px`
       }
       startLive2d(canvas, texture)
+    },
+
+    // 点击菜单
+    menuClick (menuItem) {
+      let { type } = menuItem
+      if (type == 'changeTexture') this.changeTexture()
+      else if (type == 'communication') this.isTalk = !this.isTalk
+      else if (type == 'goTop') window.scrollTo(0, 0)
+      else this.$emit('menuListClick', menuItem)
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  @mixin cycle ($rotate: 1) {
+    animation: cycle-#{$rotate} .5s linear forwards;
+    @keyframes cycle-#{$rotate} {
+      from {
+        opacity: 0;
+        transform: rotate(0);
+      }
+      to {
+        opacity: 1;
+        transform: rotate(($rotate - 1) * 30deg);
+      }
+    }
+  }
   .live-rem {
     position: fixed;
     left: 10px;
@@ -427,6 +467,34 @@ export default {
     background-color: rgba(74, 59, 114,0.9);
     color:#fff;
     cursor: pointer;
+  }
+
+  .menu-list {
+    position: absolute;
+    top: -10px;
+    left: 70px;
+    z-index: 4;
+    list-style: none;
+
+    li {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+      padding: 5px;
+      border-radius: 50%;
+      color: #fff;
+      transform-origin: 0 150px;
+      cursor: pointer;
+    }
+
+    @for $i from 1 through 3 {
+      li:nth-child(#{$i}) {
+        @include cycle($i);
+      }
+    }
   }
 
 </style>

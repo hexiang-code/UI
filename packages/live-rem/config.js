@@ -98,10 +98,29 @@ const textureConfig = [
     }
 ]
 
+const meauList = [
+    {
+        name: '想看换装play嘛',
+        icon: '&#xe695;',
+        type: 'changeTexture'
+    },
+    {
+        name: '要和我聊天嘛',
+        icon: '&#xe62b;',
+        type: 'communication'
+    },
+    {
+        name: '回到顶部',
+        icon: '&#xe635;',
+        type: 'goTop'
+    }
+]
+
 
 export {
 //   IMAGESRCPATH,
   HOMEPATH,
   MESSAGE,
-  textureConfig
+  textureConfig,
+  meauList
 }
