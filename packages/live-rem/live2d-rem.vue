@@ -474,6 +474,7 @@ export default {
     top: -10px;
     left: 70px;
     z-index: 4;
+    width: 50px;
     list-style: none;
 
     li {
