@@ -1,7 +1,7 @@
 <template>
   <transition name="window">
     <div class="window" v-if="isShowWindow">
-      <curtain v-if="curtain" :isShow="isShowWindow" @curtainClose="cancel"></curtain>
+      <curtain v-if="curtain" :isShow="isShowWindow" @curtainClose="curtainClose"></curtain>
       <div class="window-utils" :style="windowSizeText">
         <slot name="windowTitle">
           <div class="window-title" v-if="!$slots.windowTitle">{{title}}</div>
@@ -76,6 +76,11 @@ export default {
     // 点击取消事件
     cancel() {
       this.$emit("update:isShowWindow", false);
+    },
+
+    curtainClose () {
+      this.cancel()
+      this.$emit('curtainClose', false)
     }
   }
 }

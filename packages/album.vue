@@ -1,6 +1,6 @@
 <template>
   <div class="album">
-    <window-utils :isShowWindow.sync="visible" title="相册" width="800px" :curtain="visible && ismodal" @curtainClose="$emit('update:visible', false)">
+    <window-utils :isShowWindow="visible" title="相册" width="800px" :curtain="visible && ismodal" @curtainClose="$emit('update:visible', false)">
       <div class="album-main">
         <div class="left">
           <div :class="classId == item.id ? 'selected' : ''" @click="classId = item.id" v-for="item in classList" :key="item.id">{{item.className}}</div>
