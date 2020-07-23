@@ -1,7 +1,3 @@
-export const directives = vue => {
-  close(vue)
-  drag(vue)
-}
 
 const close = vue => {
   vue.directive('close', (el, binding, vnode) => {
@@ -68,6 +64,7 @@ const drag = vue => {
     )
 }
 
+
 /**
  * 限制目标在父节点里移动
  * @param {Number} translate 移动距离
@@ -109,4 +106,9 @@ const hasParent = (curNode, parent) => {
     }
   }
   return false;
+}
+
+export const directives = vue => {
+  close(vue)
+  drag(vue)
 }
