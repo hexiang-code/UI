@@ -8,21 +8,23 @@ class ImageLazy {
   }
 
   bind (el) {
-    this.intersectionObserver = new IntersectionObserver(this.imageVisibel.bind(this))
-    this.intersectionObserver.observe(el)
-    this.dataSrc = el.src
-    el.src = this.options.loading
-    this.status = 'loading'
-    this.el = el
+    if (window && window.IntersectionObserver) {
+      this.intersectionObserver = new IntersectionObserver(this.imageVisibel.bind(this))
+      this.intersectionObserver.observe(el)
+      this.dataSrc = el.src
+      el.src = this.options.loading
+      this.status = 'loading'
+      this.el = el
+    }
   }
 
-  // unbind () {
-  //   this.intersectionObserver.disconnect()
-  //   this.options = null
-  //   this.intersectionObserver = null
-  //   this.dataSrc = null
-  //   this.status = null
-  // }
+  unbind () {
+    this.intersectionObserver.disconnect()
+    this.options = null
+    this.intersectionObserver = null
+    this.dataSrc = null
+    this.status = null
+  }
 
   imageVisibel (entries) {
     let [ entry ] = entries
