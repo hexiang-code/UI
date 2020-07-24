@@ -1,3 +1,4 @@
+import ImageLazy from './imageLazy'
 
 const close = vue => {
   vue.directive('close', (el, binding, vnode) => {
@@ -64,6 +65,16 @@ const drag = vue => {
     )
 }
 
+// 图片懒加载  （待优化）
+const imgLazy = vue => {
+  vue.directive('imgLazy', {
+    bind: function () {
+      let imageLazy = new ImageLazy()
+      imageLazy.bind(...arguments)
+    }
+    // unbind: imageLazy.unbind
+  })
+}
 
 /**
  * 限制目标在父节点里移动
@@ -111,4 +122,5 @@ const hasParent = (curNode, parent) => {
 export const directives = vue => {
   close(vue)
   drag(vue)
+  imgLazy(vue)
 }
