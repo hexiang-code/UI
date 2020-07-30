@@ -14,7 +14,7 @@
           </div>
           <div class="live-rem__confirm__buttom">
             <div class="btn live-rem__confirm__confirm" ref="liveRemConfirmBtn">确认</div>
-            <div class="btn live-rem__confirm__cancel" ref="liveRemCancelBtn">取消</div>
+            <div class="btn live-rem__confirm__cancel" ref="liveRemCancelBtn" v-if="confirm.showCancelButton">取消</div>
           </div>
         </div>
       </div>
@@ -94,7 +94,6 @@ export default {
         title: '提示',  // 标题
         message: '', // 消息内容
         showCancelButton: true, // 取消按钮
-        showConfirmButton: true // 确定按钮
       } 
       
     }
@@ -191,7 +190,7 @@ export default {
             resolve()
             this.confirm.visibel = false
           })
-          this.$refs.liveRemCancelBtn.addEventListener('click', () => {
+          this.$refs.liveRemCancelBtn && this.$refs.liveRemCancelBtn.addEventListener('click', () => {
             reject({
               text: '用户拒绝',
               type: 'userReject'

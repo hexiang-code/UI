@@ -100,6 +100,11 @@ textureConfig = [
 ]
 
 ```
+##### event
+事件名|说明|参数|返回值类型
+--|:--:|:--:|--:
+showToast | 弹出提示 | function(text, time, type)<br> text: 提示内容，time: 持续时间,type: live2d展示动作类型(见textureConfig.toastAction) | void
+showConfirm | 弹出二次确认弹框 | function(options)<br> options.title: 提示标题 <br> options.message 提示内容 <br> options.showCancelButton 是否展示取消按钮 <br> | void 
 **********
 #### background-video：视频背景
 ##### attribute
