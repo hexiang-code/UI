@@ -90,7 +90,7 @@ export default {
       meauListVisibel: false, // 菜单列表展示开关
       // 确认弹框
       confirm: {
-        visibel: true, // 确认弹框开关
+        visibel: false, // 确认弹框开关
         title: '提示',  // 标题
         message: '', // 消息内容
         showCancelButton: true, // 取消按钮
