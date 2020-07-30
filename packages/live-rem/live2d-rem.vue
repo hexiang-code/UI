@@ -95,6 +95,7 @@ export default {
   },
   created () {
     this.checkSleep()
+    this.lovelyRemind()
   },
 
   mounted () {
@@ -195,26 +196,24 @@ export default {
       const remindFn = () => {
           let curhours = new Date().getHours()
           let curMinutes = new Date().getMinutes()
+          let notifyText = ''
           if (curhours % 1 === 0 && curMinutes == 0) {
-            this.showToast({
-              text: `${curhours}点了哟，休息一下保护下眼睛吧`,
-              type: 'lovely'
-            })
+            notifyText = `${curhours}点了哟，休息一下保护下眼睛吧`
           }
           if (curhours == 9 && curMinutes == 0) {
-            this.showToast({
-              text: '亲爱哒，到上班时间咯，要好好加油哟',
-              type: 'lovely'
-            })
+            notifyText = '亲爱哒，到上班时间咯，要好好加油哟'
           } else if (curhours == 12 && curMinutes == 0) {
-            this.showToast({
-              text: '亲爱哒，午休啦，要好好吃饭哟',
-              type: 'lovely'
-            })
+            notifyText = '亲爱哒，午休啦，要好好吃饭哟'
           } else if (curhours == 18 && curMinutes == 0) {
-            this.showToast({
-              text: '亲爱哒，下班啦，回家路上注意安全哟',
-              type: 'lovely'
+            notifyText = '亲爱哒，下班啦，回家路上注意安全哟'
+          }
+          this.showToast({
+            text: notifyText,
+            type: 'lovely'
+          })
+          if (window.Notification && Notification.permission !== "denied") {
+            Notification.requestPermission(() => {
+              new Notification('来自蕾姆的关怀', { body: notifyText })
             })
           }
       }
