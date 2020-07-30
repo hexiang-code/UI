@@ -1,35 +1,38 @@
 <template>
-  <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick" @mouseover="meauListVisibel = true" @mouseleave="meauListVisibel = false">
+  <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick">
     <transition-group name="liveRem__slow-in" tag="div">
-        <div class="message" key="message" v-show="isShowLeimu && message.length > 0" v-html="message"></div>
-        <!-- <canvas id="live2d" key="live2d" class="live2d" ref="canvasRem" v-show="isShowLeimu"></canvas> -->
-        <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
-          <div class="live-rem__name">
-            <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />
+      <div class="message" key="message" v-show="isShowLeimu && (message.length > 0 || confirm.visibel)">
+        <span v-show="message.length > 0 && !confirm.visibel">{{message}}</span>
+        <div class="live-rem__confirm" v-if="confirm.visibel">
+          <div class="live-rem__confirm__title">
+            <span>{{ confirm.title }}</span>
+            <i class="iconfont message-icon close-icon">&#xe604;</i>
           </div>
-          <div class="live-rem__talk-box">
-            <input v-model="talkAbout" name="talk" type="text" class="live-rem__name-input live-rem__talk-input" autocomplete="off" placeholder="要和我聊什么呀？"/>
-            <div class="live-rem__send-tips" @click="liveRemTalk">发送</div>
+          <div class="live-rem__confirm__content">
+            <i class="iconfont message-icon warn-icon">&#xe606;</i>
+            <span>{{confirm.message}}</span>
+          </div>
+          <div class="live-rem__confirm__buttom">
+            <div class="btn live-rem__confirm__confirm" ref="liveRemConfirmBtn">确认</div>
+            <div class="btn live-rem__confirm__cancel" ref="liveRemCancelBtn">取消</div>
           </div>
         </div>
-        <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
-        <!-- <div class="live-rem__icon-list" key="live-rem__icon-list" v-show="isShowLeimu">
-          <img class="live-rem__icon" id="liveRemInfo" @click="changeTexture" src="../image/info.png" />
-          <img class="live-rem__icon" id="liveRemTalk" @click.stop="isTalk = !isTalk" src="../image/talk.png"/>
-          <img class="live-rem__icon" id="liveRemMusic" src="../image/music.png"/>
-          <img class="live-rem__icon" id="liveRemGuiChu" @click.stop="isGuiChu = !isGuiChu" src="../image/youdu.png"/>
-          <img class="live-rem__icon" id="liveRemHide" @click="isShowLeimu = false" src="../image/quite.png"/>
-          <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
-          <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
-          <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p4qbp15idv6bl55h381moha.mp3" type="hidden">
-          <input name="live2dBGM" value="https://t1.aixinxi.net/o_1c52p8frrlmf1aled1e14m56una.mp3" type="hidden">
-          <input id="duType" value="douqilai,l2d_caihong" type="hidden">
-        </div> -->
-        <ul class="menu-list" key="meauList" v-show="meauListVisibel">
-          <li v-for="item in meaus" :key="item.id" :title="item.name" @click.stop="menuClick(item)">
-            <i v-html="item.icon" class="iconfont menu-icon"></i>
-          </li>
-        </ul>
+      </div>
+      <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
+        <div class="live-rem__name">
+          <input name="name" type="text" class="live-rem__name-input" autocomplete="off" placeholder="你的名字" />
+        </div>
+        <div class="live-rem__talk-box">
+          <input v-model="talkAbout" name="talk" type="text" class="live-rem__name-input live-rem__talk-input" autocomplete="off" placeholder="要和我聊什么呀？"/>
+          <div class="live-rem__send-tips" @click="liveRemTalk">发送</div>
+        </div>
+      </div>
+      <input name="live_talk" key="live_talk" id="live_talk" value="1" type="hidden" />
+      <ul class="menu-list" key="meauList" v-show="meauListVisibel">
+        <li v-for="item in meaus" :key="item.id" :title="item.name" @click.stop="menuClick(item)">
+          <i v-html="item.icon" class="iconfont menu-icon"></i>
+        </li>
+      </ul>
     </transition-group>
     <div v-if="!isShowLeimu" class="live-rem__call" @click="isShowLeimu = true">
       <div class="live-rem__call-text">召唤蕾姆</div>
@@ -84,7 +87,16 @@ export default {
       talkAbout: '', // 聊天内容
       setIn: '', // 循环定时器
       curTexture: {}, // 当前皮肤信息
-      meauListVisibel: false // 菜单列表展示开关
+      meauListVisibel: false, // 菜单列表展示开关
+      // 确认弹框
+      confirm: {
+        visibel: true, // 确认弹框开关
+        title: '提示',  // 标题
+        message: '', // 消息内容
+        showCancelButton: true, // 取消按钮
+        showConfirmButton: true // 确定按钮
+      } 
+      
     }
   },
 
@@ -93,6 +105,7 @@ export default {
       return this.meauList.concat(meauList)
     }
   },
+
   created () {
     this.checkSleep()
     this.lovelyRemind()
@@ -130,17 +143,8 @@ export default {
       this.changeTexture()
     },
 
-    // 鼠标移动
-    // liveRemMouseover () {
-    //   // let { mouseover: mouseoverMsg } = MESSAGE
-    //   // if ($event.target && $event.target.id  && Array.isArray(mouseoverMsg)) {
-    //   //   let { text } = mouseoverMsg.find(item => item.selectorId == $event.target.id) || {}
-    //   //   this.showToast({text})
-    //   // }
-    // },
-
     // 点击事件
-    liveRemClick($event) {
+    liveRemClick ($event) {
       let { click } = MESSAGE
       if ($event.target && $event.target.id  && Array.isArray(click)) {
         let { text } = click.find(item => item.selectorId == $event.target.id) || {}
@@ -173,6 +177,34 @@ export default {
       messageTimer = setTimeout(() => {
         this.message = ''
       }, time)
+    },
+
+    // 选择提示
+    showConfirm (options) {
+      return new Promise((resolve, reject) => {
+        let {
+          message,
+        } = options
+        if (message) {
+          this.confirm = Object.assign({}, this.confirm, options, { visibel: true })
+          this.$refs.liveRemConfirmBtn.addEventListener('click', () => {
+            resolve()
+            this.confirm.visibel = false
+          })
+          this.$refs.liveRemCancelBtn.addEventListener('click', () => {
+            reject({
+              text: '用户拒绝',
+              type: 'userReject'
+            })
+            this.confirm.visibel = false
+          })
+          return
+        }
+        reject({
+          text: '参数不合法',
+          type: 'paramError'
+        })
+      })
     },
 
     // 随机获取数组中的一项
@@ -245,6 +277,9 @@ export default {
       canvas = document.createElement('canvas')
       canvas.setAttribute('id', 'live2d')
       canvas.setAttribute('class', 'live2d')
+      // @mouseover="meauListVisibel = true" @mouseleave="meauListVisibel = false"
+      canvas.addEventListener('mouseover', () => this.meauListVisibel = true)
+      canvas.addEventListener('mouseleave', () => this.meauListVisibel = false)
       if (width) {
         canvas.width = width
         this.$refs.liveRem.style.width = `${width}px`
@@ -268,7 +303,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @mixin cycle ($rotate: 1) {
     animation: cycle-#{$rotate} .5s linear forwards;
     @keyframes cycle-#{$rotate} {
@@ -440,7 +475,7 @@ export default {
     margin: auto;
     padding: 5px;
     width: 250px;
-    max-height: 100px;
+    // max-height: 100px;
     text-align: center;
     border: 2px solid rgba(75,127,199,0.9);
     border-radius: 5px;
@@ -494,6 +529,49 @@ export default {
       li:nth-child(#{$i}) {
         @include cycle($i);
       }
+    }
+  }
+
+  .live-rem__confirm {
+    width: 100%;
+
+    .live-rem__confirm__title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+
+      .close-icon {
+        width: 14px;
+        height: 14px;
+        font-size: 14px;
+      }
+    }
+
+    .live-rem__confirm__content {
+      display: flex;
+      justify-content: flex-start;
+      padding: 10px;
+      font-size: 14px;
+      
+      .warn-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+        font-size: 16px;
+      }
+    }
+
+    .live-rem__confirm__buttom {
+      display: flex;
+      justify-content: flex-end;
+
+      .btn {
+        padding: 5px 15px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
     }
   }
 

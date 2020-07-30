@@ -10,8 +10,9 @@ import hxSwitch from './switch.vue'
 import slider from './slider.vue'
 import album from './album.vue'
 import pagination from './pagination.vue'
+import hxMessage from './meesage.vue'
 import './css/animation.css'
-import './css/live2d.css'
+// import './css/live2d.css'
 import './css/globalStyle.scss'
 import './css/baseIcon.scss'
 // import '../public/live-model/rem/rem.json'
@@ -30,7 +31,8 @@ const elementArray = [
   hxSwitch,
   slider,
   album,
-  pagination
+  pagination,
+  hxMessage
 ]
 
 const install = function (vue) {

@@ -52,7 +52,11 @@
       :current-page.sync="currentPage" 
       @current-change="currentPageChange">
     </hx-pagination>
-
+    <!-- <hx-message :visibel.sync="hxMessageVisibel">
+      <template #title>
+        <span>你好</span>
+      </template>
+    </hx-message> -->
     <!-- <div class="menu">
       <ul class="menu-list" >
         <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
@@ -191,7 +195,8 @@ export default {
       currentPage: 1,
       totalPage: 10,
       canvasVisiable: true,
-      meauList
+      meauList,
+      hxMessageVisibel: true
     }
   },
 
@@ -201,7 +206,11 @@ export default {
   //   }
   // },
   mounted () {
-    // this.$refs.rem.showToast({text: '你好'})
+    // this.$refs.rem.showConfirm({message: '你好'}).then(() => {
+    //   console.log('用户点击同意')
+    // }).catch(err => {
+    //   console.log(err)
+    // })
   },
 
   methods: {
