@@ -180,12 +180,13 @@ export default {
 
     // 选择提示
     showConfirm (options) {
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         let {
           message,
         } = options
         if (message) {
           this.confirm = Object.assign({}, this.confirm, options, { visibel: true })
+          await this.$nextTick()
           this.$refs.liveRemConfirmBtn.addEventListener('click', () => {
             resolve()
             this.confirm.visibel = false
