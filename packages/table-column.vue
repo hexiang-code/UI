@@ -15,6 +15,7 @@
   </th>
 </template>
 <script>
+import store from './store'
 export default {
   name: 'hxTableColumn',
   props: {
@@ -59,7 +60,7 @@ export default {
   },
 
   mounted () {
-    this.$store.commit('setTableColumn', {
+    store.commit('setTableColumn', {
       columnContent: this.$scopedSlots.columnContent,
       ...this.$props,
       uid: this._uid
@@ -81,7 +82,7 @@ export default {
   },
 
   destroyed () {
-    this.$store.commit('delTableColumn', this._uid)
+    store.commit('delTableColumn', this._uid)
   }
 }
 </script>

@@ -1,6 +1,7 @@
 
 
 <script>
+import store from './store'
 export default {
   name: 'hxTable',
   props: {
@@ -57,7 +58,7 @@ export default {
 
   computed: {
     columns () {
-      return this.$store.getters.getTableColumn
+      return store.getters.getTableColumn
     }
   },
 

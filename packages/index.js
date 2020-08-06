@@ -1,5 +1,4 @@
 // 导出install方法
-import store from './store'
 import backgroundVideo from './background-video.vue'
 import windowUtils from './vague-window-utils'
 import drawer from './drawer.vue'
@@ -46,7 +45,6 @@ const install = function (vue) {
     directives(vue)
   })
   createMouseAnimation()
-  vue.prototype.$store = store
 }
 
 if (!window && typeof window.Vue !== 'undefined' ) install(window.Vue)
