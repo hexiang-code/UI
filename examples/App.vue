@@ -63,7 +63,7 @@
       </ul>
     </div> -->
 
-    <hx-table :data="hardwareArray">
+    <hx-table :tableData="hardwareArray">
       <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props">
         <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
           <div>{{cpuTemp}}</div>

@@ -4,7 +4,7 @@
 export default {
   name: 'hxTable',
   props: {
-    data: {
+    tableData: {
       type: Array,
       required: true
     },
@@ -30,7 +30,7 @@ export default {
             </tr>
           </thead>
           { 
-           this.data && this.data.map((dataItem, index) => {
+           this.tableData && this.tableData.map((dataItem, index) => {
               return (
                 <tr class={["table-row", { 'cell_stripe': this.stripe && (index + 1) % 2 === 0 }]}>
                   {
