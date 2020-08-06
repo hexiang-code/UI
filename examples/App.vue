@@ -33,7 +33,7 @@
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
+    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem> -->
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
@@ -62,6 +62,15 @@
         <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
       </ul>
     </div> -->
+
+    <hx-tabel :data="hardwareArray">
+      <hx-tabel-column :props="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props">
+        <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
+          <div>{{cpuTemp}}</div>
+        </template>
+        <!-- <template #header="{ header: {props} = {} }">{{props}}</template> -->
+      </hx-tabel-column>
+    </hx-tabel>
   </div >
   
 </template>
@@ -176,6 +185,58 @@ const meauList = [
     name: '测试'
   }
 ]
+const hardwareTitle = [
+  {
+    props: 'cpuTemp',
+    label: 'cpu温度'
+  },
+  {
+    props: 'cpuUseage',
+    label: 'cpu使用率'
+  },
+  {
+    props: 'cpuMaxClocks',
+    label: 'cpu最大频率'
+  },
+  {
+    props: 'cpuPowers',
+    label: 'cpu功耗'
+  },
+  {
+    props: 'diskTemp',
+    label: '硬盘温度'
+  },
+  {
+    props: 'diskUseage',
+    label: '硬盘使用率'
+  },
+  {
+    props: 'ssdDiskTemp',
+    label: '固态硬盘温度'
+  },
+  {
+    props: 'ssdDiskUseage',
+    label: '固态硬盘使用率'
+  },
+  {
+    props: 'memUseage',
+    label: '内存使用率'
+  }
+]
+let hardwareArray = [
+  {
+    cpuTemp: '38 °C',
+    cpuUseage: '40 %',
+    cpuMaxClocks: '3850 MHz',
+    cpuPowers: '40 W',
+    diskTemp: '40 °C',
+    diskUseage: '20 %',
+    ssdDiskTemp: '20 °C',
+    ssdDiskUseage: '50 %',
+    memUseage: '30 %'
+  }
+]
+hardwareArray = hardwareArray.concat(hardwareArray)
 // import backgroundVideo from 'backgroundVideo'
 export default {
   name: 'app',
@@ -196,7 +257,9 @@ export default {
       totalPage: 10,
       canvasVisiable: true,
       meauList,
-      hxMessageVisibel: true
+      hxMessageVisibel: true,
+      hardwareArray,
+      hardwareTitle
     }
   },
 

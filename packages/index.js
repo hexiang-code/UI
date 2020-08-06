@@ -1,4 +1,5 @@
 // 导出install方法
+import store from './store'
 import backgroundVideo from './background-video.vue'
 import windowUtils from './vague-window-utils'
 import drawer from './drawer.vue'
@@ -11,6 +12,8 @@ import slider from './slider.vue'
 import album from './album.vue'
 import pagination from './pagination.vue'
 import hxMessage from './meesage.vue'
+import hxTabel from './table.vue'
+import hxTabelColumn from './table-column.vue'
 import './css/animation.css'
 // import './css/live2d.css'
 import './css/globalStyle.scss'
@@ -32,7 +35,9 @@ const elementArray = [
   slider,
   album,
   pagination,
-  hxMessage
+  hxMessage,
+  hxTabel,
+  hxTabelColumn
 ]
 
 const install = function (vue) {
@@ -41,6 +46,7 @@ const install = function (vue) {
     directives(vue)
   })
   createMouseAnimation()
+  vue.prototype.$store = store
 }
 
 if (!window && typeof window.Vue !== 'undefined' ) install(window.Vue)

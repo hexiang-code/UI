@@ -14,7 +14,8 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "scss-loader": "0.0.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.8.3",
