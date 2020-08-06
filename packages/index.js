@@ -12,8 +12,8 @@ import slider from './slider.vue'
 import album from './album.vue'
 import pagination from './pagination.vue'
 import hxMessage from './meesage.vue'
-import hxTabel from './table.vue'
-import hxTabelColumn from './table-column.vue'
+import hxTable from './table.vue'
+import hxTableColumn from './table-column.vue'
 import './css/animation.css'
 // import './css/live2d.css'
 import './css/globalStyle.scss'
@@ -36,8 +36,8 @@ const elementArray = [
   album,
   pagination,
   hxMessage,
-  hxTabel,
-  hxTabelColumn
+  hxTable,
+  hxTableColumn
 ]
 
 const install = function (vue) {

@@ -1,6 +1,6 @@
 <template>
   <th>
-    <slot name="header" v-if="$scopedSlots.header" :header="{props}"></slot>
+    <slot name="header" v-if="$scopedSlots.header" :header="{prop}"></slot>
     <div :class="[
       'cell',
       {'cell_center': align === 'center'},
@@ -16,10 +16,10 @@
 </template>
 <script>
 export default {
-  name: 'hxTabelColumn',
+  name: 'hxTableColumn',
   props: {
     // 对应列内容字段名
-    props: {
+    prop: {
       type: String,
       required: true
     },
@@ -74,7 +74,7 @@ export default {
     clickSort (type) {
       if (this.sortable && this.$parent && this.$parent.$emit) {
         let sort = type == 1 ? 'asc' : 'desc'
-        this.$parent.$emit(this.props, sort)
+        this.$parent.$emit(this.prop, sort)
         this.sort = sort
       }
     }

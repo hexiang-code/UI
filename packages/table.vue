@@ -2,7 +2,7 @@
 
 <script>
 export default {
-  name: 'hxTabel',
+  name: 'hxTable',
   props: {
     data: {
       type: Array,
@@ -30,7 +30,7 @@ export default {
             </tr>
           </thead>
           { 
-           this.data.map((dataItem, index) => {
+           this.data && this.data.map((dataItem, index) => {
               return (
                 <tr class={["table-row", { 'cell_stripe': this.stripe && (index + 1) % 2 === 0 }]}>
                   {
@@ -68,8 +68,8 @@ export default {
     getColumnContent (row, column) {
       if (column.columnContent && typeof column.columnContent === 'function') {
         return column.columnContent(row)
-      } else if (column.props) {
-        return row[column.props] || '-'
+      } else if (column.prop) {
+        return row[column.prop] || '-'
       } else {
         return '-'
       }
