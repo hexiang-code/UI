@@ -75,7 +75,7 @@ export default {
     clickSort (type) {
       if (this.sortable && this.$parent && this.$parent.$emit) {
         let sort = type == 1 ? 'asc' : 'desc'
-        this.$parent.$emit(this.prop, sort)
+        this.$parent.$emit('sort-change', this.prop, sort)
         this.sort = sort
       }
     }

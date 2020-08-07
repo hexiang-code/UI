@@ -279,7 +279,7 @@ export default {
       canvas.setAttribute('class', 'live2d')
       // @mouseover="meauListVisibel = true" @mouseleave="meauListVisibel = false"
       canvas.addEventListener('mouseover', () => this.meauListVisibel = true)
-      canvas.addEventListener('mouseleave', () => this.meauListVisibel = false)
+      canvas.addEventListener('mouseleave', () => setTimeout(() => this.meauListVisibel = false, 3000))
       if (width) {
         canvas.width = width
         this.$refs.liveRem.style.width = `${width}px`

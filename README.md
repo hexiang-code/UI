@@ -98,7 +98,6 @@ textureConfig = [
         texture: '/live-model/rem-swim/neko.model.json'
     }
 ]
-
 ```
 ##### event
 事件名|说明|参数|返回值类型
@@ -332,8 +331,35 @@ current-page | 当前页（支持.sync） | Number | - | 1 | 否
 total | 资源总数 | Number | - | 1 | 否
 layout | 组件布局，子组件名用逗号分隔 | String | prev/pager/next/jumper/total | prev, pager, next, jumper, total | 否
 pager-count | 页码按钮的数量，当总页数超过该值时会折叠 | Number | - | 5 | 否
-
+--------------
 ##### event
 事件名|说明|参数|返回值类型
 --|:--:|:--:|--:
 current-change | 当前页码改变事件 | 新的页码 | void
+--------------
+
+#### hx-table: 表格组件
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+tableData | 显示的数据 | Array | - | - | 必填
+stripe | 是否斑马条纹表格 | Boolean | true/false | true | -
+--------------
+##### event
+事件名|说明|参数|返回值类型
+--|:--:|:--:|--:
+sort-change | 点击表格排序按钮触发的事件 | (prop, sort)<br>prop: 触发排序的列属性 <br>sort: 排序方式 asc: 升序, desc降序 | void
+
+------
+#### hx-table-column: 表格列组件
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+prop | 对应列内容的字段名 | String | - | - | 必填
+label | 对应列标题 | Sting | - | - | 必填
+sortable | 是否展示排序按钮 | Boolean | true/false | false | 否
+align | 文字对齐方式 | Sting | 'left'/'right'/'center' |left | 否
+
+##### Scoped slot
+name | 说明
+--|:--:|:--
+header | 头部插槽，参数为 { prop } 当前列属性
+columnContent | 内容插槽，参数为 { row } 当前行全部数据
