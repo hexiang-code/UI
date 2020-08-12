@@ -13,6 +13,7 @@ import pagination from './pagination.vue'
 import hxMessage from './meesage.vue'
 import hxTable from './table.vue'
 import hxTableColumn from './table-column.vue'
+import hxDatePicker from './date-picker/date-picker.vue'
 import './css/animation.css'
 // import './css/live2d.css'
 import './css/globalStyle.scss'
@@ -21,6 +22,7 @@ import './css/baseIcon.scss'
 import canvasBg from './canvas-bg/canvas-bg.vue'
 import { createMouseAnimation } from './js/mouse-animation'
 import { directives } from './js/directive'
+import { filters } from './js/filters'
 const elementArray = [
   backgroundVideo,
   windowUtils,
@@ -36,13 +38,15 @@ const elementArray = [
   pagination,
   hxMessage,
   hxTable,
-  hxTableColumn
+  hxTableColumn,
+  hxDatePicker
 ]
 
 const install = function (vue) {
   elementArray.forEach(item =>{
     vue.component(item.name, item)
     directives(vue)
+    filters(vue)
   })
   createMouseAnimation()
 }

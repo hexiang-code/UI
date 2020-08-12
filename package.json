@@ -1,6 +1,6 @@
 {
   "name": "codehe-ui",
-  "version": "1.2.21",
+  "version": "1.2.23",
   "private": false,
   "main": "lib/codeheUi.umd.min.js",
   "scripts": {

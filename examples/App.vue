@@ -33,7 +33,7 @@
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
+    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem> -->
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
@@ -63,14 +63,15 @@
       </ul>
     </div> -->
 
-    <hx-table :tableData="hardwareArray">
+    <!-- <hx-table :tableData="hardwareArray">
       <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props">
         <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
           <div>{{cpuTemp}}</div>
         </template>
-        <!-- <template #header="{ header: {props} = {} }">{{props}}</template> -->
+        <template #header="{ header: {props} = {} }">{{props}}</template>
       </hx-table-column>
-    </hx-table>
+    </hx-table> -->
+    <hx-date-picker @selectComplete="dateSelect"></hx-date-picker>
   </div >
   
 </template>
@@ -283,12 +284,14 @@ export default {
 
     checkbox () {
       this.isShowCheckBox = !this.isShowCheckBox
+      this.browerNotification()
       console.log(this.isShowCheckBox)
     },
 
     deleteBtn(item) {
       console.log('删除成功', item)
     },
+
     liveRemTalk(msg) {
       console.log(msg)
     },
@@ -303,6 +306,18 @@ export default {
     
     albumReachBottom () {
       console.log('图片库要到底啦')
+    },
+
+    browerNotification () {
+      if (window.Notification && Notification.permission !== "denied") {
+        Notification.requestPermission(() => {
+          new Notification('测试提示', { body: '你好', icon: 'https://api.hexiangzone.cn/assets/kafeidou/leimuAvatar.jpg' })
+        })
+      }
+    },
+
+    dateSelect (val) {
+      console.log(val)
     }
   }
 }

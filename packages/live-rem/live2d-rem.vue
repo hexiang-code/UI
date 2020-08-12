@@ -226,28 +226,29 @@ export default {
       let curM = new Date().getMinutes()
       let delay = 60 * 60 * 1000 - (curM * 60 * 1000 +  curS * 1000)
       const remindFn = () => {
-          let curhours = new Date().getHours()
-          let curMinutes = new Date().getMinutes()
-          let notifyText = ''
-          if (curhours % 1 === 0 && curMinutes == 0) {
-            notifyText = `${curhours}点了哟，休息一下保护下眼睛吧`
-          }
-          if (curhours == 9 && curMinutes == 0) {
-            notifyText = '亲爱哒，到上班时间咯，要好好加油哟'
-          } else if (curhours == 12 && curMinutes == 0) {
-            notifyText = '亲爱哒，午休啦，要好好吃饭哟'
-          } else if (curhours == 18 && curMinutes == 0) {
-            notifyText = '亲爱哒，下班啦，回家路上注意安全哟'
-          }
-          this.showToast({
-            text: notifyText,
-            type: 'lovely'
+        let curhours = new Date().getHours()
+        let curMinutes = new Date().getMinutes()
+        let notifyText = ''
+        if (curhours % 1 === 0 && curMinutes == 0) {
+          notifyText = `${curhours}点了哟，休息一下保护下眼睛吧`
+        }
+        if (curhours == 9 && curMinutes == 0) {
+          notifyText = '亲爱哒，到上班时间咯，要好好加油哟'
+        } else if (curhours == 12 && curMinutes == 0) {
+          notifyText = '亲爱哒，午休啦，要好好吃饭哟'
+        } else if (curhours == 18 && curMinutes == 0) {
+          notifyText = '亲爱哒，下班啦，回家路上注意安全哟'
+        }
+        this.showToast({
+          text: notifyText,
+          type: 'lovely'
+        })
+        console.log(notifyText)
+        if (window.Notification && Notification.permission !== "denied") {
+          Notification.requestPermission(() => {
+            new Notification('来自蕾姆的关怀', { body: notifyText, icon: 'https://api.hexiangzone.cn/assets/kafeidou/leimuAvatar.jpg' })
           })
-          if (window.Notification && Notification.permission !== "denied") {
-            Notification.requestPermission(() => {
-              new Notification('来自蕾姆的关怀', { body: notifyText })
-            })
-          }
+        }
       }
       setTimeout(() => { 
         remindFn()

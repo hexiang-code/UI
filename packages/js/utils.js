@@ -31,7 +31,49 @@ function throttle(fn, wait = 200, ctx = null) {
   }
 }
 
+function formatDate(formatText, timestamp = +new Date()) {
+  const _getFullDate = val => {
+    if (String(val).length < 2) {
+      return '0' + String(val)
+    } else {
+      return val
+    }
+  }
+  const replaceFn = (str, _target) => {
+    if (str.length == 2) return _getFullDate(_target)
+    else return _target
+  }
+  let targetDate = new Date(timestamp),
+  _targetYear = targetDate.getFullYear(),
+  _targetMonth = targetDate.getMonth() + 1,
+  _targetDay = targetDate.getDate(),
+  _targetHour = targetDate.getHours(),
+  _targetMinutes = targetDate.getMinutes(),
+  _targetSecond = targetDate.getSeconds(),
+  returnText = ''
+  returnText = formatText.replace(/Y+/g, function (str) {
+    return String(_targetYear).slice(String(_targetYear).length - str.length)
+  })
+  returnText = returnText.replace(/M+/g, function (str) {
+    return replaceFn(str, _targetMonth)
+  })
+  returnText = returnText.replace(/D+/g, function (str) {
+    return replaceFn(str, _targetDay)
+  })
+  returnText = returnText.replace(/H+/g, function (str) {
+    return replaceFn(str, _targetHour)
+  })
+  returnText = returnText.replace(/m+/g, function (str) {
+    return replaceFn(str, _targetMinutes)
+  })
+  returnText = returnText.replace(/s+/g, function (str) {
+    return replaceFn(str, _targetSecond)
+  })
+  return returnText
+}
+
 export {
   debounce,
-  throttle
+  throttle,
+  formatDate
 }
