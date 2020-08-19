@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@import './css/_globalStyle.scss';
 .login-input {
   display: flex;
   height: 60px;
@@ -57,7 +57,7 @@ export default {
   margin-right: 40px;
   text-align: right;
   font-weight: 700;
-  color: #1296db;
+  color: $theme-color;
 }
 
 .login-label__icon {

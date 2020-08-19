@@ -19,7 +19,13 @@
     render: function(h) {
       return (
         <div class="tree-main__body">
+          {
+            this.$parent.$scopedSlots.header ? this.$parent.$scopedSlots.header() : ''
+          }
           {this.$parent.createTree(h, this.tree.children)}
+          {
+            this.$parent.$scopedSlots.bottom ? this.$parent.$scopedSlots.bottom() : ''
+          }
         </div> 
       )
     }
@@ -177,8 +183,8 @@
             </transition>
             <a class="tree-main__title-text" style={ isExpandAll ? '' : 'display: none' } onClick={() => this.childNodeClick(childData)} title={childData[label]}>{childData[label]}</a>
             {
-              this.$scopedSlots.operation ? 
-                h('div', this.$scopedSlots.operation(childData)) : 
+              this.$scopedSlots.operation && isExpandAll ? 
+                this.$scopedSlots.operation(childData) : 
                 ''
             }
           </div>

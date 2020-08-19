@@ -11,15 +11,24 @@
         <window-utils-item label="书签名">
           <input v-model="filterValue" type="text">
         </window-utils-item>
-        <input />
       </template>
     </windowUtils>
-    <drawer :isShow.sync="testDrawer" des="" title='' :isModal="false">
+    <drawer :isShow.sync="testDrawer" :isModal="false">
       <input v-model="filterValue" @blur="blur"/>
       <div class="bookmarks-header__search" @dblclick ="deleteBtn">
         search
       </div>
       <tree :tree="tree" :isExpandAll="true" ref="tree" :isShowCheckBox="isShowCheckBox" @nodeChange="nodeChange">
+        <template #header>
+          <div>
+            头部
+          </div>
+        </template>
+        <template #bottom>
+          <div>
+            底部
+          </div>
+        </template>
         <template #operation="treeItem">
           <div class="operation-btn">
             <span>修改</span>
@@ -30,6 +39,7 @@
     </drawer>
     <button @click="visiable = !visiable" v-drag>弹框</button>
     <button @click="albumVisible = !albumVisible" v-drag>相册</button>
+    <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
     <input />
     <button @click="checkbox">checkBox</button>
@@ -245,7 +255,7 @@ export default {
     return {
       tree: tree,
       visiable: false,
-      testDrawer: false,
+      testDrawer: true,
       filterValue: '',
       isShowCheckBox: false,
       isShowLoadAnimation: true,

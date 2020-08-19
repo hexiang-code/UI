@@ -223,6 +223,8 @@ nodeChange | 点击复选框事件 | 当前节点数据, 选中的节点id数组
 name | 说明
 --|:--:|:--
 operation | 子树操作区域插槽，参数为当前节点数据
+header | 树组件头部区域
+bottom | 树组件底部区域
 **********
 #### vague-window-utils: 弹框组件
 ##### attribute

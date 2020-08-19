@@ -82,6 +82,7 @@ export default {
 <style scoped lang="scss">
   @import './css/_globalStyle.scss';
   .table-container {
+    position: relative;
     
     .table {
       width: 100%;
