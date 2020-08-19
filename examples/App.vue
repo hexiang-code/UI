@@ -18,7 +18,7 @@
       <div class="bookmarks-header__search" @dblclick ="deleteBtn">
         search
       </div>
-      <tree :tree="tree" :isExpandAll="true" ref="tree" :isShowCheckBox="isShowCheckBox" @nodeChange="nodeChange">
+      <tree :tree="tree" :isExpandAll="false" ref="tree" :isShowCheckBox="isShowCheckBox" @nodeChange="nodeChange">
         <template #header>
           <div>
             头部

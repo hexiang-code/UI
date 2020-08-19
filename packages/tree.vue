@@ -78,7 +78,7 @@
         let { isExpandAll } = this
         let treeStr = list && list.map(item => {
           if (item[children] && item[children].length > 0) {
-            return this.createParendNode(h, item)
+            return this.createParendNode(h, item, isExpandAll)
           } else {
             return this.createChildNode(h, item, isExpandAll)
           }
@@ -87,7 +87,7 @@
       },
 
       // 创建父节点
-      createParendNode (h, parentData) {
+      createParendNode (h, parentData, isExpandAll) {
         let { children, label } = this.renderKey
         return(
           <div class="tree-main__content">
@@ -104,7 +104,7 @@
                 }
               </transition>
               <div class="tree-main__label-title" onClick={($event) => this.parentNodeClick($event, parentData)}>
-                <i class="iconfont tree-main__icon tree-main__icon_open">&#xe61e;</i>
+                <i class={ ['iconfont tree-main__icon', isExpandAll ? 'tree-main__icon_open' : 'tree-main__icon_close'] }>&#xe61e;</i>
                 <div class="tree-main__title-text">{parentData[label]}</div>
                 {
                   this.$scopedSlots.operation ? 
@@ -135,8 +135,8 @@
         let fragment = this.createFragment(false, $event.currentTarget.parentNode.nextElementSibling)
         let nodes = [...fragment.children]
         nodes.forEach(item => {
-          let isExpand = item.getAttribute('style') == 'display: none'
-          if (!isExpand) item.setAttribute('style', 'display: none')
+          let isExpand = item.getAttribute('style') == 'display: none;'
+          if (!isExpand) item.setAttribute('style', 'display: none;')
           else item.removeAttribute('style')
         })
         $event.currentTarget.parentNode.nextElementSibling.appendChild(fragment)
