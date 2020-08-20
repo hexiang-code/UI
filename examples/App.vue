@@ -13,7 +13,7 @@
         </window-utils-item>
       </template>
     </windowUtils>
-    <drawer :isShow.sync="testDrawer" :isModal="false">
+    <drawer :isShow.sync="testDrawer" :isModal="true">
       <input v-model="filterValue" @blur="blur"/>
       <div class="bookmarks-header__search" @dblclick ="deleteBtn">
         search

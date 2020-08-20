@@ -113,7 +113,7 @@
                 }
               </div>
             </div>
-            <div class="tree-main__child-list">
+            <div class="tree-main__child-list" style={ isExpandAll ? '' : 'display: none' }>
               { this.createTree(h, parentData[children]) }
             </div>
           </div>
@@ -132,14 +132,18 @@
           iconClassList.remove('tree-main__icon_close')
           iconClassList.add('tree-main__icon_open')
         }
-        let fragment = this.createFragment(false, $event.currentTarget.parentNode.nextElementSibling)
-        let nodes = [...fragment.children]
-        nodes.forEach(item => {
-          let isExpand = item.getAttribute('style') == 'display: none;'
-          if (!isExpand) item.setAttribute('style', 'display: none;')
-          else item.removeAttribute('style')
-        })
-        $event.currentTarget.parentNode.nextElementSibling.appendChild(fragment)
+        let childListNode = $event.currentTarget.parentNode.nextElementSibling
+        let isExpand = childListNode.getAttribute('style') == 'display: none;'
+        if (!isExpand) childListNode.setAttribute('style', 'display: none;')
+        else childListNode.removeAttribute('style')
+        // let fragment = this.createFragment(false, $event.currentTarget.parentNode.nextElementSibling)
+        // let nodes = [...fragment.children]
+        // nodes.forEach(item => {
+        //   let isExpand = item.getAttribute('style') == 'display: none;'
+        //   if (!isExpand) item.setAttribute('style', 'display: none;')
+        //   else item.removeAttribute('style')
+        // })
+        // $event.currentTarget.parentNode.nextElementSibling.appendChild(fragment)
       },
 
       // 创建文档碎片
@@ -169,7 +173,7 @@
       createChildNode (h, childData, isExpandAll) {
         let { label } = this.renderKey
         return (
-          <div class='tree-main__children-label' style={ isExpandAll ? '' : 'display: none' }>
+          <div class='tree-main__children-label'>
             <transition name="checkbox">
               { 
                 this.isShowCheckBox ? 
