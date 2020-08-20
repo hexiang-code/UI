@@ -110,6 +110,7 @@ export default {
         height: 14px;
         margin: 0;
         font-size: 14px;
+        color: #c0c4cc;
         cursor: pointer;
       }
 

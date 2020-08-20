@@ -73,14 +73,14 @@
       </ul>
     </div> -->
 
-    <!-- <hx-table :tableData="hardwareArray">
-      <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props">
+    <hx-table :tableData="hardwareArray">
+      <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props" sortable>
         <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
           <div>{{cpuTemp}}</div>
         </template>
-        <template #header="{ header: {props} = {} }">{{props}}</template>
+        <!-- <template #header="{ header: {props} = {} }">{{props}}</template> -->
       </hx-table-column>
-    </hx-table> -->
+    </hx-table>
     <hx-date-picker @selectComplete="dateSelect"></hx-date-picker>
   </div >
   
@@ -255,7 +255,7 @@ export default {
     return {
       tree: tree,
       visiable: false,
-      testDrawer: true,
+      testDrawer: false,
       filterValue: '',
       isShowCheckBox: false,
       isShowLoadAnimation: true,
