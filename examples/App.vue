@@ -81,7 +81,7 @@
         <!-- <template #header="{ header: {props} = {} }">{{props}}</template> -->
       </hx-table-column>
     </hx-table>
-    <hx-date-picker @selectComplete="dateSelect"></hx-date-picker>
+    <hx-date-picker v-model="pickerRange" @selectComplete="dateSelect"></hx-date-picker>
   </div >
   
 </template>
@@ -270,7 +270,8 @@ export default {
       meauList,
       hxMessageVisibel: true,
       hardwareArray,
-      hardwareTitle
+      hardwareTitle,
+      pickerRange: [+new Date(2020, 7, 1, 0, 0, 0), +new Date(2020, 7, 31, 0, 0, 0)]
     }
   },
 

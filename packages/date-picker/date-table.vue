@@ -97,7 +97,7 @@ export default {
                           ]}>
                             <span class={{
                               'grey-day': dateObj.month != this.curMonth,
-                              'selected-day': this.selectedDate.includes(timestap),
+                              'selected-day': this.selectedDate.includes(timestap) && dateObj.month == this.curMonth,
                             }}>{dateObj.date}</span>
                           </div>
                         </td>

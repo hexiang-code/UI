@@ -5,6 +5,15 @@ import { formatDate } from '../js/utils'
 export default {
   name: 'hxDatePicker',
   props: {
+    value: {
+      type: [Array, Number, String],
+      default: () => [0, 0],
+      validator: val => {
+        if (val instanceof Array && val.length !== 2) return false
+        return true
+      }
+    },
+
     startPlaceholder: {
       type: String,
       default: '请选择开始日期'
@@ -35,6 +44,24 @@ export default {
   },
 
   computed: {
+    // realStartDate: {
+    //   get () {
+    //     return this.value[0]
+    //   },
+    //   set (val) {
+    //     this.$emit('input', [val, this.realEndDate])
+    //   }
+    // },
+
+    // realEndDate: {
+    //   get () {
+    //     return this.value[1]
+    //   },
+    //   set (val) {
+    //     this.$emit('input', [this.realStartDate, val])
+    //   }
+    // },
+
     // 用户点击选择的两个日期（鼠标点击选择）
     selectedDateRange () {
       return [Math.min(this.realStartDate, this.realEndDate), Math.max(this.realStartDate, this.realEndDate)]
@@ -47,16 +74,26 @@ export default {
   },
 
   watch: {
-    realStartDate (val) {
-      this.preliminaryStartDate = val
+    realStartDate: {
+      handler (val) {
+        this.preliminaryStartDate = val
+      },
+      immediate: true
     },
     
-    realEndDate (val) {
-      this.preliminaryEndDate = val
+    realEndDate: {
+      handler (val) {
+        this.preliminaryEndDate = val
+      },
+      immediate: true
     },
 
-    dateTableVisible (val) {
-      !val && this.realStartDate && this.realEndDate && this.$emit('selectComplete', [this.realStartDate, this.realEndDate])
+    value: {
+      handler (val) {
+        this.realStartDate = val[0]
+        this.realEndDate = val[1]
+      },
+      immediate: true 
     }
   },
 
@@ -124,6 +161,12 @@ export default {
     selectedDate (val) {
       let { year, month, date } = val
       let timestrap = +new Date(year, month - 1, date, 0, 0, 0)
+      // 如果已存在时间范围，清空原先时间范围重新选择
+      if (this.realStartDate && this.realEndDate) {
+        this.realEndDate = 0
+        this.realStartDate = timestrap
+        return
+      }
       if (!this.realStartDate) {
         this.realStartDate = timestrap
         return
@@ -138,6 +181,17 @@ export default {
           this.realEndDate = + new Date(this.realStartDate + dateTime - 1000)
         }
       }
+      this.isCloseDateTable()
+    },
+
+    // 是否关闭日期选择表格
+    isCloseDateTable () { 
+      if(this.realStartDate && this.realEndDate ) {
+        this.$emit('selectComplete', [this.realStartDate, this.realEndDate])
+        this.$emit('input', [this.realStartDate, this.realEndDate])
+        this.dateTableVisible = false
+      }
+      
     },
 
     // 鼠标悬浮预选最小日期
