@@ -271,7 +271,7 @@ export default {
       hxMessageVisibel: true,
       hardwareArray,
       hardwareTitle,
-      pickerRange: [+new Date(2020, 7, 1, 0, 0, 0), +new Date(2020, 7, 31, 0, 0, 0)]
+      pickerRange: []
     }
   },
 

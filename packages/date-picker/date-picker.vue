@@ -7,11 +7,7 @@ export default {
   props: {
     value: {
       type: [Array, Number, String],
-      default: () => [0, 0],
-      validator: val => {
-        if (val instanceof Array && val.length !== 2) return false
-        return true
-      }
+      default: () => [0, 0]
     },
 
     startPlaceholder: {

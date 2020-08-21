@@ -365,3 +365,18 @@ name | 说明
 --|:--:|:--
 header | 头部插槽，参数为 { prop } 当前列属性
 columnContent | 内容插槽，参数为 { row } 当前行全部数据
+
+
+-------
+#### hx-date-picker 日期范围选择组件
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+value/v-model | 	绑定值 | Array | - | - | 否
+start-placeholder | 范围选择时开始日期的占位内容 | Sting | - | - | 否
+end-placeholder | 范围选择时结束日期的占位内容 | Sting | - | - | 否
+format | 日期展示展示格式 | Sting | - | YYYY-MM-DD HH:mm:ss | 否
+
+##### event
+事件名|说明|参数|返回值类型
+--|:--:|:--:|--:
+select-complete | 日期选择完成 | [start, end]: 日期范围 | void
