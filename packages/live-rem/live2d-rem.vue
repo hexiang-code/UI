@@ -297,12 +297,37 @@ export default {
       let { type } = menuItem
       if (type == 'changeTexture') this.changeTexture()
       else if (type == 'communication') this.isTalk = !this.isTalk
-      else if (type == 'goTop') window.scrollTo(0, 0)
+      else if (type == 'goTop') {
+        this.goTop()
+      } 
       else this.$emit('menuListClick', menuItem)
+    },
+
+    // 回到顶部
+    goTop () {
+      let timer = setInterval(() => {
+        let totalOffsetY = window.pageYOffset
+        totalOffsetY -= 100
+        if (totalOffsetY <= 0) {
+          window.scrollTo(0, 0)
+          clearInterval(timer)
+          return
+        }
+        window.scrollTo(0, totalOffsetY)
+      }, 16)
+      
     }
   }
 }
 </script>
+
+<style>
+.live2d {
+  position: relative;
+  z-index: 3;
+  animation: slow-in .5s forwards linear;
+}
+</style>
 
 <style lang="scss" scoped>
   @mixin cycle ($rotate: 1) {
@@ -333,11 +358,6 @@ export default {
   // .liveRem__slow-in-leave-active {
   //   animation: slow-in 1s forwards reverse;
   // }
-
-  .live2d {
-    position: relative;
-    z-index: 3;
-  }
 
   .live-rem__icon {
     width: 15px;
