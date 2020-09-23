@@ -41,6 +41,7 @@
     <button @click="albumVisible = !albumVisible" v-drag>相册</button>
     <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
+    <button @click="testConfirm" v-drag>确认弹框</button>
     <input />
     <button @click="checkbox">checkBox</button>
     <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
@@ -281,11 +282,7 @@ export default {
   //   }
   // },
   mounted () {
-    this.$refs.rem.showConfirm({message: '你好'}).then(() => {
-      console.log('用户点击同意')
-    }).catch(err => {
-      console.log(err)
-    })
+    // this.testConfirm()
     // this.testProgress()
   },
 
@@ -343,6 +340,14 @@ export default {
           percentage
         })
       }, 1000)
+    },
+
+    testConfirm () {
+      this.$refs.rem.showConfirm({message: '你好'}).then(() => {
+        console.log('用户点击同意')
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

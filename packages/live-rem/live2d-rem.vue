@@ -307,44 +307,41 @@ export default {
         } = options
         if (message) {
           this.confirm = Object.assign({}, this.confirm, options, { visibel: true })
-          this.$slots.lovelyTips = (
-            <div>
-              {
-                this.confirm.visibel ? 
-                <div class="live-rem__confirm">
-                  <div class="live-rem__confirm__title">
-                    <span>{ this.confirm.title }</span>
-                    <i class="iconfont message-icon close-icon">&#xe604;</i>
-                  </div>
-                  <div class="live-rem__confirm__content">
-                    <i class="iconfont message-icon warn-icon">&#xe606;</i>
-                    <span>{ this.confirm.message }</span>
-                  </div>
-                  <div class="live-rem__confirm__buttom">
-                    <div class="btn live-rem__confirm__confirm" onClick={ () => {
-                        resolve()
-                        this.$slots.lovelyTips = ''
-                      }
-                    }>确认</div>
-                    { 
-                      this.confirm.showCancelButton ? 
-                      <div class="btn live-rem__confirm__cancel" onClick={ () => {
-                        reject({
-                          text: '用户拒绝',
-                          type: 'userReject'
-                        })
-                        this.$slots.lovelyTips = ''
-                        }
-                      } >取消</div> :
-                      ''
+          this.$slots.lovelyTips = this.confirm.visibel ? 
+            <div class="live-rem__confirm">
+              <div class="live-rem__confirm__title">
+                <span>{ this.confirm.title }</span>
+                <i class="iconfont message-icon close-icon">&#xe604;</i>
+              </div>
+              <div class="live-rem__confirm__content">
+                <i class="iconfont message-icon warn-icon">&#xe606;</i>
+                <span>{ this.confirm.message }</span>
+              </div>
+              <div class="live-rem__confirm__buttom">
+                <div class="btn live-rem__confirm__confirm" onClick={ () => {
+                    resolve()
+                    this.$slots.lovelyTips = ''
+                    this.$forceUpdate()
+                  }
+                }>确认</div>
+                { 
+                  this.confirm.showCancelButton ? 
+                  <div class="btn live-rem__confirm__cancel" onClick={ () => {
+                      reject({
+                        text: '用户拒绝',
+                        type: 'userReject'
+                      })
+                      this.$slots.lovelyTips = ''
+                      this.$forceUpdate()
                     }
-                  </div>
-                </div> : 
+                  } >取消</div> :
                   ''
-              }
-            </div>
-          )
-          return
+                }
+              </div>
+            </div> : 
+              ''
+          console.log(this.$slots.lovelyTips)
+          this.$forceUpdate()
         }
         reject({
           text: '参数不合法',
