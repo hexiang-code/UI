@@ -1,9 +1,10 @@
 <template>
   <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick">
     <transition-group name="liveRem__slow-in" tag="div">
-      <div class="message" key="message" v-show="isShowLeimu && (message.length > 0 || confirm.visibel)">
-        <span v-show="message.length > 0 && !confirm.visibel">{{message}}</span>
-        <div class="live-rem__confirm" v-if="confirm.visibel">
+      <div class="message" key="message" v-show="isShowLeimu && $slots.lovelyTips">
+        <slot name="lovelyTips"></slot>
+        <!-- <span v-show="message.length > 0 && !confirm.visibel">{{message}}</span> -->
+        <!-- <div class="live-rem__confirm" v-if="confirm.visibel">
           <div class="live-rem__confirm__title">
             <span>{{ confirm.title }}</span>
             <i class="iconfont message-icon close-icon">&#xe604;</i>
@@ -16,7 +17,7 @@
             <div class="btn live-rem__confirm__confirm" ref="liveRemConfirmBtn">确认</div>
             <div class="btn live-rem__confirm__cancel" ref="liveRemCancelBtn" v-if="confirm.showCancelButton">取消</div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
         <div class="live-rem__name">
@@ -43,6 +44,7 @@
 <script>
 import { MESSAGE, textureConfig, meauList } from './config'
 import { startLive2d, loadAction } from './live2d-resource/startLive2d'
+import Vue from 'vue'
 let messageTimer // 提示计时器
 let canvas // live2d画布
 export default {
@@ -94,14 +96,22 @@ export default {
         title: '提示',  // 标题
         message: '', // 消息内容
         showCancelButton: true, // 取消按钮
-      } 
-      
+      }
     }
   },
 
   computed: {
+    // 菜单列表
     meaus () {
       return this.meauList.concat(meauList)
+    }
+  },
+
+  watch: {
+    message (newVal) {
+      this.$slots.lovelyTips = newVal
+      // TODO 不知名原因页面没有渲染该插槽
+      this.$forceUpdate()
     }
   },
 
@@ -149,62 +159,6 @@ export default {
         let { text } = click.find(item => item.selectorId == $event.target.id) || {}
         this.showToast({ text })
       }
-    },
-
-    // 展示信息
-    showToast ({text, time = this.toastTime, type='normal'}) {
-      messageTimer && clearTimeout(messageTimer)
-      if (text && Array.isArray(text)) {
-        this.message = this.getRandomItem(text)
-      }
-      if (text && typeof text === 'string') this.message = text
-      const { toastAction } = this.curTexture
-      if (toastAction && Object.prototype.toString.call(toastAction) === "[object Object]") {
-        let curAction = toastAction[type]
-        let actionRes
-        if (Array.isArray(curAction)) {
-          actionRes = this.getRandomItem(curAction)
-        } else if (Object.prototype.toString.call(curAction) === "[object Object]") {
-          actionRes = curAction
-        } else {
-          console.warn('toastAction不符合规范')
-          return
-        }
-        let { index, name, priority } = actionRes
-        actionRes &&  loadAction({ name, priority, index: --index })
-      }
-      messageTimer = setTimeout(() => {
-        this.message = ''
-      }, time)
-    },
-
-    // 选择提示
-    showConfirm (options) {
-      return new Promise(async (resolve, reject) => {
-        let {
-          message,
-        } = options
-        if (message) {
-          this.confirm = Object.assign({}, this.confirm, options, { visibel: true })
-          await this.$nextTick()
-          this.$refs.liveRemConfirmBtn.addEventListener('click', () => {
-            resolve()
-            this.confirm.visibel = false
-          })
-          this.$refs.liveRemCancelBtn && this.$refs.liveRemCancelBtn.addEventListener('click', () => {
-            reject({
-              text: '用户拒绝',
-              type: 'userReject'
-            })
-            this.confirm.visibel = false
-          })
-          return
-        }
-        reject({
-          text: '参数不合法',
-          type: 'paramError'
-        })
-      })
     },
 
     // 随机获取数组中的一项
@@ -316,6 +270,105 @@ export default {
         window.scrollTo(0, totalOffsetY)
       }, 16)
       
+    },
+
+    // 展示信息
+    showToast ({text, time = this.toastTime, type='normal'}) {
+      messageTimer && clearTimeout(messageTimer)
+      if (text && Array.isArray(text)) {
+        this.message = this.getRandomItem(text)
+      }
+      if (text && typeof text === 'string') this.message = text
+      const { toastAction } = this.curTexture
+      if (toastAction && Object.prototype.toString.call(toastAction) === "[object Object]") {
+        let curAction = toastAction[type]
+        let actionRes
+        if (Array.isArray(curAction)) {
+          actionRes = this.getRandomItem(curAction)
+        } else if (Object.prototype.toString.call(curAction) === "[object Object]") {
+          actionRes = curAction
+        } else {
+          console.warn('toastAction不符合规范')
+          return
+        }
+        let { index, name, priority } = actionRes
+        actionRes &&  loadAction({ name, priority, index: --index })
+      }
+      messageTimer = setTimeout(() => {
+        this.message = ''
+      }, time)
+    },
+
+    // 选择提示
+    showConfirm (options) {
+      return new Promise(async (resolve, reject) => {
+        let {
+          message,
+        } = options
+        if (message) {
+          this.confirm = Object.assign({}, this.confirm, options, { visibel: true })
+          this.$slots.lovelyTips = this.confirm.visibel ? 
+          <div class="live-rem__confirm">
+            <div class="live-rem__confirm__title">
+              <span>{ this.confirm.title }</span>
+              <i class="iconfont message-icon close-icon">&#xe604;</i>
+            </div>
+            <div class="live-rem__confirm__content">
+              <i class="iconfont message-icon warn-icon">&#xe606;</i>
+              <span>{ this.confirm.message }</span>
+            </div>
+            <div class="live-rem__confirm__buttom">
+              <div class="btn live-rem__confirm__confirm" onClick={ () => {
+                  resolve()
+                  this.confirm.visibel = false
+                }
+              }>确认</div>
+              { 
+                this.confirm.showCancelButton ? 
+                <div class="btn live-rem__confirm__cancel" onClick={ () => {
+                  reject({
+                    text: '用户拒绝',
+                    type: 'userReject'
+                  })
+                  this.confirm.visibel = false
+                  }
+                } >取消</div> :
+                ''
+              }
+            </div>
+          </div> : 
+          ''
+          return
+        }
+        reject({
+          text: '参数不合法',
+          type: 'paramError'
+        })
+      })
+    },
+
+    // 进度条
+    showProgress (options = {}) {
+      options = Vue.observable({...options})
+      this.$slots.lovelyTips = (
+        <div class="live-rem__progress">
+          <div class="live-rem__progress-title">{ options.title || '蕾姆全力加载中···' }</div>
+          <div class="live-rem__progress-line">
+            <div 
+              class="live-rem__progress-bg"
+              style={[
+                {
+                  width: `${Number(options.percentage) % 100}%`
+                },
+                {
+                  backgroundColor: options.color
+                }
+              ]}
+            >
+            </div>
+          </div>
+        </div>
+      )
     }
   }
 }
@@ -330,6 +383,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+  @import '../css/_globalStyle.scss';
   @mixin cycle ($rotate: 1) {
     animation: cycle-#{$rotate} .5s linear forwards;
     @keyframes cycle-#{$rotate} {
@@ -492,6 +546,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 4;
     box-sizing: border-box;
     margin: auto;
     padding: 5px;
@@ -594,6 +649,34 @@ export default {
       }
 
     }
+  }
+
+  .live-rem__progress-line {
+    width: 100%;
+    height: 6px;
+    margin-top: 12px;
+    border-radius: 3px;
+    background-color: #fff;
+  }
+
+  .live-rem__progress-bg {
+    position: relative;
+    height: 6px;
+    border-radius: 3px;
+    background-color: $theme-color;
+    transition: width .2s;
+  }
+
+  .live-rem__progress-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    opacity: .8;
+    border-radius: 3px;
+    background-color: #fff;
+    animation: condensation-animation 1.5s infinite linear;
   }
 
 </style>

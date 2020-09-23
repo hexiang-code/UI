@@ -281,11 +281,12 @@ export default {
   //   }
   // },
   mounted () {
-    // this.$refs.rem.showConfirm({message: '你好'}).then(() => {
-    //   console.log('用户点击同意')
-    // }).catch(err => {
-    //   console.log(err)
-    // })
+    this.$refs.rem.showConfirm({message: '你好'}).then(() => {
+      console.log('用户点击同意')
+    }).catch(err => {
+      console.log(err)
+    })
+    // this.testProgress()
   },
 
   methods: {
@@ -329,6 +330,19 @@ export default {
 
     dateSelect (val) {
       console.log(val)
+    },
+
+    testProgress () {
+      let percentage = 0
+      let timer = setInterval(() => {
+        percentage += 10
+        percentage >= 100 && clearInterval(timer)
+        console.log(percentage)
+        this.$refs.rem.showProgress({
+          title: '你好',
+          percentage
+        })
+      }, 1000)
     }
   }
 }
@@ -468,8 +482,4 @@ export default {
     }
   }
 }
-
-
-
-
 </style>
