@@ -1,8 +1,8 @@
 <template>
   <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick">
     <transition-group name="liveRem__slow-in" tag="div">
-      <div class="message" key="message" v-show="isShowLeimu && $slots.lovelyTips">
-        <slot name="lovelyTips"></slot>
+      <div class="message" key="message" v-show="isShowLeimu && messageVisible">
+        <slot name="lovelyTips"></slot >
         <!-- <span v-show="message.length > 0 && !confirm.visibel">{{message}}</span> -->
         <!-- <div class="live-rem__confirm" v-if="confirm.visibel">
           <div class="live-rem__confirm__title">
@@ -96,7 +96,8 @@ export default {
         title: '提示',  // 标题
         message: '', // 消息内容
         showCancelButton: true, // 取消按钮
-      }
+      },
+      messageVisible: false // 消息盒子开关
     }
   },
 
@@ -110,7 +111,6 @@ export default {
   watch: {
     message (newVal) {
       this.$slots.lovelyTips = newVal
-      // TODO 不知名原因页面没有渲染该插槽
       this.$forceUpdate()
     }
   },
@@ -275,6 +275,7 @@ export default {
     // 展示信息
     showToast ({text, time = this.toastTime, type='normal'}) {
       messageTimer && clearTimeout(messageTimer)
+      this.messageVisible = true
       if (text && Array.isArray(text)) {
         this.message = this.getRandomItem(text)
       }
@@ -295,7 +296,7 @@ export default {
         actionRes &&  loadAction({ name, priority, index: --index })
       }
       messageTimer = setTimeout(() => {
-        this.message = ''
+        this.messageVisible = false
       }, time)
     },
 
@@ -306,8 +307,9 @@ export default {
           message,
         } = options
         if (message) {
+          this.messageVisible = true
           this.confirm = Object.assign({}, this.confirm, options, { visibel: true })
-          this.$slots.lovelyTips = this.confirm.visibel ? 
+          this.$slots.lovelyTips = (
             <div class="live-rem__confirm">
               <div class="live-rem__confirm__title">
                 <span>{ this.confirm.title }</span>
@@ -320,8 +322,7 @@ export default {
               <div class="live-rem__confirm__buttom">
                 <div class="btn live-rem__confirm__confirm" onClick={ () => {
                     resolve()
-                    this.$slots.lovelyTips = ''
-                    this.$forceUpdate()
+                    this.messageVisible = false
                   }
                 }>确认</div>
                 { 
@@ -331,22 +332,22 @@ export default {
                         text: '用户拒绝',
                         type: 'userReject'
                       })
-                      this.$slots.lovelyTips = ''
-                      this.$forceUpdate()
+                      this.messageVisible = false
                     }
                   } >取消</div> :
                   ''
                 }
               </div>
-            </div> : 
-              ''
-          console.log(this.$slots.lovelyTips)
+            </div>
+          )
           this.$forceUpdate()
+        } else {
+          reject({
+            text: '参数不合法',
+            type: 'paramError'
+          })
         }
-        reject({
-          text: '参数不合法',
-          type: 'paramError'
-        })
+        
       })
     },
 
