@@ -197,7 +197,6 @@ export default {
           text: notifyText,
           type: 'lovely'
         })
-        console.log(notifyText)
         if (window.Notification && Notification.permission !== "denied") {
           Notification.requestPermission(() => {
             new Notification('来自蕾姆的关怀', { body: notifyText, icon: 'https://api.hexiangzone.cn/assets/kafeidou/leimuAvatar.jpg' })
