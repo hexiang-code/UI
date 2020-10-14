@@ -44,7 +44,7 @@
     <button @click="testConfirm" v-drag>确认弹框</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦'}"></live-rem>
+    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem>
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
@@ -343,7 +343,10 @@ export default {
     },
 
     testConfirm () {
-      this.$refs.rem.showConfirm({message: '你好'}).then(() => {
+      let message = {
+        message: <span style="color: red">你好</span>
+      }
+      this.$refs.rem.showConfirm(message).then(() => {
         console.log('用户点击同意')
       }).catch(err => {
         console.log(err)
