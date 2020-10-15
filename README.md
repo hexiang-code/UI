@@ -226,11 +226,11 @@ operation | 子树操作区域插槽，参数为当前节点数据
 header | 树组件头部区域
 bottom | 树组件底部区域
 **********
-#### vague-window-utils: 弹框组件
+#### dialog: 弹框组件
 ##### attribute
 参数|说明|类型|可选值|默认值|是否必填
 --|:--:|:--:|--:|:--:|:--
-isShowWindow | 开关 | Boolean | true/false | false | 否
+dialogVisiable | 开关 | Boolean | true/false | false | 否
 width | 宽度 | String | - | 30% | 否
 height | 高度(自适应) | String | - | - | 否
 title | 窗口顶部标题 | String | - | 提示 | 否
@@ -240,11 +240,11 @@ curtain | 是否需要背景幕布 | Boolean | true/false | false | 否
 ##### slot
 name | 说明
 --|:--:|:--
-windowTitle | 窗口顶部插槽
-windowFoot | 窗口底部插槽
+title | 窗口顶部插槽
+footer | 窗口底部插槽
 
 *********
-#### window-utils-item：单个表单控件
+#### hx-form-item：单个表单控件
 参数|说明|类型|可选值|默认值|是否必填
 --|:--:|:--:|--:|:--:|:--
 label | 表单标签 | String | - | - | 是

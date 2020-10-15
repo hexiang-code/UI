@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'windowUtilsItem',
+  name: 'hxFormItem',
   props: {
     // 标签文本
     label: {

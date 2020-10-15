@@ -1,6 +1,6 @@
 <template>
   <div class="album">
-    <window-utils :isShowWindow="visible" title="相册" width="800px" :curtain="visible && ismodal" @curtainClose="$emit('update:visible', false)">
+    <hx-dialog :dialogVisiable="visible" title="相册" width="800px" :isCurtain="visible && ismodal" @dialogClose="$emit('update:visible', false)">
       <div class="album-main">
         <div class="left">
           <div :class="classId == item.id ? 'selected' : ''" @click="classId = item.id" v-for="item in classList" :key="item.id">{{item.className}}</div>
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <template #windowFoot>
+      <template #footer>
         <slot name="albumFooter">
           <div class="album-buttom" v-if="!$slots.albumFooter">
             <div class="left">
@@ -37,7 +37,7 @@
           </div>
         </slot>
       </template>
-    </window-utils>
+    </hx-dialog >
     <image-preview :visible.sync="imagePreviewVisible" :resource="curImage" :resourceList="imageList"
      @previewImageChange="previewImageChange"
      >
@@ -45,13 +45,13 @@
   </div>
 </template>
 <script>
-import windowUtils from './vague-window-utils'
+import hxDialog  from './dialog'
 import imagePreview from './image-preview'
 import { debounce, throttle } from './js/utils'
 export default {
   name: 'hxAlbum',
   components: {
-    windowUtils,
+    hxDialog,
     imagePreview
   },
   props: {

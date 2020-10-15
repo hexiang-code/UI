@@ -235,44 +235,29 @@
     }
   }
 
-  /* 弹窗开关动画 */
-  
-  @keyframes dialog-open {
+  /* 弹窗背景开关动画 */
+  @keyframes dialog-bg-open {
     0% {
-      opacity: 0;
-      transform: translateY(-100%);
+      transform: scaleY(.005) scaleX(0)
     }
-
-    30% {
-      opacity: 0.5;
-      transform: translateY(-60%);
-    }
-
     50% {
-      opacity: 1;
-      transform: translateY(0);
+      transform: scaleY(.005) scaleX(1);
     }
-
-    70% {
-      opacity: 1;
-      transform: translateY(-15%);
-    }
-
     100% {
-      opacity: 1;
-      transform: translateY(0);
+      transform: scaleY(1) scaleX(1);
     }
   }
   
-  @keyframes dialog-close {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+  @keyframes dialog-bg-close {
+    
+  }
 
+  /* 弹窗内容开关动画 */
+  @keyframes dialog-container-open {
+    0% {
+      transform: scale(0);
+    }
     100% {
-      transform: translateY(-100%);
-      opacity: 0;
-      visibility: hidden;
+      transform: scale(1);
     }
   }

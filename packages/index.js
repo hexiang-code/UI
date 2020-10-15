@@ -1,9 +1,9 @@
 // 导出install方法
 import backgroundVideo from './background-video.vue'
-import windowUtils from './vague-window-utils'
+import dialog from './dialog'
 import drawer from './drawer.vue'
 import tree from './tree.vue'
-import windowUtilsItem from './window-utils-item.vue'
+import hxFormItem from './form-item.vue'
 import loadAnimation from './load-animation.vue'
 import liveRem from './live-rem/live2d-rem.vue'
 import hxSwitch from './switch.vue'
@@ -25,10 +25,10 @@ import { directives } from './js/directive'
 import { filters } from './js/filters'
 const elementArray = [
   backgroundVideo,
-  windowUtils,
+  dialog,
   drawer,
   tree,
-  windowUtilsItem,
+  hxFormItem,
   loadAnimation,
   liveRem,
   canvasBg,

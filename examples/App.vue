@@ -3,16 +3,16 @@
     <!-- <button @click="visiable = !visiable">1111</button> -->
     <!-- <backgroundVideo resource="https://api.hexiangzone.cn/assets/kafeidou/start-background-video.mp4" poster="https://api.hexiangzone.cn/assets/kafeidou/startBg.png" @videoLoaded="isShowLoadAnimation = false" @posterLoaded="isShowLoadAnimation = false"></backgroundVideo> -->
     <!-- <load-animation :isShow.sync="isShowLoadAnimation"></load-animation> -->
-    <windowUtils title="你好" :isShowWindow.sync="visiable" :curtain="true">
+    <hx-dialog title="你好" :dialogVisiable.sync="visiable" :isCurtain="false">
       <template>
-        <window-utils-item label="书签名">
+        <hx-form-item label="书签名">
           <input v-model="filterValue" type="text">
-        </window-utils-item>
-        <window-utils-item label="书签名">
+        </hx-form-item>
+        <hx-form-item label="书签名">
           <input v-model="filterValue" type="text">
-        </window-utils-item>
+        </hx-form-item>
       </template>
-    </windowUtils>
+    </hx-dialog>
     <drawer :isShow.sync="testDrawer" :isModal="true">
       <input v-model="filterValue" @blur="blur"/>
       <div class="bookmarks-header__search" @dblclick ="deleteBtn">
@@ -44,7 +44,7 @@
     <button @click="testConfirm" v-drag>确认弹框</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem>
+    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem> -->
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
