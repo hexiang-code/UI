@@ -1,6 +1,6 @@
 <template>
   <transition name="dialog-bg" v-if="dialogVisiable">
-    <div class="dialog-bg" key="curtain" @click="dialogClose" :style="!isCurtain ? 'transparent' : ''">
+    <div class="dialog-bg" key="curtain" @click.self="dialogClose" :style="!isCurtain ? 'transparent' : ''">
       <transition name="dialog-container">
         <div class="dialog-container" key="dialogContent" :style="windowSizeText">
           <div class="dialog__title">
