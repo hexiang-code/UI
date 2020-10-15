@@ -142,37 +142,61 @@ const imageList = [
             id: 1,
             type: 'image',
             resourceName: '测试图片测试图片测试图片测试图片测试图片测试图片测试图片测试图片测试图片测试图片',
-            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/IMG_20200830_232533.jpg'
           },
           {
             id: 2,
             type: 'image',
             resourceName: '测试图片',
-            resourceUrl: 'http://localhost:3000/assets/kafeidou/songshu.jpg'
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/songshu.jpg'
           },
           {
             id: 3,
             type: 'video',
             resourceName: '测试图片',
-            resourceUrl: 'http://localhost:3000/assets/kafeidou/start-background-video.mp4'
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/6.jpg'
           },
           {
             id: 4,
             type: 'image',
             resourceName: '测试图片',
-            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/8.jpg'
           },
           {
             id: 5,
             type: 'image',
             resourceName: '测试图片',
-            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/loadingError.png'
           },
           {
             id: 6,
             type: 'image',
             resourceName: '测试图片',
-            resourceUrl: 'http://localhost:3000/assets/kafeidou/englishenglishenglishenglishenglishenglishenglishenglish.png'
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/leimuAvatar.jpg'
+          },
+          {
+            id: 7,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/leimuAvatar.gif'
+          },
+          {
+            id: 8,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/IMG_20200830_173606.jpg'
+          },
+          {
+            id: 9,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/wx_camera_1598800076868.jpg'
+          },
+          {
+            id: 10,
+            type: 'image',
+            resourceName: '测试图片',
+            resourceUrl: 'https://api.hexiangzone.cn/assets/kafeidou/IMG_20200830_232533.jpg'
           }
         ]
 
@@ -263,7 +287,7 @@ export default {
       switchVal: false,
       sliderVal: 9,
       albumVisible: false,
-      imageList: imageList.concat(imageList),
+      imageList: imageList,
       classList,
       currentPage: 1,
       totalPage: 10,

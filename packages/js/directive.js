@@ -68,7 +68,7 @@ const drag = vue => {
 // 图片懒加载  （待优化）
 const imgLazy = vue => {
   vue.directive('imgLazy', {
-    bind: function () {
+    inserted: function () {
       let imageLazy = new ImageLazy()
       imageLazy.bind(...arguments)
     }
