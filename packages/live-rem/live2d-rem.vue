@@ -141,6 +141,7 @@ export default {
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState == 'visible') {
             mp3 && mp3.play()
+            text = <span>你回来啦</span>
             text && this.showToast({text})
           }
         })
@@ -278,7 +279,9 @@ export default {
       if (text && Array.isArray(text)) {
         this.message = this.getRandomItem(text)
       }
-      if (text) this.message = text
+      if (text && 
+          (typeof text === 'string' || Object.prototype.hasOwnProperty.call(text, 'componentOptions') )
+      ) this.message = text
       if (!this.message) return
       const { toastAction } = this.curTexture
       if (toastAction && Object.prototype.toString.call(toastAction) === "[object Object]") {
