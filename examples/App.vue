@@ -44,7 +44,7 @@
     <button @click="testConfirm" v-drag>确认弹框</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem>
+    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem> -->
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
@@ -57,9 +57,11 @@
 
     <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList" @onReachBottom="albumReachBottom">
     </hx-album>
-
+    <div class="list-box">
+      <h1>你好</h1>
+    </div>
     <hx-pagination 
-      :total="totalPage" :page-size="10" 
+      :total="totalPage" :page-size="3" 
       :current-page.sync="currentPage" 
       @current-change="currentPageChange">
     </hx-pagination>
@@ -513,5 +515,11 @@ export default {
       @include cycle(12);
     }
   }
+}
+.list-box {
+  width: 500px;
+  height: 300px;
+  border: 1px solid;
+  margin: 0 auto;
 }
 </style>
