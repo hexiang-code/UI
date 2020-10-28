@@ -73,7 +73,7 @@
         <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
       </ul>
     </div> -->
-    <div ref="testPoint">
+    <div ref="testPoint" style="width: 1000px">
       <hx-table :tableData="hardwareArray" ref="testPoint1">
         <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props" sortable>
           <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">

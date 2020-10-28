@@ -1,59 +1,71 @@
 import html2canvas from 'html2canvas'
-const translateX = 20
-const translateY = 5
-const pointSize = 1
-
+const repetition = 2;
+const canvasNums = 128
 /**
  * 切换动画
  * @param {vNode} targetNode 引用动画的vNode后者元素节点
+ * @param {Number} time 动画持续时间
  */
-function pointAnimation (targetNode) {
+function pointAnimation (targetNode, time = 2000) {
   if (!(targetNode instanceof HTMLElement)) targetNode = targetNode.$el
   html2canvas(targetNode).then(canvas => {
-    targetNode.parentNode.replaceChild(canvas, targetNode)
-    pointContent(canvas, targetNode)
+    let replaceNode = document.createElement('div')
+    replaceNode.style = `height: ${canvas.height}px`
+    replaceNode.classList.add('content-canvas')
+    targetNode.parentNode.replaceChild(replaceNode, targetNode)
+    pointContent(canvas, targetNode, replaceNode, time)
   })
 }
 
-// 翻页切换动画
-function pointContent (canvas, targetNode) {
-  let ctx = canvas.getContext('2d')
-  let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-  let index = 0
-  let pointArr = []
-  for (let x = 0; x < canvas.width; x += pointSize) {
-    for (let y = 0; y < canvas.height; y += pointSize) {
-      let point = {};
-      point.x = x;
-      point.y = y;
-      index = y * imageData.width + x
-      point.color = 'rgba('+String(imageData.data[4*index]) + ',' + String(imageData.data[4*index+1]) + ',' + String(imageData.data[4*index+2]) + ',' + String(imageData.data[4*index+3]/255) + ')'
-      pointArr.push(point);
-    }
-  }
-  canvas.setAttribute('width', `${canvas.width}px`)
-  canvas.setAttribute('height', `${canvas.height}px`)
-  let foreachFn = () =>{
-    let len = pointArr.length
-    let pointIndex = 0
-    while (pointIndex < len - 1) {
-      let item = pointArr[pointIndex]
-      if (pointIndex % 5 == 0) {
-        let randomX = Math.random() * (Math.random() > 0.5 ? -translateX : translateX)
-        let randomY = Math.random() * (Math.random() > 0.5 ? -translateY : translateY)
-        ctx.fillStyle = item.color
-        ctx.fillRect(item.x + randomX, item.y + randomY, pointSize, pointSize)
-      }
-      pointIndex ++
-    }
-  }
-  foreachFn()
-  let timer = setInterval(foreachFn, 50)
+/**
+ * 沙化动画
+ * @param {HTMLElement} canvas 
+ * @param {HTMLElement} targetNode 被替换的dom
+ * @param {HTMLElement} replaceNode 替换用的dom
+ * @param {Number} time 动画持续时间
+ */
+function pointContent (canvas, targetNode, replaceNode, time) {
+  let nodes = new NewFrame(canvas, canvasNums)
+  nodes.forEach((item, i) => {
+    item.style.transitionDelay = `${1.7 * i / nodes.length}s`
+    replaceNode.appendChild(item)
+  })
   setTimeout(() => {
-    clearInterval(timer)
-    canvas.parentNode.replaceChild(targetNode, canvas)
-  }, 1000)
+    nodes.forEach(item => {
+      let randomRadian = 2 * Math.PI * (Math.random() - 0.5)
+      item.style.transform = `rotate(${15 * (Math.random() - 0.5)}deg) translate(${60 * Math.cos(randomRadian)}px, ${30 * Math.sin(randomRadian)}px) rotate(${15 * (Math.random() - 0.5)}deg)`;
+      item.style.opacity = 0;
+    })
+    setTimeout(() => {
+      replaceNode.parentNode.replaceChild(targetNode, replaceNode)
+    }, time)
+  })
 } 
+
+function NewFrame(canvas, count = 32) {
+  let {
+      width,
+      height
+  } = canvas;
+  let ctx = canvas.getContext("2d");
+  let originalData = ctx.getImageData(0, 0, width, height);
+  let imageDatas = [...Array(count)].map(() => ctx.createImageData(width, height))
+
+  for (let x = 0; x < width; ++x)
+      for (let y = 0; y < height; ++y) {
+          for (let i = 0; i < repetition; ++i) {
+              let dataIndex = Math.floor(count * (Math.random() + 2 * x / width) / 3);
+              let pixelIndex = (y * width + x) * 4;
+              for (let offset = 0; offset < 4; ++offset) 
+              imageDatas[dataIndex].data[pixelIndex + offset] = originalData.data[pixelIndex + offset];
+          }
+      }
+  return imageDatas.map(data => {
+      let clone = canvas.cloneNode(true);
+      clone.getContext("2d").putImageData(data, 0, 0);
+      return clone;
+  });
+}
 
 export {
   pointAnimation
