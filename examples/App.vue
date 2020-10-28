@@ -58,6 +58,7 @@
     <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList" @onReachBottom="albumReachBottom">
     </hx-album>
     <hx-pagination 
+      ref="pagination"
       :total="totalPage" :page-size="3" 
       :current-page.sync="currentPage" 
       @current-change="currentPageChange">
@@ -72,15 +73,16 @@
         <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
       </ul>
     </div> -->
-
-    <hx-table :tableData="hardwareArray" ref="testPoint" style="padding: 20px;">
-      <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props" sortable>
-        <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
-          <div>{{cpuTemp}}</div>
-        </template>
-        <!-- <template #header="{ header: {props} = {} }">{{props}}</template> -->
-      </hx-table-column>
-    </hx-table>
+    <div ref="testPoint">
+      <hx-table :tableData="hardwareArray" ref="testPoint1">
+        <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props" sortable>
+          <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
+            <div>{{cpuTemp}}</div>
+          </template>
+          <!-- <template #header="{ header: {props} = {} }">{{props}}</template> -->
+        </hx-table-column>
+      </hx-table>
+    </div>
     <hx-date-picker v-model="pickerRange" @selectComplete="dateSelect"></hx-date-picker>
   </div >
   
@@ -273,10 +275,7 @@ let hardwareArray = [
 ]
 hardwareArray = hardwareArray.concat(hardwareArray)
 // import backgroundVideo from 'backgroundVideo'
-import html2canvas from 'html2canvas'
-let translateX = 20
-let translateY = 5
-let pointSize = 1
+
 export default {
   name: 'app',
   data () {
@@ -338,10 +337,7 @@ export default {
 
     async currentPageChange (curPage) {
       console.log(`当前在第${curPage}页`)
-      let targetNode = this.$refs['testPoint'].$el
-      html2canvas(targetNode).then(res => {
-        this.pointContent(res, targetNode)
-      })
+      this.$refs['pagination'].pointAnimation(this.$refs['testPoint1'])
     },
     
     albumReachBottom () {
@@ -382,51 +378,7 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-    },
-
-    pointContent (canvas, targetNode) {
-      let canvas1 = document.createElement('canvas')
-      canvas1.width = canvas.width
-      canvas1.height = canvas.height
-      targetNode.parentNode.replaceChild(canvas1, targetNode)
-      let ctx1 = canvas1.getContext('2d')
-      let ctx = canvas.getContext('2d')
-      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-      let index = 0
-      let pointArr = []
-      for (let x = 0; x < canvas.width; x += pointSize) {
-          for (let y = 0; y < canvas.height; y += pointSize) {
-            let point = {};
-            point.x = x;
-            point.y = y;
-            index = y * imageData.width + x
-            point.color = 'rgba('+String(imageData.data[4*index]) + ',' + String(imageData.data[4*index+1]) + ',' + String(imageData.data[4*index+2]) + ',' + String(imageData.data[4*index+3]/255) + ')'
-            pointArr.push(point);
-          }
-        }
-        pointArr.forEach(item => {
-          ctx1.fillStyle = item.color
-          ctx1.fillRect(item.x, item.y, 1, 1)
-        })
-      let timer = setInterval(() => {
-        let len = pointArr.length
-        let pointIndex = 0
-        while (pointIndex < len - 1) {
-          let item = pointArr[pointIndex]
-          if (pointIndex % 5 == 0) {
-            let randomX = Math.random() * (Math.random() > 0.5 ? -translateX : translateX)
-            let randomY = Math.random() * (Math.random() > 0.5 ? -translateY : translateY)
-            ctx1.fillStyle = item.color
-            ctx1.fillRect(item.x + randomX, item.y + randomY, pointSize, pointSize)
-          }
-          pointIndex ++
-        }
-      }, 50)
-      setTimeout(() => {
-        clearInterval(timer)
-        canvas1.parentNode.replaceChild(targetNode, canvas1)
-      }, 1000)
-    } 
+    }
   }
 }
 </script>

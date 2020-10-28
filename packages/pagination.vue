@@ -1,4 +1,5 @@
 <script>
+import { pointAnimation } from './js/pointAnimation'
 const layoutString = 'prev, pager, next, jumper, total'
 const template = {
   total: function (h) { return <span class="total-number">共{this.total}条</span> },
@@ -94,6 +95,10 @@ export default {
         { this.layoutArray.map(item => typeof template[item.trim()] === 'function' ? template[item.trim()].call(this, h) : '') }
       </div>
     )
+  },
+
+  mounted () {
+    this.pointAnimation = pointAnimation
   },
 
   methods: {
