@@ -57,12 +57,6 @@
 
     <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList" @onReachBottom="albumReachBottom">
     </hx-album>
-    <hx-pagination 
-      ref="pagination"
-      :total="totalPage" :page-size="3" 
-      :current-page.sync="currentPage" 
-      @current-change="currentPageChange">
-    </hx-pagination>
     <!-- <hx-message :visibel.sync="hxMessageVisibel">
       <template #title>
         <span>你好</span>
@@ -73,7 +67,8 @@
         <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
       </ul>
     </div> -->
-    <div ref="testPoint" style="width: 1000px">
+    <hx-date-picker v-model="pickerRange" @selectComplete="dateSelect"></hx-date-picker>
+    <div ref="testPoint" style="width: 1000px;" class="hardware-manager__table">
       <hx-table :tableData="hardwareArray" ref="testPoint1">
         <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props" sortable>
           <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
@@ -83,7 +78,12 @@
         </hx-table-column>
       </hx-table>
     </div>
-    <hx-date-picker v-model="pickerRange" @selectComplete="dateSelect"></hx-date-picker>
+    <hx-pagination
+      ref="pagination"
+      :total="totalPage" :page-size="3" 
+      :current-page.sync="currentPage" 
+      @current-change="currentPageChange">
+    </hx-pagination>
   </div >
   
 </template>
@@ -273,7 +273,7 @@ let hardwareArray = [
     memUseage: '30 %'
   }
 ]
-hardwareArray = hardwareArray.concat(hardwareArray)
+hardwareArray = Array.apply(null, {length: 10}).map(() => hardwareArray[0])
 // import backgroundVideo from 'backgroundVideo'
 
 export default {
@@ -522,5 +522,20 @@ export default {
   height: 300px;
   border: 1px solid;
   margin: 0 auto;
+}
+
+.hardware-manager__table {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  
+  .table-container {
+    position: relative;
+  }
+  .table-container .table {
+    font-size: 12px;
+  }
 }
 </style>

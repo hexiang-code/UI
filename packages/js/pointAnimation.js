@@ -1,17 +1,22 @@
 import html2canvas from 'html2canvas'
 const repetition = 2;
 const canvasNums = 128
+const html2CanvasOPtions = {
+  backgroundColor: null,
+}
 /**
  * 切换动画
  * @param {vNode} targetNode 引用动画的vNode后者元素节点
  * @param {Number} time 动画持续时间
  */
-function pointAnimation (targetNode, time = 2000) {
+function pointAnimation (targetNode, time = 2000, params) {
   if (!(targetNode instanceof HTMLElement)) targetNode = targetNode.$el
-  html2canvas(targetNode).then(canvas => {
+  params = Object.assign({ scrollY: -window.pageYOffset }, html2CanvasOPtions, params)
+  html2canvas(targetNode, params).then(canvas => {
     let replaceNode = document.createElement('div')
     replaceNode.style = `height: ${canvas.height}px`
     replaceNode.classList.add('content-canvas')
+    replaceNode.classList.add(targetNode.classList)
     targetNode.parentNode.replaceChild(replaceNode, targetNode)
     pointContent(canvas, targetNode, replaceNode, time)
   })
