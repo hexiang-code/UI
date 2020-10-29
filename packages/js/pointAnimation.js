@@ -9,17 +9,17 @@ const html2CanvasOPtions = {
  * @param {vNode} targetNode 引用动画的vNode后者元素节点
  * @param {Number} time 动画持续时间
  */
-function pointAnimation (targetNode, time = 2000, params) {
+async function pointAnimation (targetNode, time = 2000, params) {
   if (!(targetNode instanceof HTMLElement)) targetNode = targetNode.$el
   params = Object.assign({ scrollY: -window.pageYOffset }, html2CanvasOPtions, params)
-  html2canvas(targetNode, params).then(canvas => {
-    let replaceNode = document.createElement('div')
-    replaceNode.style = `height: ${canvas.height}px`
-    replaceNode.classList.add('content-canvas')
-    replaceNode.classList.add(targetNode.classList)
-    targetNode.parentNode.replaceChild(replaceNode, targetNode)
-    pointContent(canvas, targetNode, replaceNode, time)
-  })
+  let canvas = await html2canvas(targetNode, params)
+  let replaceNode = document.createElement('div')
+  replaceNode.style = `height: ${canvas.height}px`
+  replaceNode.classList.add('content-canvas')
+  replaceNode.classList.add(targetNode.classList)
+  targetNode.parentNode.replaceChild(replaceNode, targetNode)
+  await pointContent(canvas, targetNode, replaceNode, time)
+  return Promise.resolve()
 }
 
 /**
@@ -30,20 +30,23 @@ function pointAnimation (targetNode, time = 2000, params) {
  * @param {Number} time 动画持续时间
  */
 function pointContent (canvas, targetNode, replaceNode, time) {
-  let nodes = new NewFrame(canvas, canvasNums)
-  nodes.forEach((item, i) => {
-    item.style.transitionDelay = `${1.7 * i / nodes.length}s`
-    replaceNode.appendChild(item)
-  })
-  setTimeout(() => {
-    nodes.forEach(item => {
-      let randomRadian = 2 * Math.PI * (Math.random() - 0.5)
-      item.style.transform = `rotate(${15 * (Math.random() - 0.5)}deg) translate(${60 * Math.cos(randomRadian)}px, ${30 * Math.sin(randomRadian)}px) rotate(${15 * (Math.random() - 0.5)}deg)`;
-      item.style.opacity = 0;
+  return new Promise(resolve => {
+    let nodes = new NewFrame(canvas, canvasNums)
+    nodes.forEach((item, i) => {
+      item.style.transitionDelay = `${1.7 * i / nodes.length}s`
+      replaceNode.appendChild(item)
     })
     setTimeout(() => {
-      replaceNode.parentNode.replaceChild(targetNode, replaceNode)
-    }, time)
+      nodes.forEach(item => {
+        let randomRadian = 2 * Math.PI * (Math.random() - 0.5)
+        item.style.transform = `rotate(${15 * (Math.random() - 0.5)}deg) translate(${60 * Math.cos(randomRadian)}px, ${30 * Math.sin(randomRadian)}px) rotate(${15 * (Math.random() - 0.5)}deg)`;
+        item.style.opacity = 0;
+      })
+      setTimeout(() => {
+        replaceNode.parentNode.replaceChild(targetNode, replaceNode)
+        resolve()
+      }, time)
+    })
   })
 } 
 
