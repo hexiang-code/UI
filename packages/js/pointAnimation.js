@@ -32,12 +32,9 @@ async function pointAnimation (targetNode, time = 2000, params) {
 function pointContent (canvas, targetNode, replaceNode, time) {
   return new Promise(resolve => {
     let nodes = new NewFrame(canvas, canvasNums)
-    nodes.forEach((item, i) => {
-      item.style.transitionDelay = `${1.7 * i / nodes.length}s`
-      replaceNode.appendChild(item)
-    })
+    replaceNode.appendChild(nodes)
     setTimeout(() => {
-      nodes.forEach(item => {
+      [...replaceNode.children].forEach(item => {
         let randomRadian = 2 * Math.PI * (Math.random() - 0.5)
         item.style.transform = `rotate(${15 * (Math.random() - 0.5)}deg) translate(${60 * Math.cos(randomRadian)}px, ${30 * Math.sin(randomRadian)}px) rotate(${15 * (Math.random() - 0.5)}deg)`;
         item.style.opacity = 0;
@@ -68,12 +65,21 @@ function NewFrame(canvas, count = 32) {
               imageDatas[dataIndex].data[pixelIndex + offset] = originalData.data[pixelIndex + offset];
           }
       }
-  return imageDatas.map(data => {
-      let clone = canvas.cloneNode(true);
-      clone.getContext("2d").putImageData(data, 0, 0);
-      return clone;
-  });
+  // return imageDatas.map(data => {
+  //     let clone = canvas.cloneNode(true);
+  //     clone.getContext("2d").putImageData(data, 0, 0);
+  //     return clone;
+  // });
+  let fragement = document.createDocumentFragment()
+  imageDatas.forEach((data, i) => {
+    let clone = canvas.cloneNode(true)
+    clone.style.transitionDelay = `${1.7 * i / imageDatas.length}s`
+    clone.getContext("2d").putImageData(data, 0, 0)
+    fragement.appendChild(clone)
+  })
+  return fragement
 }
+
 
 export {
   pointAnimation
