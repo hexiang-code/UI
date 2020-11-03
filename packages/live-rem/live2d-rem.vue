@@ -2,22 +2,7 @@
   <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick">
     <transition-group name="liveRem__slow-in" tag="div">
       <div class="message" key="message" v-show="isShowLeimu && messageVisible">
-        <slot name="lovelyTips"></slot >
-        <!-- <span v-show="message.length > 0 && !confirm.visibel">{{message}}</span> -->
-        <!-- <div class="live-rem__confirm" v-if="confirm.visibel">
-          <div class="live-rem__confirm__title">
-            <span>{{ confirm.title }}</span>
-            <i class="iconfont message-icon close-icon">&#xe604;</i>
-          </div>
-          <div class="live-rem__confirm__content">
-            <i class="iconfont message-icon warn-icon">&#xe606;</i>
-            <span>{{confirm.message}}</span>
-          </div>
-          <div class="live-rem__confirm__buttom">
-            <div class="btn live-rem__confirm__confirm" ref="liveRemConfirmBtn">确认</div>
-            <div class="btn live-rem__confirm__cancel" ref="liveRemCancelBtn" v-if="confirm.showCancelButton">取消</div>
-          </div>
-        </div> -->
+        <render-custom :content="this.renderCustom" />
       </div>
       <div class="live-rem__talk-body" key="live-rem__talk-body" v-if="isTalk">
         <div class="live-rem__name">
@@ -45,6 +30,7 @@
 import { MESSAGE, textureConfig, meauList } from './config'
 import { startLive2d, loadAction } from './live2d-resource/startLive2d'
 import Vue from 'vue'
+import renderCustom from './render-custom'
 let messageTimer // 提示计时器
 let canvas // live2d画布
 export default {
@@ -97,7 +83,8 @@ export default {
         message: '', // 消息内容
         showCancelButton: true, // 取消按钮
       },
-      messageVisible: false // 消息盒子开关
+      messageVisible: false, // 消息盒子开关
+      renderCustom: true
     }
   },
 
@@ -110,10 +97,11 @@ export default {
 
   watch: {
     message (newVal) {
-      this.$slots.lovelyTips = newVal
-      this.$forceUpdate()
+      this.renderCustom = newVal
     }
   },
+
+  components: { renderCustom },
 
   created () {
     this.checkSleep()
@@ -280,7 +268,7 @@ export default {
         this.message = this.getRandomItem(text)
       }
       if (text && 
-          (typeof text === 'string' || Object.prototype.hasOwnProperty.call(text, 'componentOptions') )
+          (typeof text === 'string' || Object.prototype.hasOwnProperty.call(text, 'componentOptions'))
       ) this.message = text
       if (!this.message)  {
         this.messageVisible = false
@@ -316,7 +304,7 @@ export default {
         if (message) {
           this.messageVisible = true
           this.confirm = Object.assign({}, this.confirm, options, { visibel: true })
-          this.$slots.lovelyTips = (
+          this.renderCustom = (
             <div class="live-rem__confirm">
               <div class="live-rem__confirm__title">
                 <span>{ this.confirm.title }</span>
@@ -361,7 +349,8 @@ export default {
     // 进度条
     showProgress (options = {}) {
       options = Vue.observable({...options})
-      this.$slots.lovelyTips = (
+      this.messageVisible = true
+      this.renderCustom = (
         <div class="live-rem__progress">
           <div class="live-rem__progress-title">{ options.title || '蕾姆全力加载中···' }</div>
           <div class="live-rem__progress-line">
@@ -380,6 +369,11 @@ export default {
           </div>
         </div>
       )
+    },
+
+    // 关闭进度条
+    closeProgress () {
+      this.messageVisible = false
     }
   }
 }
