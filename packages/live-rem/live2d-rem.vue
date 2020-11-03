@@ -282,7 +282,10 @@ export default {
       if (text && 
           (typeof text === 'string' || Object.prototype.hasOwnProperty.call(text, 'componentOptions') )
       ) this.message = text
-      if (!this.message) return
+      if (!this.message)  {
+        this.messageVisible = false
+        return
+      }
       const { toastAction } = this.curTexture
       if (toastAction && Object.prototype.toString.call(toastAction) === "[object Object]") {
         let curAction = toastAction[type]
@@ -300,6 +303,7 @@ export default {
       }
       messageTimer = setTimeout(() => {
         this.messageVisible = false
+        this.message = ''
       }, time)
     },
 

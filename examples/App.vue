@@ -310,6 +310,7 @@ export default {
   mounted () {
     // this.testConfirm()
     // this.testProgress()
+    this.$refs.rem.showToast({text: '您当前采用访客模式访问本网站，您可以查看主人部分信息，但是不可以提交任何内容哟！', time: 10000})
   },
 
   methods: {
