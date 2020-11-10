@@ -7,7 +7,7 @@ const option = {
     },
 
     value: {
-      type: [String, Number]
+      type: [Boolean, String, Number]
     }
   },
 
