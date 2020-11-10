@@ -27,7 +27,7 @@ export default {
     // 可搜索
     filterable: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data () {
@@ -102,7 +102,7 @@ export default {
   methods: {
     selectVal (option) {
       let key = this.valueKey
-      let value = option[key] ? option[key] : option.label
+      let value = option[key] !== undefined ? option[key] : option.label
       this.$emit('input', value)
     },
 
@@ -132,7 +132,8 @@ export default {
   .select {
     position: relative;
     z-index: 9;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
 
     .select__input {
@@ -160,9 +161,8 @@ export default {
     }
 
     .select-icon {
-      position: absolute;
-      top: 10px;
-      right: 5px;
+      position: relative;
+      right: 25px;
       font-size: 20px;
       color: $theme-color;
       cursor: pointer;
