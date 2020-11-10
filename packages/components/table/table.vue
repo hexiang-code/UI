@@ -1,7 +1,6 @@
 
 
 <script>
-import store from '../../store'
 export default {
   name: 'hxTable',
   props: {
@@ -16,11 +15,19 @@ export default {
       default: true
     }
   },
-  data () {
-    return {
 
+  provide () {
+    return {
+      'table': this
     }
   },
+
+  data () {
+    return {
+      columns: [] // 列数据
+    }
+  },
+
   render () {
     return (
       <div class="table-container">
@@ -75,11 +82,11 @@ export default {
     )
   },
 
-  computed: {
-    columns () {
-      return store.getters.getTableColumn
-    }
-  },
+  // computed: {
+  //   columns () {
+  //     return store.getters.getTableColumn
+  //   }
+  // },
 
   mounted () {
   },
@@ -93,6 +100,15 @@ export default {
       } else {
         return '-'
       }
+    },
+
+    setColumn (column) {
+      if (this.columns.findIndex(item => item.uid === column._uid) === -1) this.columns.push(column)
+    },
+
+    delColumn (_uid) {
+      let index = this.columns.findIndex(item => item.uid === _uid)
+      if (index && index > -1) this.columns.splice(index, 1)
     }
   }
 }

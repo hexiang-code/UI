@@ -1,5 +1,4 @@
 <script>
-import store from '../../store'
 export default {
   name: 'hxTableColumn',
   props: {
@@ -37,6 +36,8 @@ export default {
     }
   },
 
+  inject: ['table'],
+
   data () {
     return {
       sort: '' // 排序类型
@@ -59,7 +60,7 @@ export default {
   },
 
   mounted () {
-    store.commit('setTableColumn', {
+    this.table.setColumn({
       columnContent: this.$scopedSlots.columnContent,
       ...this.$props,
       columnWidth: this.columnWidth,
@@ -108,7 +109,7 @@ export default {
   },
 
   destroyed () {
-    store.commit('delTableColumn', this._uid)
+    this.table.delColumn(this._uid)
   }
 }
 </script>

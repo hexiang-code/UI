@@ -77,6 +77,18 @@
     
 
     <hx-date-picker v-model="pickerRange" @selectComplete="dateSelect"></hx-date-picker>
+    <hx-table :tableData="hardwareArray">
+        <hx-table-column
+          :width="item.props === 'token' ? 400 : 0"
+          align="center"
+          :prop="item.props"
+          :label="item.label"
+          v-for="item in hardwareTitle"
+          :key="item.props"
+          sortable
+        >
+        </hx-table-column>
+      </hx-table>
     <div ref="testPoint" class="hardware-manager__table">
       <hx-table :tableData="loggerList" ref="testPoint1">
         <hx-table-column

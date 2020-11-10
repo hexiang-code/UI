@@ -1,5 +1,4 @@
 <script>
-import store from '../../store'
 import { debounce } from '../../assets/js/utils'
 export default {
   name: 'hxSelect',
@@ -34,14 +33,18 @@ export default {
   data () {
     return {
       optionsVisiable: false, // 下拉弹框
-      filterValue: '' // 查询关键字
+      filterValue: '', // 查询关键字
+      options: [] // 下拉条件
+    }
+  },
+
+  provide() {
+    return {
+      'select': this
     }
   },
 
   computed: {
-    options () {
-      return store.getters.getSelectOptions
-    },
 
     getValue () {
       let currentVal = this.options.find(item => item.value === this.value)
@@ -110,6 +113,15 @@ export default {
     filter (event) {
       if (!this.filterable) return
       this.filterValue = event.target.value
+    },
+
+    setOptions (option) {
+      if (this.options.findIndex(item => item.uid === option._uid) == -1) this.options.push(option)
+    },
+
+    delOptions (_uid) {
+      let index = this.options.findIndex(item => item.uid === _uid)
+      if (index && index > -1) this.options.splice(index, 1)
     }
   }
 }

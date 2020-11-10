@@ -1,4 +1,3 @@
-import store from  '../../store'
 const option = {
   name: 'hxOption',
   props: {
@@ -12,12 +11,14 @@ const option = {
     }
   },
 
+  inject: ['select'],
+
   render () {
     return ''
   },
 
   mounted () {
-    store.commit('setSelectOptions', {
+    this.select.setOptions({
       defaultSlot: this.$slots.default,
       ...this.$props,
       uid: this._uid
@@ -25,7 +26,7 @@ const option = {
   },
 
   destroyed () {
-    store.commit('delSelecteOptions', this._uid)
+    this.select.delOptions(this._uid)
   }
 }
 
