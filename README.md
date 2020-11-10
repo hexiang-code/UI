@@ -359,6 +359,7 @@ prop | 对应列内容的字段名 | String | - | - | 必填
 label | 对应列标题 | Sting | - | - | 必填
 sortable | 是否展示排序按钮 | Boolean | true/false | false | 否
 align | 文字对齐方式 | Sting | 'left'/'right'/'center' |left | 否
+width | 列宽 | Number | - | - | 否
 
 ##### Scoped slot
 name | 说明
@@ -380,3 +381,19 @@ format | 日期展示展示格式 | Sting | - | YYYY-MM-DD HH:mm:ss | 否
 事件名|说明|参数|返回值类型
 --|:--:|:--:|--:
 select-complete | 日期选择完成 | [start, end]: 日期范围 | void
+
+
+-----
+#### hx-select 下拉框选择
+参数|说明|类型|可选值|默认值|是否必填
+--|:--:|:--:|--:|:--:|:--
+value/v-model | 	绑定值 | String/Number/Boolean | - | - | true
+placeholder | 占位符 | Sting | - | 请选择 | 否
+disabled | 是否禁用 | Boolean | - | false | 否
+valueKey | 指定value值得key | Sting | - | value| 否
+filterable | 是否可搜索 |  boolean | true/false | false | 否
+
+##### slot
+name | 说明
+--|:--:|:--
+default | 自定义hx-option内容，filterable此时对自定义内容失效，只能搜索label内容

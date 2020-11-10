@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./css/_globalStyle.scss";
+@import "../assets/css/_globalStyle.scss";
 .dialog-bg {
   position: fixed;
   top: 0;

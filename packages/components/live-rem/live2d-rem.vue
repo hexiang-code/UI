@@ -388,7 +388,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-  @import '../css/_globalStyle.scss';
+  @import '../../assets/css/_globalStyle.scss';
   @mixin cycle ($rotate: 1) {
     animation: cycle-#{$rotate} .5s linear forwards;
     @keyframes cycle-#{$rotate} {

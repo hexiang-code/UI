@@ -47,7 +47,7 @@
 <script>
 import hxDialog  from './dialog'
 import imagePreview from './image-preview'
-import { debounce, throttle } from './js/utils'
+import { debounce, throttle } from '../assets/js/utils'
 export default {
   name: 'hxAlbum',
   components: {
@@ -155,7 +155,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @import './css/_globalStyle.scss';
+  @import '../assets/css/_globalStyle.scss';
   .album /deep/ {
     .window-utils {
       width: 800px;

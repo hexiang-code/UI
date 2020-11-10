@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import './css/_globalStyle.scss';
+  @import '../assets/css/_globalStyle.scss';
   .message {
     position: fixed;
     top: 0;

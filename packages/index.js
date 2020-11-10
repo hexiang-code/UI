@@ -1,28 +1,28 @@
-// 导出install方法
-import backgroundVideo from './background-video.vue'
-import dialog from './dialog'
-import drawer from './drawer.vue'
-import tree from './tree.vue'
-import hxFormItem from './form-item.vue'
-import loadAnimation from './load-animation.vue'
-import liveRem from './live-rem/live2d-rem.vue'
-import hxSwitch from './switch.vue'
-import slider from './slider.vue'
-import album from './album.vue'
-import pagination from './pagination.vue'
-import hxMessage from './meesage.vue'
-import hxTable from './table.vue'
-import hxTableColumn from './table-column.vue'
-import hxDatePicker from './date-picker/date-picker.vue'
-import './css/animation.css'
-// import './css/live2d.css'
-import './css/globalStyle.scss'
-import './css/baseIcon.scss'
-// import '../public/live-model/rem/rem.json'
-import canvasBg from './canvas-bg/canvas-bg.vue'
-import { createMouseAnimation } from './js/mouse-animation'
-import { directives } from './js/directive'
-import { filters } from './js/filters'
+import './assets/css/animation.css'
+import './assets/css/globalStyle.scss'
+import './assets/css/baseIcon.scss'
+import { createMouseAnimation } from './assets/js/mouse-animation'
+import { directives } from './assets/js/directive'
+import { filters } from './assets/js/filters'
+
+import backgroundVideo from './components/background-video.vue'
+import dialog from './components/dialog'
+import drawer from './components/drawer.vue'
+import tree from './components/tree.vue'
+import hxFormItem from './components/form-item.vue'
+import loadAnimation from './components/load-animation.vue'
+import liveRem from './components/live-rem/live2d-rem.vue'
+import hxSwitch from './components/switch.vue'
+import slider from './components/slider.vue'
+import album from './components/album.vue'
+import pagination from './components/pagination.vue'
+import hxMessage from './components/meesage.vue'
+import hxTable from './components/table/table.vue'
+import hxTableColumn from './components/table/table-column.vue'
+import hxDatePicker from './components/date-picker/date-picker.vue'
+import canvasBg from './components/canvas-bg/canvas-bg.vue'
+import select from './components/select/select.vue'
+import options from './components/select/option'
 const elementArray = [
   backgroundVideo,
   dialog,
@@ -39,7 +39,9 @@ const elementArray = [
   hxMessage,
   hxTable,
   hxTableColumn,
-  hxDatePicker
+  hxDatePicker,
+  select,
+  options
 ]
 
 const install = function (vue) {

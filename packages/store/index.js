@@ -4,10 +4,15 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     tableColumn: [], // 表格列
+    selectOptions: [] // 选择框选项
   },
   getters: {
     getTableColumn (state) {
       return state.tableColumn
+    },
+
+    getSelectOptions (state) {
+      return state.selectOptions
     }
   },
 
@@ -23,7 +28,20 @@ const store = new Vuex.Store({
           state.tableColumn = state.tableColumn.splice(index, 1)
         }
       }
-    }
+    },
+
+    setSelectOptions (state, val) {
+      if (state.selectOptions instanceof Array) state.selectOptions.push(val)
+    },
+
+    delSelecteOptions (state, id) {
+      if (id) {
+        let index = state.selectOptions && state.selectOptions.findIndex(item => item.uid == id)
+        if (index > -1) {
+          state.selectOptions = state.selectOptions.splice(index, 1)
+        }
+      }
+    },
   }
 })
 

@@ -6,28 +6,28 @@
     <hx-dialog title="你好" :dialogVisiable.sync="visiable" :isCurtain="false">
       <template>
         <hx-form-item label="书签名">
-          <input v-model="filterValue" type="text">
+          <input v-model="filterValue" type="text" />
         </hx-form-item>
         <hx-form-item label="书签名">
-          <input v-model="filterValue" type="text">
+          <input v-model="filterValue" type="text" />
         </hx-form-item>
       </template>
     </hx-dialog>
     <drawer :isShow.sync="testDrawer" :isModal="true">
-      <input v-model="filterValue" @blur="blur"/>
-      <div class="bookmarks-header__search" @dblclick ="deleteBtn">
-        search
-      </div>
-      <tree :tree="tree" :isExpandAll="false" ref="tree" :isShowCheckBox="isShowCheckBox" @nodeChange="nodeChange">
+      <input v-model="filterValue" @blur="blur" />
+      <div class="bookmarks-header__search" @dblclick="deleteBtn">search</div>
+      <tree
+        :tree="tree"
+        :isExpandAll="false"
+        ref="tree"
+        :isShowCheckBox="isShowCheckBox"
+        @nodeChange="nodeChange"
+      >
         <template #header>
-          <div>
-            头部
-          </div>
+          <div>头部</div>
         </template>
         <template #bottom>
-          <div>
-            底部
-          </div>
+          <div>底部</div>
         </template>
         <template #operation="treeItem">
           <div class="operation-btn">
@@ -44,7 +44,7 @@
     <button @click="testConfirm" v-drag>确认弹框</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem>
+    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem> -->
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
@@ -55,37 +55,54 @@
       {{sliderVal}}
     </div>
 
-    <hx-album :visible.sync="albumVisible" :imageList="imageList" :classList="classList" @onReachBottom="albumReachBottom">
-    </hx-album>
+    <hx-album
+      :visible.sync="albumVisible"
+      :imageList="imageList"
+      :classList="classList"
+      @onReachBottom="albumReachBottom"
+    ></hx-album>
     <!-- <hx-message :visibel.sync="hxMessageVisibel">
       <template #title>
         <span>你好</span>
       </template>
-    </hx-message> -->
+    </hx-message>-->
     <!-- <div class="menu">
       <ul class="menu-list" >
         <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
       </ul>
-    </div> -->
+    </div>-->
+    <hx-select v-model="selectVal" :filterable="false">
+      <hx-option v-for="(item, index) in loggerTitle" :value="item.props" :label="item.label" :key="index"></hx-option>
+    </hx-select>
+    
+
     <hx-date-picker v-model="pickerRange" @selectComplete="dateSelect"></hx-date-picker>
-    <div ref="testPoint" style="width: 1000px;" class="hardware-manager__table">
-      <hx-table :tableData="hardwareArray" ref="testPoint1">
-        <hx-table-column :prop="item.props" :label="item.label" v-for="item in hardwareTitle" :key="item.props" sortable>
-          <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
+    <div ref="testPoint" class="hardware-manager__table">
+      <hx-table :tableData="loggerList" ref="testPoint1">
+        <hx-table-column
+          :width="item.props === 'token' ? 400 : 0"
+          align="center"
+          :prop="item.props"
+          :label="item.label"
+          v-for="item in loggerTitle"
+          :key="item.props"
+          sortable
+        >
+          <!-- <template #columnContent="{cpuTemp}" v-if="item.props == 'cpuTemp'">
             <div>{{cpuTemp}}</div>
           </template>
-          <!-- <template #header="{ header: {props} = {} }">{{props}}</template> -->
+          <template #header="{ header: {props} = {} }">{{props}}</template>-->
         </hx-table-column>
       </hx-table>
     </div>
     <hx-pagination
       ref="pagination"
-      :total="totalPage" :page-size="3" 
-      :current-page.sync="currentPage" 
-      @current-change="currentPageChange">
-    </hx-pagination>
-  </div >
-  
+      :total="totalPage"
+      :page-size="3"
+      :current-page.sync="currentPage"
+      @current-change="currentPageChange"
+    ></hx-pagination>
+  </div>
 </template>
 
 <script>
@@ -260,6 +277,49 @@ const hardwareTitle = [
     label: '内存使用率'
   }
 ]
+const loggerTitle = [
+  {
+    props: 'userId',
+    label: '用户id'
+  },
+  {
+    props: 'userAccount',
+    label: '用户账户'
+  },
+  {
+    props: 'url',
+    label: '请求地址'
+  },
+  {
+    props: 'method',
+    label: '请求方式'
+  },
+  {
+    props: 'params',
+    label: '请求参数'
+  },
+  {
+    props: 'time',
+    label: '请求耗时'
+  },
+  {
+    props: 'token',
+    label: '用户token'
+  },
+  {
+    props: 'mode',
+    label: '用户身份'
+  },
+  {
+    props: 'error',
+    label: '错误信息'
+  },
+  {
+    props: 'createdAt',
+    label: '发生时间',
+    sortable: true
+  }
+]
 let hardwareArray = [
   {
     cpuTemp: '38 °C',
@@ -273,8 +333,20 @@ let hardwareArray = [
     memUseage: '30 %'
   }
 ]
-hardwareArray = Array.apply(null, {length: 10}).map(() => hardwareArray[0])
-// import backgroundVideo from 'backgroundVideo'
+let loggerList = [{
+  createdAt: 1604630787183,
+  error: JSON.stringify({"message":"你好啊，错了错了"}),
+  id: 22,
+  method: "GET",
+  mode: "superManager",
+  params: "{}",
+  time: 59,
+  token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2RlIjoic3VwZXJNYW5hZ2VyIiwidXNlckFjY291bnQiOiJrYWZlaWRvdSIsInVzZXJJZCI6OCwiaWF0IjoxNjA0NjI3ODAwLCJleHAiOjE2MDQ3MTQyMDB9.bEn2-efVa3BxREiqYdqClGOs3hbkxByvyOKsbUcZD5M",
+  updatedAt: 1604630787183,
+  url: "/api/user/getCurLoginUserInfo",
+  userAccount: null,
+  userId: 8,
+}]
 
 export default {
   name: 'app',
@@ -298,7 +370,10 @@ export default {
       hxMessageVisibel: true,
       hardwareArray,
       hardwareTitle,
-      pickerRange: []
+      pickerRange: [],
+      loggerTitle,
+      loggerList,
+      selectVal: ''
     }
   },
 
@@ -309,7 +384,7 @@ export default {
   // },
   mounted () {
     // this.testConfirm()
-    this.testProgress()
+    // this.testProgress()
   },
 
   methods: {
@@ -384,9 +459,8 @@ export default {
 </script>
 
 <style lang="scss">
-
-@mixin cycle ($rotate: 1) {
-  animation: cycle-#{$rotate} .5s linear forwards;
+@mixin cycle($rotate: 1) {
+  animation: cycle-#{$rotate} 0.5s linear forwards;
   @keyframes cycle-#{$rotate} {
     from {
       opacity: 0;
@@ -399,7 +473,7 @@ export default {
   }
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -419,7 +493,7 @@ export default {
 }
 
 .bookmarks-header__search:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -430,28 +504,29 @@ export default {
 }
 
 .bookmarks-header__search:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   border: 2px solid #1296db;
-  animation: search-animation 1s .5s linear infinite reverse;
+  animation: search-animation 1s 0.5s linear infinite reverse;
 }
 
 @keyframes search-animation {
-  0%, 100% {
-    clip: rect(0, 60px, 22px, 0)
+  0%,
+  100% {
+    clip: rect(0, 60px, 22px, 0);
   }
   25% {
-    clip: rect(0, 102px, 22px, 60px)
+    clip: rect(0, 102px, 22px, 60px);
   }
   50% {
-    clip: rect(20px, 102px, 40px, 60px)
+    clip: rect(20px, 102px, 40px, 60px);
   }
   75% {
-    clip: rect(22px, 40px, 40px, 0)
+    clip: rect(22px, 40px, 40px, 0);
   }
 }
 
@@ -530,7 +605,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  
+
   .table-container {
     position: relative;
   }

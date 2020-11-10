@@ -1,21 +1,5 @@
-<template>
-  <th>
-    <slot name="header" v-if="$scopedSlots.header" :header="{prop}"></slot>
-    <div :class="[
-      'cell',
-      {'cell_center': align === 'center'},
-      {'cell_right': align === 'right'}
-    ]" v-else>
-      <span>{{label}}</span>
-      <span class="sortable" v-if="sortable">
-        <i :class="['iconfont', 'sort-icon', 'asc-sort', {'sort-icon_selected': sort == 'asc' }]" @click="clickSort(1)">&#xe60b;</i>
-        <i :class="['iconfont', 'sort-icon', {'sort-icon_selected': sort == 'desc' }]" @click="clickSort(2)">&#xe60b;</i>
-      </span>
-    </div>
-  </th>
-</template>
 <script>
-import store from './store'
+import store from '../../store'
 export default {
   name: 'hxTableColumn',
   props: {
@@ -44,6 +28,12 @@ export default {
       validator: function (val) {
         return ['left', 'right', 'center'].includes(val)
       }
+    },
+
+    //列宽
+    width: {
+      type: [String, Number],
+      default: ''
     }
   },
 
@@ -56,6 +46,15 @@ export default {
   computed: {
     alignStyle () {
       return `text-align: ${this.align}`
+    },
+
+    // 列宽
+    columnWidth () {
+      return this.width ? 
+              typeof this.width == 'number' ? 
+                this.width + 'px' :
+                '' :
+              this.width
     }
   },
 
@@ -63,8 +62,35 @@ export default {
     store.commit('setTableColumn', {
       columnContent: this.$scopedSlots.columnContent,
       ...this.$props,
+      columnWidth: this.columnWidth,
       uid: this._uid
     })
+  },
+
+  render () {
+    return (
+      <th>
+        { this.$scopedSlots.header ? 
+          <slot name="header" header={this.prop}></slot> : 
+          <div class={[
+              'cell',
+              {'cell_center': this.align === 'center'},
+              {'cell_right': this.align === 'right'}
+            ]}
+          >
+            <span>{this.label}</span>
+            {
+              this.sortable ? 
+              <span class="sortable">
+                <i class={['iconfont', 'sort-icon', 'asc-sort', {'sort-icon_selected': this.sort == 'asc' }]} onClick={() => this.clickSort(1)}>&#xe60b;</i>
+                <i class={['iconfont', 'sort-icon', {'sort-icon_selected': this.sort == 'desc' }]} onClick={() => this.clickSort(2)}>&#xe60b;</i>
+              </span> :
+              ''
+            }
+          </div>
+        } 
+      </th>
+    )
   },
 
   methods: {
@@ -88,14 +114,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import './css/_globalStyle.scss';
+  @import '../../assets/css/_globalStyle.scss';
 
   .cell {
+    box-sizing: border-box;
     position: relative;
     display: inline-flex;
     align-items: center;
     width: 100%;
     text-align: left;
+    padding: 0 10px;
 
     .sortable {
       position: relative;
@@ -125,10 +153,12 @@ export default {
   }
 
   .cell_center {
-    text-align: center;
+    // text-align: center;
+    justify-content: center;
   }
 
   .cell_right {
-    text-align: right;
+    // text-align: right;
+    justify-content: flex-end;
   }
 </style>

@@ -32,7 +32,7 @@ export default {
 
   computed: {
     labelIconSrc () {
-      return this.labelIcon ? this.labelIcon : require('./image/leimu-icon.png')
+      return this.labelIcon ? this.labelIcon : require('../assets/image/leimu-icon.png')
     },
 
     labelWidthStyle () {
@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './css/_globalStyle.scss';
+@import '../assets/css/_globalStyle.scss';
 .login-input {
   display: flex;
   height: 60px;

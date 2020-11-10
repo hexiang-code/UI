@@ -304,7 +304,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '../css/_globalStyle.scss';
+  @import '../../assets/css/_globalStyle.scss';
 
   .date-picker__table {
     padding: 16px;

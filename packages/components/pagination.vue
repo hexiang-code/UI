@@ -1,5 +1,5 @@
 <script>
-import { pointAnimation } from './js/pointAnimation'
+import { pointAnimation } from '../assets/js/pointAnimation'
 const layoutString = 'prev, pager, next, jumper, total'
 const template = {
   total: function (h) { return <span class="total-number">共{this.total}条</span> },
@@ -176,7 +176,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @import './css/_globalStyle.scss';
+  @import '../assets/css/_globalStyle.scss';
   .pagination {
     display: flex;
     align-items: center;
