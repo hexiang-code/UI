@@ -1,6 +1,7 @@
 import './assets/css/animation.css'
-import './assets/css/globalStyle.scss'
-import './assets/css/baseIcon.scss'
+import { isDev } from './config/env-config'
+isDev && import('./assets/css/globalStyle.scss')
+isDev && import('./assets/css/baseIcon.scss')
 import { createMouseAnimation } from './assets/js/mouse-animation'
 import { directives } from './assets/js/directive'
 import { filters } from './assets/js/filters'
