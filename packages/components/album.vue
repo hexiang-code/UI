@@ -16,7 +16,7 @@
               <source :src="item.resourceUrl" type="video/ogg" />
             </video>
             <p>{{item.resourceName}}</p>
-            <i class="iconfont sel-icon selected" v-show="item.selected">&#xe8aa;</i>
+            <i class="iconfont sel-icon selected" v-show="imgIsSelect(item)">&#xe8aa;</i>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
               <button @click="deleteImage">删除</button>
               <div class="insert-image">
                 <button @click="$refs.selImage.click()">上传文件</button>
-                <input ref="selImage" v-show="false" type="file" @change="selImageChange($event)" :accept="accept" :multiple="multiple"/>
+                <input ref="selImage" v-show="false" type="file" @change="selImageChange($event)" :accept="accept" :multiple="uploadMultiple"/>
               </div>
             </div>
           </div>
@@ -75,7 +75,8 @@ export default {
       type: Array,
       required: true
     },
-    multiple: {
+    // 上传图片多选
+    uploadMultiple: {
       type: Boolean,
       default: false
     },
@@ -85,13 +86,34 @@ export default {
         return value > 0 && value < 1
       },
       default: 0.1
+    },
+    // 多选图片
+    selectMutiple: {
+      type: Boolean,
+      default: false
+    },
+
+    // 图片是否可以选中
+    selectable: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
     return {
       classId: '', // 当前相册分类id
       curImage: {}, // 当前选中的图片
-      imagePreviewVisible: false // 预览图片开关
+      imagePreviewVisible: false, // 预览图片开关
+      selectedImgList: [] // 被选择的图片列表 
+    }
+  },
+
+  computed: {
+    // 图片是否被选中
+    imgIsSelect () {
+      return function (imgItem) {
+        return this.selectable && this.selectedImgList.indexOf(imgItem) > -1
+      }
     }
   },
 
@@ -109,9 +131,27 @@ export default {
   },
 
   created () {
-    // 双击选中图片
+    /**
+     * 选择图片
+     * @param {Object} imageItem 图片数据
+     * @param {Number} 1:点击 2:双击
+     */
     this.selImage = debounce((imageItem, type) => {
-      if (type == 2) this.$set(imageItem, 'selected', !imageItem.selected)
+      if (type == 2) {
+        // 如果可多选
+        if (this.selectMutiple) {
+          let index = this.selectedImgList.indexOf(imageItem)
+          index > -1 && this.selectedImgList.splice(index, 1)
+          if (index == -1) {
+            this.selectedImgList.push(imageItem)
+            this.selectedImgList = Array.from(new Set(this.selectedImgList))
+          }
+        } else {
+          let selectedImgList = []
+          selectedImgList.push(imageItem)
+          this.selectedImgList = selectedImgList
+        }
+      }
       if (type == 1) {
         this.curImage = imageItem 
         this.imagePreviewVisible = true
@@ -135,14 +175,14 @@ export default {
 
     // 删除图片
     deleteImage () {
-      let selectedImages = this.imageList.filter(item => item.selected)
-      this.$emit('deleteImage', selectedImages)
+      let selectedImages = this.selectedImgList
+      this.$emit('deleteImage', this.selectable ? selectedImages : null)
     },
 
     // 确认选择图片
     confirm () {
-      let selectedImages = this.imageList.filter(item => item.selected)
-      this.$emit('confirm', selectedImages)
+      let selectedImages = this.selectedImgList
+      this.$emit('confirm', this.selectable ? selectedImages : null)
       this.$emit('update:visible', false)
     },
 
@@ -214,7 +254,8 @@ export default {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          
+          cursor: pointer;
+
           .selected {
             position: absolute;
             top: 0;
@@ -262,6 +303,7 @@ export default {
           border: none;
           color: #fff;
           outline: none;
+          cursor: pointer;
         }
       }
       

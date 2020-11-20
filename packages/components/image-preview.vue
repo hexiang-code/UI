@@ -90,7 +90,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1002;
+    z-index: 2002;
     
     img, video {
       position: relative;

@@ -281,8 +281,10 @@ ismodal | 是否需要幕布背景 | Boolean | true/false  | - | 否
 imageList | 图片或视频信息数组(imageItem见下表) | Array | - | - | 是
 accept | 文件上传是接收的文件烈性 | String | - | image/jpeg,image/png,video/mp4
 classList | 相册分类数组(classItem 见下表) | Array | - | - | 是
-multiple | 是否允许多选文件 | Boolean | true/false | false
-reachBottomRate | 触底比例（大于0 小于1） | Number | - | -
+uploadMultiple | 上传文件是否允许多选文件 | Boolean | true/false | false | 否
+reachBottomRate | 触底比例（大于0 小于1） | Number | - | - | 否
+selectMutiple | 图片列表是否可以多选 | Boolean | true/false | false | 否
+selectable | 图片是否可以选中 | Boolean | true/false | false | 否
 ###### imageItem
 参数|说明|类型|可选值|默认值|是否必填
 --|:--:|:--:|--:|:--:|:--
