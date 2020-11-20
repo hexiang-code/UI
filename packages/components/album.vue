@@ -6,7 +6,7 @@
           <div :class="classId == item.id ? 'selected' : ''" @click="classId = item.id" v-for="item in classList" :key="item.id">{{item.className}}</div>
         </div>
         <div class="right" @scroll="albumScroll" ref="albumList">
-          <div class="image-item" title="单击预览，双击选中图片" v-for="(item, index) in imageList" :key="index" @click="selImage(item, 1)" @dblclick="selImage(item, 2)">
+          <div class="image-item" title="单击预览，双击选中图片" v-for="(item, index) in imageList" :key="index" @click.capture="selImage(item, 1)" @dblclick.capture="selImage(item, 2)">
             <img v-if="item.type == 'image'" :src="item.resourceUrl" v-imgLazy>
             <video
               v-if="item.type == 'video'"
