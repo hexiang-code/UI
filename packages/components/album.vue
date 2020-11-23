@@ -156,7 +156,7 @@ export default {
         this.curImage = imageItem 
         this.imagePreviewVisible = true
       }
-    }, 200, this)
+    }, 500, this)
 
     // 监听窗口滚动事件
     this.albumScroll = throttle($event => {
