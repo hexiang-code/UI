@@ -1,4 +1,4 @@
-import { defaultOption } from './defaultOption'
+import { defaultOption } from './default-option'
 class ImageLazy {
   constructor(options = {}) {
     this.options = Object.assign(defaultOption, options)

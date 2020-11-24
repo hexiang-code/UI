@@ -2,7 +2,7 @@ import './assets/css/animation.css'
 process.env.NODE_ENV == 'development' && import('./assets/css/globalStyle.scss')
 process.env.NODE_ENV == 'development' && import('./assets/css/baseIcon.scss')
 import { createMouseAnimation } from './assets/js/mouse-animation'
-import { directives } from './assets/js/directive'
+import { directives } from './assets/js/directive/index'
 import { filters } from './assets/js/filters'
 
 import backgroundVideo from './components/background-video.vue'

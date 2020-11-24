@@ -44,7 +44,7 @@
     <button @click="testConfirm" v-drag>确认弹框</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem>
+    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem> -->
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
@@ -114,6 +114,10 @@
       :current-page.sync="currentPage"
       @current-change="currentPageChange"
     ></hx-pagination>
+
+    <div class="test-open" ref="test-open">
+      <i class="iconfont notes-icon" v-open="{target: $refs['test-open'], targetClass: 'test-close', height: 100}">&#xe67c;</i>
+    </div>
   </div>
 </template>
 
@@ -470,7 +474,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @mixin cycle($rotate: 1) {
   animation: cycle-#{$rotate} 0.5s linear forwards;
   @keyframes cycle-#{$rotate} {
@@ -625,4 +629,21 @@ export default {
     font-size: 12px;
   }
 }
+
+.test-open {
+  width: 300px;
+  height: 300px;
+  max-height: 300px;
+  border: 1px solid;
+  margin-bottom: 300px;
+  cursor: pointer;
+
+  .test-close {
+    height: 200px;
+    max-height: 200px;
+    overflow: hidden;
+  }
+}
+
+
 </style>

@@ -1,3 +1,6 @@
+/* 分离出动画和类名，分为两个文件 */
+
+
 /*  抽屉右边打开动画 */
 .drawer-open-right-enter-active {
   animation: open-translate-right .3s forwards;
@@ -135,7 +138,7 @@
     }
   }
   
-  /* 鼠标点击动画 */
+  /* 鼠标点击爱心上浮动画 */
   .lovely-icon {
     position: fixed;
     top: 100px;
@@ -145,6 +148,7 @@
     z-index: 10000;
     animation: lovely-translate 1s forwards linear;
   }
+
   .lovely-icon__left {
     position: absolute;
     top: 0;
@@ -275,4 +279,28 @@
     transition: transform 1s ease-out, opacity 1s ease-out;
     opacity: 1;
     transform: rotate(0deg) translate(0px, 0px) rotate(0deg);
+  }
+
+  /* 闪烁动画 */
+  @keyframes twinkle {
+    0%, 100% {
+      transform: scale(1);
+      opacity: .6;
+    }
+
+    50% {
+      transform: scale(1.5);
+      opacity: 1;
+    }
+  }
+
+
+  .element-transition {
+    transition: all .3s;
+  }
+
+  .element-close {
+    height: 100px;
+    max-height: 100px;
+    overflow: hidden;
   }
