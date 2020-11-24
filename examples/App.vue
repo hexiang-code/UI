@@ -116,7 +116,7 @@
     ></hx-pagination>
 
     <div class="test-open" ref="test-open">
-      <i class="iconfont notes-icon" v-open="{target: $refs['test-open'], targetClass: 'test-close', height: 100}">&#xe67c;</i>
+      <i class="iconfont notes-icon" v-open="{target: $refs['test-open']}">&#xe67c;</i>
     </div>
   </div>
 </template>

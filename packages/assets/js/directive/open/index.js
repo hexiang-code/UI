@@ -10,9 +10,10 @@ const open = Vue => {
     let { value: { target, targetClass, height } = {} } = binding
     // 如果指定需要开关的节点
     if (target) {
-      let tartgetNode = target instanceof HTMLElement ? target : document.getElementById(target)
-      tartgetNode.classList.add('element-transition')
-      el.addEventListener('click',$event => targetNodeHandler($event, tartgetNode, targetClass, height), false)
+      let targetNode = target instanceof HTMLElement ? target : document.getElementById(target)
+      targetNode.classList.add('element-transition')
+      targetNode.style.height = `${targetNode.getBoundingClientRect().height}px`
+      el.addEventListener('click',$event => targetNodeHandler($event, targetNode, targetClass, height), false)
     }
   })
 }
