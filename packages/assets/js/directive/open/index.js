@@ -12,7 +12,6 @@ const open = Vue => {
     if (target) {
       let targetNode = target instanceof HTMLElement ? target : document.getElementById(target)
       targetNode.classList.add('element-transition')
-      targetNode.style.height = `${targetNode.getBoundingClientRect().height}px`
       el.addEventListener('click',$event => targetNodeHandler($event, targetNode, targetClass, height), false)
     }
   })
