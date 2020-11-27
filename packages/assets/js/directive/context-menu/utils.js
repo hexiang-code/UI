@@ -14,7 +14,7 @@ function createCtxMenu (h, ctx, menuList, clientX, clientY) {
 function getMenuList (h, ctx, menuList) {
   // 如果menuList是vNode，直接渲染menuList
   if (Object.prototype.hasOwnProperty.call(menuList, 'componentOptions')) {
-    return menuList
+  return <li>{ menuList }</li>
   } else if (Array.isArray(menuList)) { // 如果是数组
     return (
       menuList.map(menu => {
@@ -30,7 +30,11 @@ function getMenuList (h, ctx, menuList) {
               label 
                 ? Object.prototype.hasOwnProperty.call(label, 'componentOptions') 
                   ? label 
-                  : ctx.$createElement('span', label)
+                  : ctx.$createElement('span', {
+                    domProps: {
+                      innerHTML: label
+                    }
+                  })
                 : ''
                 
             }
@@ -39,7 +43,11 @@ function getMenuList (h, ctx, menuList) {
       })
     )
   } else {
-    return ctx.$createElement('li', menuList)
+    return ctx.$createElement('li', {
+      domProps: {
+        innerHTML: menuList
+      }
+    })
   }
 }
 

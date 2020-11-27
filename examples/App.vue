@@ -367,6 +367,8 @@ let loggerList = [{
 export default {
   name: 'app',
   data () {
+    let testDiv = document.createElement('div')
+    testDiv.innerHTML = '你好'
     return {
       tree: tree,
       visiable: false,
@@ -404,20 +406,13 @@ export default {
           }
         },
         {
-          label: <span>你好</span>,
+          label: '<span>你好</span>',
           clickCallback: () => {
             console.log('点击了编辑3按钮')
           }
         }
       ],
-      testMeauList1: [
-        {
-          label: '新增',
-          clickCallback: () => {
-            console.log('点击了新增按钮')
-          }
-        }
-      ]
+      testMeauList1: '<span>你好</span>'
     }
   },
 

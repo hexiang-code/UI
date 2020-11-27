@@ -1,6 +1,7 @@
 import { createCtxMenu } from './utils'
-let parent
-
+let parent = document.createElement('div')
+document.body.appendChild(parent)
+let ctxMenu // 右键菜单实例
 const contextMenu = Vue => {
   Vue.directive('ctxmenu', function (el, binding, vNode) {
     let { value: { menuList } = {} } = binding
@@ -9,20 +10,27 @@ const contextMenu = Vue => {
       // el.addEventListener('contextmenu', ctxmenuHandler, false)
       el.oncontextmenu = function ($event) {
         $event.preventDefault()
-        parent && parent.parentNode && parent.parentNode.removeChild(parent)
         let { clientX, clientY } = $event
-        parent = document.createElement('div')
-        document.body.appendChild(parent)
-        const ctxMenu = new Vue({
-          data() {
-            return {
-              visible: true
-            }
-          },
-          render: function (h) {
-            return this.visible ? createCtxMenu.call(this, h, ctx, menuList, clientX, clientY) : ''
-          } 
-        }).$mount(parent)
+        if (!ctxMenu) {
+          ctxMenu = new Vue({
+            data() {
+              return {
+                clientX,
+                clientY,
+                menuList,
+                visible: true
+              }
+            },
+            render: function (h) {
+              return this.visible ? createCtxMenu.call(this, h, ctx, this.menuList, this.clientX, this.clientY) : ''
+            } 
+          }).$mount(parent)
+        } else {
+          ctxMenu.menuList = menuList
+          ctxMenu.clientX = clientX
+          ctxMenu.clientY = clientY
+          ctxMenu.visible = true
+        }
         document.onclick = function ($event) {
           const ctxNode = ctxMenu.$el
           let { target } = $event
