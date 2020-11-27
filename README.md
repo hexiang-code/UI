@@ -394,6 +394,7 @@ placeholder | 占位符 | Sting | - | 请选择 | 否
 disabled | 是否禁用 | Boolean | - | false | 否
 valueKey | 指定value值得key | Sting | - | value| 否
 filterable | 是否可搜索 |  boolean | true/false | false | 否
+multiple | 是否多选 | boolean | true/false | false | 否
 
 ##### slot
 name | 说明

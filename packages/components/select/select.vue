@@ -34,7 +34,7 @@ export default {
     // 可多选
     multiple: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data () {
