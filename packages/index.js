@@ -47,9 +47,9 @@ const elementArray = [
 const install = function (vue) {
   elementArray.forEach(item =>{
     vue.component(item.name, item)
-    directives(vue)
     filters(vue)
   })
+  directives(vue)
   createMouseAnimation()
 }
 

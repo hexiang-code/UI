@@ -37,8 +37,8 @@
         </template>
       </tree>
     </drawer>
-    <button @click="visiable = !visiable" v-drag>弹框</button>
-    <button @click="albumVisible = !albumVisible" v-drag>相册</button>
+    <button @click="visiable = visiable" v-drag v-ctxmenu="{menuList}">弹框</button>
+    <button @click="albumVisible = !albumVisible" v-drag v-ctxmenu="{menuList: testMeauList1}">相册</button>
     <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
     <button @click="testConfirm" v-drag>确认弹框</button>
@@ -71,7 +71,7 @@
         <li v-for="item in meauList" :key="item.name">{{item.name}}</li>
       </ul>
     </div>-->
-    <hx-select v-model="selectVal" :filterable="false">
+    <hx-select v-model="selectVal" :filterable="true">
       <hx-option v-for="(item, index) in loggerTitle" :value="item.props" :label="item.label" :key="index"></hx-option>
     </hx-select>
     
@@ -89,7 +89,7 @@
         >
         </hx-table-column>
       </hx-table>
-    <div ref="testPoint" class="hardware-manager__table">
+    <div ref="testPoint" class="hardware-manager__table" @resize="console.log(213)">
       <hx-table :tableData="loggerList" ref="testPoint1">
         <hx-table-column
           :width="item.props === 'token' ? 400 : 0"
@@ -389,7 +389,35 @@ export default {
       pickerRange: [],
       loggerTitle,
       loggerList,
-      selectVal: ''
+      selectVal: '用户账户',
+      menuList: [
+        {
+          label: '编辑',
+          clickCallback: () => {
+            console.log('点击了编辑1按钮')
+          }
+        },
+        {
+          label: '编辑',
+          clickCallback: () => {
+            console.log('点击了编辑2按钮')
+          }
+        },
+        {
+          label: <span>你好</span>,
+          clickCallback: () => {
+            console.log('点击了编辑3按钮')
+          }
+        }
+      ],
+      testMeauList1: [
+        {
+          label: '新增',
+          clickCallback: () => {
+            console.log('点击了新增按钮')
+          }
+        }
+      ]
     }
   },
 
