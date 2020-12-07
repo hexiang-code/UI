@@ -1,5 +1,5 @@
 <template>
-  <div v-drag class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick">
+  <div v-drag="{limit: 'window'}" class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick">
     <transition-group name="liveRem__slow-in" tag="div">
       <div class="message" key="message" v-show="isShowLeimu && messageVisible">
         <render-custom :content="this.renderCustom" />

@@ -42,6 +42,7 @@
     <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
     <button @click="testConfirm" v-drag>确认弹框</button>
+    <button @click="testTextChange" @mousedown="testText = '你好'" v-drag>{{testText}}</button>
     <input />
     <button @click="checkbox">checkBox</button>
     <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem> -->
@@ -51,7 +52,7 @@
         <span slot="switchRight">11</span>
         <span slot="switchLeft">你好</span>
       </hx-switch>
-      <hx-slider v-model="sliderVal" :toFixed="2" :max="1" :min="0.8"></hx-slider>
+      <hx-slider v-model="sliderVal" :toFixed="2" :max="100" :min="0" direction="X"></hx-slider>
       {{sliderVal}}
     </div>
 
@@ -118,6 +119,15 @@
     <div class="test-open" ref="test-open">
       <i class="iconfont notes-icon" v-open="{target: $refs['test-open']}">&#xe67c;</i>
     </div>
+
+    <hx-music
+      :musicLyric="musicLyric"
+      musicSrc="http://localhost:3000/assets/kafeidou/test-music.mp3"
+      musicFaceSrc="https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
+      singer="迟木"
+      song="一千万"
+    >
+    </hx-music>
   </div>
 </template>
 
@@ -170,7 +180,45 @@ const tree = {
     }
   ]
 }
-
+const musicLyric = `[00:00.000] 作词 : 迟木
+[00:01.000] 作曲 : 迟木
+[00:24]没有酒 而我醉好几夜
+[00:30]没有风 却飘在青雾间
+[00:36]没朝夕 只有我 与神仙
+[00:48]没有山 犹立在云之巅
+[00:54]没有船 也渡到苦海边
+[01:00]没日月 只有我 和妖孽
+[01:12]飘不到 一千万座岛屿
+[01:17]赶不上 一千万次花期
+[01:24]我梦了 一千万道涟漪
+[01:31]全是你
+[01:37]不愿留 一千万页过去
+[01:42]换最后 一千万首怨曲
+[01:49]我所求 一千万个故事
+[01:55]只有你
+[02:00]没有诗 捉呓语谱作曲
+[02:06]没有琴 戏流水弄笑语
+[02:12]没鬼神 只有我 只有你
+[02:48]没有灯 铜铃声照四壁
+[02:54]没有火 燃烧爱与身体
+[03:00]没天地 还有我 还有你
+[03:12]飘不到 一千万座岛屿
+[03:19]赶不上 一千万次花期
+[03:25]我梦了 一千万道涟漪
+[03:30]全是你
+[03:37]不愿留 一千万页过去
+[03:43]换最后 一千万首怨曲
+[03:50]我所求 一千万个故事
+[03:55]只有你
+[04:18]全是你
+[04:24]不愿留 一千万页过去
+[04:31]换最后 一千万首怨曲
+[04:37]我所求 一千万个故事
+[04:42]只有你
+[04:48]没有酒 而我醉好几夜
+[04:54]没有风 却飘在青雾间
+[05:00]没朝夕 只有我 与神仙
+`
 const imageList = [
           {
             id: 1,
@@ -370,6 +418,7 @@ export default {
     let testDiv = document.createElement('div')
     testDiv.innerHTML = '你好'
     return {
+      testText: '测试文字',
       tree: tree,
       visiable: false,
       testDrawer: false,
@@ -391,7 +440,16 @@ export default {
       pickerRange: [],
       loggerTitle,
       loggerList,
-      selectVal: '用户账户',
+      selectVal: [
+        {
+          props: 'userId',
+          label: '用户id'
+        },
+        {
+          props: 'userAccount',
+          label: '用户账户'
+        }
+      ],
       menuList: [
         {
           label: '编辑',
@@ -412,7 +470,8 @@ export default {
           }
         }
       ],
-      testMeauList1: '<span>你好</span>'
+      testMeauList1: '<span>你好</span>',
+      musicLyric
     }
   },
 
@@ -491,6 +550,14 @@ export default {
         console.log('用户点击同意')
       }).catch(err => {
         console.log(err)
+      })
+    },
+
+    async testTextChange () {
+      // this.testText = '你好'
+      // await this.$nextTick()
+      Array.apply(null, {length: 10000}).forEach(() => {
+        console.log(123)
       })
     }
   }

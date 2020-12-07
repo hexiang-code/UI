@@ -23,6 +23,7 @@ import hxDatePicker from './components/date-picker/date-picker.vue'
 import canvasBg from './components/canvas-bg/canvas-bg.vue'
 import select from './components/select/select.vue'
 import options from './components/select/option'
+import music from './components/music/music.vue'
 const elementArray = [
   backgroundVideo,
   dialog,
@@ -41,7 +42,8 @@ const elementArray = [
   hxTableColumn,
   hxDatePicker,
   select,
-  options
+  options,
+  music
 ]
 
 const install = function (vue) {

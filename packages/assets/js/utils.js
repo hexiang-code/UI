@@ -31,6 +31,11 @@ function throttle(fn, wait = 200, ctx = null) {
   }
 }
 
+/**
+ * 格式化时间
+ * @param {String} formatText 日期格式
+ * @param {Number} timestamp 时间戳
+ */
 function formatDate(formatText, timestamp = +new Date()) {
   const _getFullDate = val => {
     if (String(val).length < 2) {

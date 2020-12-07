@@ -5,7 +5,7 @@ import { limitTranslate } from './utils'
  * @param {Number} initX 初始化x轴位置以屏幕左上角为原点
  * @param {Number} initY 初始化y轴位置以屏幕左上角为原点
  * @param {Function} moveCb 拖动元素回调函数，参数为{x, y}携带相对原点位置的对象
- * @param {Boolean} [limit = true] 该元素是否限制在屏幕内拖动
+ * @param {Boolean} [limit = parent] 该元素是否限制拖动, 'parent': 在父节点里限制, window: 在窗口里限制, ''：则不限制
  * @param {Number} arg 参数为X/Y,可限制元素在某一方向(x轴/y轴)拖动
  */
 const drag = Vue => {
@@ -15,8 +15,8 @@ const drag = Vue => {
         let { arg , value: {
           initX, initY, moveCb, limit
         } = {} } = binding
-        if (initX) el.style.left = `${initX}px`
-        if (initY) el.style.left = `${initY}px`
+        if (String(initX)) el.style.left = `${initX}px`
+        if (String(initY)) el.style.top = `${initY}px`
         el.onmousedown = ($event) => {
           if (!arg) {
             disX = $event.pageX - el.offsetLeft
