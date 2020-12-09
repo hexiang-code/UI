@@ -248,6 +248,7 @@ export default {
      * @param {type} 1:上一曲 2:下一曲
      */
     changeMusic (type) {
+      this.isStratMusic = false
       type == 1 && this.$emit('up')
       type == 2 && this.$emit('next')
     },
