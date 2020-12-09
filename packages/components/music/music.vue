@@ -507,6 +507,7 @@ export default {
 
         .singer {
           margin-left: 12px;
+          white-space: nowrap;
           font-size: 14px;
           color: #666;
           color: $theme-color;
