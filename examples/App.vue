@@ -122,7 +122,9 @@
 
     <hx-music
       :musicLyric="musicLyric"
-      musicSrc="http://localhost:3000/assets/kafeidou/test-music.mp3"
+      :musicSrc="musicSrc"
+      ref="music-box"
+      @end="musicEnd"
       musicFaceSrc="https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
       singer="迟木"
       song="一千万"
@@ -471,7 +473,8 @@ export default {
         }
       ],
       testMeauList1: '<span>你好</span>',
-      musicLyric
+      musicLyric,
+      musicSrc: 'http://localhost:3000/assets/kafeidou/test-music.mp3'
     }
   },
 
@@ -559,6 +562,11 @@ export default {
       Array.apply(null, {length: 10000}).forEach(() => {
         console.log(123)
       })
+    },
+
+    musicEnd () {
+      this.musicSrc = 'http://m8.music.126.net/20201209151658/fca87ecb505ace967c2668ff720815f9/ymusic/0e58/0453/5609/920c678a2c39b263f1c4ac58e2593712.mp3'
+      this.$refs['music-box'].musicSwitch()
     }
   }
 }

@@ -126,6 +126,7 @@ export default {
       } else {
         this.$refs['music-box'].pause()
       }
+      stopOrStartMusicCanvas(this.isStratMusic)
     },
 
     volume (newVal) {
@@ -178,7 +179,7 @@ export default {
                   value={this.volume} onInput={val => this.volume = val}>
                 </hx-silder>
               </span>
-              { this.formatTime(this.currentTime) }&nbsp;/&nbsp;{ this.formatTime(this.duration) }
+              { this.formatTimeFromSencondToMinute(this.currentTime) }&nbsp;/&nbsp;{ this.formatTimeFromSencondToMinute(this.duration) }
             </div>
           </div>
         </div>
@@ -205,7 +206,6 @@ export default {
     // 音乐开关
     musicSwitch () {
       this.isStratMusic = !this.isStratMusic
-      stopOrStartMusicCanvas(this.isStratMusic)
     },
 
     // 音乐播放进度
@@ -219,8 +219,8 @@ export default {
       if (this.playMode == 'circulation') {
         this.playMusicFromTarget(0)
       }
-      this.$emit('end', this.playMode)
       this.isStratMusic = false
+      this.$emit('end', this.playMode)
     },
 
     /**
@@ -232,8 +232,8 @@ export default {
       type == 2 && this.$emit('next')
     },
 
-    // 格式化时间
-    formatTime (val) {
+    // 格式化时间(秒(60)->分钟(1:0))
+    formatTimeFromSencondToMinute (val) {
       if (this.progressUnit === 'm') {
         let min = Math.floor(val / 60)
         let second = Math.floor(val % 60)
@@ -261,23 +261,47 @@ export default {
         let time = matchInfo['1']
         let lyricText = matchInfo['2']
         if (time) {
-          let startTimesArray = time.split(':')
           let nextLyricInfo = lyricArray[index+1].match(reg)
-          if (!nextLyricInfo) return
-          let endTimesArray = nextLyricInfo[1].split(':')
-          // 一个':' 能分割成连个数组,则最大时间为分钟
-          if (startTimesArray.length == 2 && endTimesArray.length == 2) {
-            let startTimestamp = Number(startTimesArray[0]) * 60 + Number(startTimesArray[1])
-            let endTimestamp = Number(endTimesArray[0]) * 60 + Number(endTimesArray[1])
-            if (currentTime >= startTimestamp && currentTime < endTimestamp && this.lyricText !== lyricText) {
+          let startTimestamp = this._formatTimeFromMinuteToSecond(time)
+          // 如果不存在结束时间，则此时歌词到了最后一句
+          if (!nextLyricInfo) {
+            if (currentTime >= startTimestamp  && this.lyricText !== lyricText) {
               this.lyricColor = randomColor()
               this.lyricText = lyricText
-              return
             }
+            return
           }
+          let endTimestamp = this._formatTimeFromMinuteToSecond(nextLyricInfo[1])
+          if (currentTime >= startTimestamp && currentTime < endTimestamp && this.lyricText !== lyricText) {
+            this.lyricColor = randomColor()
+            this.lyricText = lyricText
+            return
+          }
+
+          // let startTimesArray = time.split(':')
+          // let nextLyricInfo = lyricArray[index+1].match(reg)
+          // if (!nextLyricInfo) return
+          // let endTimesArray = nextLyricInfo[1].split(':')
+          // // 一个':' 能分割成连个数组,则最大时间为分钟
+          // if (startTimesArray.length == 2 && endTimesArray.length == 2) {
+          //   let startTimestamp = Number(startTimesArray[0]) * 60 + Number(startTimesArray[1])
+          //   let endTimestamp = Number(endTimesArray[0]) * 60 + Number(endTimesArray[1])
+          //   if (currentTime >= startTimestamp && currentTime < endTimestamp && this.lyricText !== lyricText) {
+          //     this.lyricColor = randomColor()
+          //     this.lyricText = lyricText
+          //     return
+          //   }
+          // }
         }
         index++
       }
+    },
+
+    // 格式化时间 (分钟(1:0)->秒(60))
+    _formatTimeFromMinuteToSecond (minute) {
+      let timeArray = minute.split(':').reverse() 
+      // 将数组颠倒则得到[秒,分,...]这样的数组，歌词时间只算到分钟即可
+      return Number(timeArray[0]) + Number(timeArray[1]) * 60
     },
 
     // 音量滑块开关
