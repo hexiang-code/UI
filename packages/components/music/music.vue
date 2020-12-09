@@ -120,15 +120,6 @@ export default {
   },
 
   watch: {
-    // isStratMusic (newVal) {
-    //   if (newVal) {
-    //     this.$refs['music-box'].play()
-    //   } else {
-    //     this.$refs['music-box'].pause()
-    //   }
-    //   stopOrStartMusicCanvas(this.isStratMusic)
-    // },
-
     volume (newVal) {
       if (this.$refs['music-box']) this.$refs['music-box'].volume = newVal / 100
     }
@@ -152,7 +143,9 @@ export default {
           <i class="iconfont down" 
             onClick={() => this.changeMusic(2)}
             vShow={this.isMusicChangeVisible}>&#xe651;</i>
-          <i class="iconfont start" onClick={() => {this.musicSwitch()}} domProps={{innerHTML: this.isStratMusic ? '&#xe60f;' : '&#xe617;' }}></i>
+          <i class="iconfont start" 
+            onClick={() => this.isStratMusic ? this.pauseMusic() : this.playMusic()} 
+            domProps={{innerHTML: this.isStratMusic ? '&#xe60f;' : '&#xe617;' }}></i>
         </div>
         <div class="right">
           <div class="song-info">
@@ -224,8 +217,18 @@ export default {
     },
 
     // 音乐开关
-    musicSwitch () {
-      this.isStratMusic = !this.isStratMusic
+    // musicSwitch () {
+    //   this.isStratMusic = !this.isStratMusic
+    // },
+
+    // 开始播放
+    playMusic () {
+      this.isStratMusic = true
+    },
+
+    // 暂停播放
+    pauseMusic () {
+      this.isStratMusic = false
     },
 
     // 音乐播放进度
@@ -249,8 +252,8 @@ export default {
      */
     changeMusic (type) {
       this.isStratMusic = false
-      type == 1 && this.$emit('up')
-      type == 2 && this.$emit('next')
+      type == 1 && this.$emit('up', this.playMode)
+      type == 2 && this.$emit('next', this.playMode)
     },
 
     // 格式化时间(秒(60)->分钟(1:0))
