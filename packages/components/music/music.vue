@@ -149,7 +149,7 @@ export default {
         </div>
         <div class="right">
           <div class="song-info">
-            { this.song ? <span class="song">{this.song}</span> : '' }
+            { this.song ? <span class="song" title={this.song}>{this.song}</span> : '' }
             { this.singer ? <span class="singer">—&nbsp;{this.singer}</span> : '' }
           </div>
           <div class="lyric-info" style={this.isStratMusic && this.lyricText ? `opacity: 1;color: ${this.lyricColor};`: ''}>{this.lyricText}</div>
@@ -495,6 +495,10 @@ export default {
         margin-bottom: 16px;
 
         .song {
+          max-width: 150px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size: 20px;
           color: #000;
           font-weight: bold;
