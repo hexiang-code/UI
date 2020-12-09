@@ -36,7 +36,7 @@ function render() {
  * @param {HTMLNode} audioObj 
  */
 function musicCanvasInit (canvasObj, audioObj) {
-  audioObj.crossOrigin = "anonymous"
+  // audioObj.crossOrigin = "anonymous"
   AudioContext = window.AudioContext || window.webkitAudioContext;
   audioContext = new AudioContext();
   analyser = audioContext.createAnalyser()
