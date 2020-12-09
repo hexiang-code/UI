@@ -78,7 +78,8 @@ export default {
       volume: 50, // 音量
       lyricText: '', // 歌词
       lyricColor: '', // 歌词颜色
-      playMode: playMode[0].mode // 播放模式
+      playMode: playMode[0].mode, // 播放模式
+      isCanvasInit: false // 是否初始化音乐背景完毕
     }
   },
 
@@ -100,7 +101,6 @@ export default {
         this.$refs['mainCanvas'].height = musicInfo.height
       } 
     }
-    this.$refs['mainCanvas'] && this.$refs['music-box'] && musicCanvasInit(this.$refs['mainCanvas'], this.$refs['music-box'])
   },
 
   created () {
@@ -120,14 +120,14 @@ export default {
   },
 
   watch: {
-    isStratMusic (newVal) {
-      if (newVal) {
-        this.$refs['music-box'].play()
-      } else {
-        this.$refs['music-box'].pause()
-      }
-      stopOrStartMusicCanvas(this.isStratMusic)
-    },
+    // isStratMusic (newVal) {
+    //   if (newVal) {
+    //     this.$refs['music-box'].play()
+    //   } else {
+    //     this.$refs['music-box'].pause()
+    //   }
+    //   stopOrStartMusicCanvas(this.isStratMusic)
+    // },
 
     volume (newVal) {
       if (this.$refs['music-box']) this.$refs['music-box'].volume = newVal / 100
@@ -185,6 +185,7 @@ export default {
         </div>
       <audio 
           ref="music-box" 
+          onCanplay={() => this.musicCanPlay()}
           onTimeupdate={$event => this.musciProgress($event)}
           onLoadedmetadata={$event => this.getDuration($event)}
           onEnded={() => this.musicEnd()}
@@ -197,6 +198,25 @@ export default {
   },
 
   methods: {
+    // 音乐可以播放
+    musicCanPlay () {
+      this.$watch('isStratMusic', async newVal => {
+        await this.$nextTick()
+        if (newVal) {
+          this.$refs['music-box'].play()
+          if (!this.isCanvasInit) {
+            this.$refs['mainCanvas'] && this.$refs['music-box'] && musicCanvasInit(this.$refs['mainCanvas'], this.$refs['music-box'])
+            this.isCanvasInit = true
+          }
+        } else {
+          this.$refs['music-box'].pause()
+        }
+        stopOrStartMusicCanvas(this.isStratMusic)
+      }, {
+        sync: true
+      })
+    },
+
     // 获取歌曲时长
     getDuration ($event) {
       this.duration = Math.ceil($event.target.duration)
@@ -215,7 +235,7 @@ export default {
     },
 
     // 音乐播放完毕
-    musicEnd() {
+    async musicEnd() {
       if (this.playMode == 'circulation') {
         this.playMusicFromTarget(0)
       }
