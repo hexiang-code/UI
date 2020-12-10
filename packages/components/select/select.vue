@@ -192,18 +192,18 @@ export default {
 
   methods: {
     selectVal (option) {
-      let { multiple, selectedOptions } = this
+      let { multiple, value: values } = this
       let value = this.getTargetValue(option)
       // 如果不是多选
       if (!multiple) {
         this.$emit('input', value)
       } else {
-        let index = selectedOptions.findIndex(item => item === value)
-        if (index > -1) selectedOptions.splice(index, 1)
+        let index = values.findIndex(item => item === value)
+        if (index > -1) values.splice(index, 1)
         else {
-          selectedOptions.push(value)
+          values.push(value)
         }
-        this.$emit('input', selectedOptions)
+        this.$emit('input', values)
       }
       
     },
@@ -233,9 +233,10 @@ export default {
     
     // 删除已选中的选项
     delSelectedOptions (label) {
-      let value = this.options.find(option => option.label === label)
-      let index = this.selectedOptions.findIndex(selectedOption => selectedOption === value)
-      this.selectedOptions.splice(index, 1)
+      let value = this.getTargetValue(this.options.find(option => option.label === label))
+      let index = this.value.findIndex(selectedOption => selectedOption === value)
+      this.value.splice(index, 1)
+      this.$emit('input', this.value)
     }
   }
 }
