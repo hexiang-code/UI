@@ -24,13 +24,13 @@ class LoadingService {
    * @param {Boolean} isLoading 
    */
   _directiveLoading (isLoading) {
-    if(isLoading) {
+    if (isLoading) {
       this.el.classList.add('btn-loading', 'condensation-light')
       this.realTextContent = this.el.textContent
       this.el.textContent = this.message
     } else {
       this.el.classList.remove('btn-loading', 'condensation-light')
-      this.el.textContent = this.realTextContent
+      if (this.realTextContent) this.el.textContent = this.realTextContent
     }
   }
 
