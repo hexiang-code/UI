@@ -8,6 +8,7 @@ class LoadingService {
   } = {}) {
     this.type = type
     this.message = message
+    this.realTextContent = ''
     if (el instanceof Vue || el instanceof HTMLElement) this.el = el
     else throw new Error('el 必须是HTML节点或者vue实例')
   }
@@ -25,9 +26,11 @@ class LoadingService {
   _directiveLoading (isLoading) {
     if(isLoading) {
       this.el.classList.add('btn-loading', 'condensation-light')
+      this.realTextContent = this.el.textContent
       this.el.textContent = this.message
     } else {
       this.el.classList.remove('btn-loading', 'condensation-light')
+      this.el.textContent = this.realTextContent
     }
   }
 
