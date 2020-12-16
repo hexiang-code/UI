@@ -1,6 +1,3 @@
-/* 分离出动画和类名，分为两个文件 */
-
-
 /*  抽屉右边打开动画 */
 .drawer-open-right-enter-active {
   animation: open-translate-right .3s forwards;
@@ -81,262 +78,215 @@
   }
 }
 
-  /* 聚光灯效果 */
-  .condensation-light {
-    position: relative;
-  }
-  .condensation-light:before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    bottom: -2px;
-    left: 0;
-    background-color: pink;
-    border: 2px solid #fff;
-    opacity: .3;
-    animation: condensation-animation 1.5s infinite linear;
-  }
+/* 聚光灯效果 */
+.condensation-light {
+  position: relative;
+}
+.condensation-light:before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: 0;
+  background-color: pink;
+  border: 2px solid #fff;
+  opacity: .3;
+  animation: condensation-animation 1.5s infinite linear;
+}
 
-  .border-animation::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    bottom: -2px;
-    right: -2px;
-    left: -2px;
-    z-index: -1;
-    /* background-color: pink; */
-    background: linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
-    filter: blur(10px);
-    /* animation: condensation-animation 1.5s infinite linear; */
-  }
+.border-animation::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  right: -2px;
+  left: -2px;
+  z-index: -1;
+  /* background-color: pink; */
+  background: linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
+  filter: blur(10px);
+  /* animation: condensation-animation 1.5s infinite linear; */
+}
 
-  @keyframes condensation-animation {
-    0% {
-      width: 0%;
-    }
-
-    50% {
-      width: 90%;
-      opacity: 1;
-    }
-
-    100% {
-      width: 100%;
-      opacity: 0;
-    }
-  }
-  
-  /* 淡入淡出 */
-  @keyframes slow-in {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  /* 鼠标点击爱心上浮动画 */
-  .lovely-icon {
-    position: fixed;
-    top: 100px;
-    left: 100px;
-    width: 32px;
-    height: 32px;
-    z-index: 10000;
-    animation: lovely-translate 1s forwards linear;
+@keyframes condensation-animation {
+  0% {
+    width: 0%;
   }
 
-  .lovely-icon__left {
-    position: absolute;
-    top: 0;
-    left: 1px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #e5e5e5;
-  }
-
-  .lovely-icon__right {
-    position: absolute;
-    top: 0;
-    right: 1px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #e5e5e5;
-  }
-
-  .lovely-icon__center {
-    position: absolute;
-    top: 7px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 16px;
-    height: 16px;
-    background-color: #e5e5e5;
-    transform: rotate(45deg);
-  }
-
-  @keyframes lovely-translate {
-    0% {
-      transform: translateY(0%);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translateY(-100px);
-      opacity: 0.2;
-    }
-  }
-
-  .baiyechuang-leave-active {
-    mask: linear-gradient(to right, #000 calc(1% * var(--seed)), transparent calc(1% * var(--seed)));
-    mask-size: 20px;
-    animation: transition-baiyechuang .6s reverse;
-  }
-  /* 百叶窗转场动画 */
-  @keyframes transition-baiyechuang {
-    0%{--seed:0}1%{--seed:1}2%{--seed:2}3%{--seed:3}4%{--seed:4}5%{--seed:5}6%{--seed:6}7%{--seed:7}8%{--seed:8}9%{--seed:9}10%
-    {--seed:10}11%{--seed:11}12%{--seed:12}13%{--seed:13}14%{--seed:14}15%{--seed:15}16%{--seed:16}17%{--seed:17}18%{--seed:18}19%{--seed:19}20%{--seed:20}
-    21%{--seed:21}22%{--seed:22}23%{--seed:23}24%{--seed:24}25%{--seed:25}26%{--seed:26}27%{--seed:27}28%{--seed:28}29%{--seed:29}30%{--seed:30}
-    31%{--seed:31}32%{--seed:32}33%{--seed:33}34%{--seed:34}35%{--seed:35}36%{--seed:36}37%{--seed:37}38%{--seed:38}39%{--seed:39}40%{--seed:40}
-    41%{--seed:41}42%{--seed:42}43%{--seed:43}44%{--seed:44}45%{--seed:45}46%{--seed:46}47%{--seed:47}48%{--seed:48}49%{--seed:49}50%{--seed:50}
-    51%{--seed:51}52%{--seed:52}53%{--seed:53}54%{--seed:54}55%{--seed:55}56%{--seed:56}57%{--seed:57}58%{--seed:58}59%{--seed:59}60%{--seed:60}
-    61%{--seed:61}62%{--seed:62}63%{--seed:63}64%{--seed:64}65%{--seed:65}66%{--seed:66}67%{--seed:67}68%{--seed:68}69%{--seed:69}70%{--seed:70}
-    71%{--seed:71}72%{--seed:72}73%{--seed:73}74%{--seed:74}75%{--seed:75}76%{--seed:76}77%{--seed:77}78%{--seed:78}79%{--seed:79}80%{--seed:80}
-    81%{--seed:81}82%{--seed:82}83%{--seed:83}84%{--seed:84}85%{--seed:85}86%{--seed:86}87%{--seed:87}88%{--seed:88}89%{--seed:89}90%{--seed:90}
-    91%{--seed:91}92%{--seed:92}93%{--seed:93}94%{--seed:94}95%{--seed:95}96%{--seed:96}97%{--seed:97}98%{--seed:98}99%{--seed:99}100%{--seed:100}
-  }
-
-  /* 左旋转，在落下 */
-  @keyframes preview-image {
-    0% {
-      transform: rotate(0deg);
-      transform-origin: 0 0;
-    }
-
-    30% {
-      transform: rotate(60deg);
-      transform-origin: 0 0;
-    }
-
-    40% {
-      transform: rotate(50deg);
-      transform-origin: 0 0;
-    }
-
-    50% {
-      transform: rotate(40deg);
-      transform-origin: 0 0;
-    }
-
-    100% {
-      transform: translateY(100%);
-    }
-  }
-
-  /* 弹窗背景开关动画 */
-  @keyframes dialog-bg-open {
-    0% {
-      transform: scaleY(.005) scaleX(0)
-    }
-    50% {
-      transform: scaleY(.005) scaleX(1);
-    }
-    100% {
-      transform: scaleY(1) scaleX(1);
-    }
-  }
-  
-  @keyframes dialog-bg-close {
-    
-  }
-
-  /* 弹窗内容开关动画 */
-  @keyframes dialog-container-open {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  /* 沙化动画 */
-  .content-canvas {
-    position: relative;
-    /* overflow: hidden; */
-  }
-
-  .content-canvas > canvas {
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: transform 1s ease-out, opacity 1s ease-out;
+  50% {
+    width: 90%;
     opacity: 1;
-    transform: rotate(0deg) translate(0px, 0px) rotate(0deg);
   }
 
-  /* 闪烁动画 */
-  @keyframes twinkle {
-    0%, 100% {
-      transform: scale(1);
-      opacity: .6;
-    }
-
-    50% {
-      transform: scale(1.5);
-      opacity: 1;
-    }
-  }
-
-
-  .element-transition {
-    transition: all .3s;
-  }
-
-  .element-close {
-    height: 46px !important;
-    overflow: hidden;
-  }
-
-  .ctx-menu {
-    padding: 0;
-    margin: 0;
-    position: fixed;
-    z-index: 3001;
-    max-width: 300px;
-    min-width: 80px;
-    background-color: #fff;
-    border-radius: 5px;
-    border:1px solid#e5e5e5;
-    list-style: none;
-    animation: slow-in .3s forwards;
-  }
-
-  .ctx-menu li {
-    box-sizing: border-box;
-    padding: 6px 12px;
+  100% {
     width: 100%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    border-bottom: 1px solid #e5e5e5;
-    font-size: 12px;
-    color: #000;
-    cursor: pointer;
+    opacity: 0;
+  }
+}
+
+/* 淡入淡出 */
+@keyframes slow-in {
+  0% {
+    opacity: 0;
   }
 
-  .ctx-menu li:last-child {
-    border-bottom: none;
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 鼠标点击爱心上浮动画 */
+.lovely-icon {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  width: 32px;
+  height: 32px;
+  z-index: 10000;
+  animation: lovely-translate 1s forwards linear;
+}
+
+.lovely-icon__left {
+  position: absolute;
+  top: 0;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+}
+
+.lovely-icon__right {
+  position: absolute;
+  top: 0;
+  right: 1px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+}
+
+.lovely-icon__center {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 16px;
+  height: 16px;
+  background-color: #e5e5e5;
+  transform: rotate(45deg);
+}
+
+@keyframes lovely-translate {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
   }
 
-  .btn-loading {
-    pointer-events: none;
-    opacity: .5;
-    cursor: wait;
+  100% {
+    transform: translateY(-100px);
+    opacity: 0.2;
   }
+}
+
+.baiyechuang-leave-active {
+  mask: linear-gradient(to right, #000 calc(1% * var(--seed)), transparent calc(1% * var(--seed)));
+  mask-size: 20px;
+  animation: transition-baiyechuang .6s reverse;
+}
+/* 百叶窗转场动画 */
+@keyframes transition-baiyechuang {
+  0%{--seed:0}1%{--seed:1}2%{--seed:2}3%{--seed:3}4%{--seed:4}5%{--seed:5}6%{--seed:6}7%{--seed:7}8%{--seed:8}9%{--seed:9}10%
+  {--seed:10}11%{--seed:11}12%{--seed:12}13%{--seed:13}14%{--seed:14}15%{--seed:15}16%{--seed:16}17%{--seed:17}18%{--seed:18}19%{--seed:19}20%{--seed:20}
+  21%{--seed:21}22%{--seed:22}23%{--seed:23}24%{--seed:24}25%{--seed:25}26%{--seed:26}27%{--seed:27}28%{--seed:28}29%{--seed:29}30%{--seed:30}
+  31%{--seed:31}32%{--seed:32}33%{--seed:33}34%{--seed:34}35%{--seed:35}36%{--seed:36}37%{--seed:37}38%{--seed:38}39%{--seed:39}40%{--seed:40}
+  41%{--seed:41}42%{--seed:42}43%{--seed:43}44%{--seed:44}45%{--seed:45}46%{--seed:46}47%{--seed:47}48%{--seed:48}49%{--seed:49}50%{--seed:50}
+  51%{--seed:51}52%{--seed:52}53%{--seed:53}54%{--seed:54}55%{--seed:55}56%{--seed:56}57%{--seed:57}58%{--seed:58}59%{--seed:59}60%{--seed:60}
+  61%{--seed:61}62%{--seed:62}63%{--seed:63}64%{--seed:64}65%{--seed:65}66%{--seed:66}67%{--seed:67}68%{--seed:68}69%{--seed:69}70%{--seed:70}
+  71%{--seed:71}72%{--seed:72}73%{--seed:73}74%{--seed:74}75%{--seed:75}76%{--seed:76}77%{--seed:77}78%{--seed:78}79%{--seed:79}80%{--seed:80}
+  81%{--seed:81}82%{--seed:82}83%{--seed:83}84%{--seed:84}85%{--seed:85}86%{--seed:86}87%{--seed:87}88%{--seed:88}89%{--seed:89}90%{--seed:90}
+  91%{--seed:91}92%{--seed:92}93%{--seed:93}94%{--seed:94}95%{--seed:95}96%{--seed:96}97%{--seed:97}98%{--seed:98}99%{--seed:99}100%{--seed:100}
+}
+
+/* 左旋转，在落下 */
+@keyframes preview-image {
+  0% {
+    transform: rotate(0deg);
+    transform-origin: 0 0;
+  }
+
+  30% {
+    transform: rotate(60deg);
+    transform-origin: 0 0;
+  }
+
+  40% {
+    transform: rotate(50deg);
+    transform-origin: 0 0;
+  }
+
+  50% {
+    transform: rotate(40deg);
+    transform-origin: 0 0;
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* 弹窗背景开关动画 */
+@keyframes dialog-bg-open {
+  0% {
+    transform: scaleY(.005) scaleX(0)
+  }
+  50% {
+    transform: scaleY(.005) scaleX(1);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+}
+
+@keyframes dialog-bg-close {
+  
+}
+
+/* 弹窗内容开关动画 */
+@keyframes dialog-container-open {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 沙化动画 */
+.content-canvas {
+  position: relative;
+  /* overflow: hidden; */
+}
+
+.content-canvas > canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+  opacity: 1;
+  transform: rotate(0deg) translate(0px, 0px) rotate(0deg);
+}
+
+/* 闪烁动画 */
+@keyframes twinkle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: .6;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}

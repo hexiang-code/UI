@@ -1,29 +1,30 @@
 import './assets/css/animation.css'
+import './assets/css/base.css'
 process.env.NODE_ENV == 'development' && import('./assets/css/globalStyle.scss')
 process.env.NODE_ENV == 'development' && import('./assets/css/baseIcon.scss')
-import { createMouseAnimation } from './assets/js/mouse-animation'
-import { directives } from './assets/js/directive/index'
-import { filters } from './assets/js/filters'
+import { createMouseAnimation } from './utils/mouse-animation'
+import { directives } from './directive/index'
+import { filters } from './filters/filters'
 
-import backgroundVideo from './components/background-video.vue'
-import dialog from './components/dialog'
-import drawer from './components/drawer.vue'
-import tree from './components/tree.vue'
-import hxFormItem from './components/form-item.vue'
-import loadAnimation from './components/load-animation.vue'
-import liveRem from './components/live-rem/live2d-rem.vue'
-import hxSwitch from './components/switch.vue'
-import slider from './components/slider.vue'
-import album from './components/album.vue'
-import pagination from './components/pagination.vue'
-import hxMessage from './components/meesage.vue'
-import hxTable from './components/table/table.vue'
-import hxTableColumn from './components/table/table-column.vue'
-import hxDatePicker from './components/date-picker/date-picker.vue'
-import canvasBg from './components/canvas-bg/canvas-bg.vue'
-import select from './components/select/select.vue'
+import backgroundVideo from './components/background-video/background-video'
+import dialog from './components/dialog/dialog'
+import drawer from './components/drawer/drawer'
+import tree from './components/tree/tree'
+import hxFormItem from './components/form/form-item'
+import loadAnimation from './components/load-animation/load-animation'
+import liveRem from './components/live-rem/live2d-rem'
+import hxSwitch from './components/switch/switch'
+import slider from './components/slider/slider'
+import album from './components/album/album'
+import pagination from './components/pagination/pagination'
+import hxMessage from './components/meesage/meesage'
+import hxTable from './components/table/table'
+import hxTableColumn from './components/table/table-column'
+import hxDatePicker from './components/date-picker/date-picker'
+import canvasBg from './components/canvas-bg/canvas-bg'
+import select from './components/select/select'
 import options from './components/select/option'
-import music from './components/music/music.vue'
+import music from './components/music/music'
 const elementArray = [
   backgroundVideo,
   dialog,
@@ -55,7 +56,7 @@ const install = function (vue) {
   createMouseAnimation()
 }
 
-if (!window && typeof window.Vue !== 'undefined' ) install(window.Vue)
+if (!window && typeof window !== 'undefined' ) install(window)
 
 
 

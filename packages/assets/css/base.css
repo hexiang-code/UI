@@ -1,0 +1,45 @@
+.element-transition {
+  transition: all .3s;
+}
+
+.element-close {
+  height: 46px !important;
+  overflow: hidden;
+}
+
+.ctx-menu {
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  z-index: 3001;
+  max-width: 300px;
+  min-width: 80px;
+  background-color: #fff;
+  border-radius: 5px;
+  border:1px solid#e5e5e5;
+  list-style: none;
+  animation: slow-in .3s forwards;
+}
+
+.ctx-menu li {
+  box-sizing: border-box;
+  padding: 6px 12px;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 12px;
+  color: #000;
+  cursor: pointer;
+}
+
+.ctx-menu li:last-child {
+  border-bottom: none;
+}
+
+.btn-loading {
+  pointer-events: none;
+  opacity: .5;
+  cursor: wait;
+}

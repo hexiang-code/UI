@@ -1,4 +1,4 @@
-import { randomColor } from './base-config'
+import { randomColor } from '../config/base-config'
 
 const animationDestence = 30 // 动画距离点击的位置
 /**

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import curtain from './bg-curtain'
+import curtain from '../bg-curtain/bg-curtain'
 export default {
   name: 'loadAnimation',
   components: {

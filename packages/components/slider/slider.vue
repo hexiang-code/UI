@@ -139,7 +139,7 @@ export default {
     computeOffset (move, isNeedEmit = false) {
       let sliderBarColumn = this.$refs['sliderBarColumn']
       let sliderBarRow = this.$refs['sliderBarRow']
-      let sliderColumn = this.$refs['sliderColumn']
+      // let sliderColumn = this.$refs['sliderColumn']
       // 当滑块沿Y轴方向滑动时，默认向上为正方向，向上滑动增加
       if (this.direction === 'Y' && sliderBarColumn) {
         // sliderBarColumn.style.height = `${sliderColumn.getBoundingClientRect().height - move}px`

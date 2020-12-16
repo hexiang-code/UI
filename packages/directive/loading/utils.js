@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import loadAnimation from '../../../../components/load-animation.vue'
+import loadAnimation from '../../components/load-animation/load-animation'
 class LoadingService {
   constructor ({
     type = 'service', 

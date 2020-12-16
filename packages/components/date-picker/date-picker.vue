@@ -1,7 +1,7 @@
 <script>
 const dateTime = 24 * 60 * 60 * 1000 // 一整天的毫秒数
 import dateTable from './date-table'
-import { formatDate } from '../../assets/js/utils'
+import { formatDate } from '../../utils/utils'
 export default {
   name: 'hxDatePicker',
   props: {

@@ -6,13 +6,13 @@ import { targetNodeHandler } from './utils'
  */
 const open = Vue => {
   Vue.directive('open', 
-  function (el, binding, vnode) {
+  function (el, binding) {
     let { value: { target, targetClass, height } = {} } = binding
     // 如果指定需要开关的节点
     if (target) {
       let targetNode = target instanceof HTMLElement ? target : document.getElementById(target)
       targetNode.classList.add('element-transition')
-      el.addEventListener('click',$event => targetNodeHandler($event, targetNode, targetClass, height), false)
+      el.addEventListener('click', $event => targetNodeHandler($event, targetNode, targetClass, height), false)
     }
   })
 }

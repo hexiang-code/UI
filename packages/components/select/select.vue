@@ -1,5 +1,5 @@
 <script>
-import { debounce } from '../../assets/js/utils'
+import { debounce } from '../../utils/utils'
 let observer // dom观察器，观察select节点高度变化
 export default {
   name: 'hxSelect',

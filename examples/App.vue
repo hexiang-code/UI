@@ -119,8 +119,8 @@
       @current-change="currentPageChange"
     ></hx-pagination>
 
-    <div class="test-open" ref="test-open">
-      <i class="iconfont notes-icon" v-open="{target: $refs['test-open']}">&#xe67c;</i>
+    <div class="test-open" ref="testOpen">
+      <i class="iconfont notes-icon" v-open="{target: testOpenTarget}">&#xe67c;</i>
     </div>
 
     <hx-music
@@ -460,7 +460,7 @@ let noteLabelList = [
   }
 ];
 import Vue from 'vue'
-import LoadingService from '../packages/assets/js/directive/loading/utils'
+import LoadingService from '../packages/directive/loading/utils'
 export default {
   name: "app",
   data() {
@@ -515,7 +515,8 @@ export default {
       testMeauList1: "<span>你好</span>",
       musicLyric,
       musicSrc: "http://localhost:3000/assets/kafeidou/test-music.mp3",
-      noteLabelList
+      noteLabelList,
+      testOpenTarget: ''
     };
   },
 
@@ -529,6 +530,7 @@ export default {
     // this.testProgress()
     // let loadingService = new LoadingService()
     // loadingService.init(true)
+    this.testOpenTarget = this.$refs['testOpen']
   },
 
   methods: {

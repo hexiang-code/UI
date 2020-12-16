@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import curtain from './bg-curtain'
+import curtain from '../bg-curtain/bg-curtain'
 const tipsType = ['warn', 'info']  // 提示类型
 export default {
   name: 'hxMessage',
@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '../assets/css/_globalStyle.scss';
+  @import '../../assets/css/_globalStyle.scss';
   .message {
     position: fixed;
     top: 0;

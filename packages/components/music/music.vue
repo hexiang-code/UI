@@ -1,8 +1,8 @@
 <script>
-import silder from '../slider'
-import { debounce } from '../../assets/js/utils'
+import silder from '../slider/slider'
+import { debounce } from '../../utils/utils'
 import { musicCanvasInit, stopOrStartMusicCanvas } from './music-canvas'
-import { randomColor } from '../../assets/js/base-config'
+import { randomColor } from '../../config/base-config'
 const playMode = [
   {
     mode: 'random', // 随机播放
