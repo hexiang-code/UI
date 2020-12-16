@@ -41,7 +41,7 @@
     <button @click="albumVisible = !albumVisible" v-drag v-ctxmenu="{menuList: testMeauList1}">相册</button>
     <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
-    <button @click="testConfirm" v-drag>确认弹框</button>
+    <button @click="testLoading" v-loading="{isLoading: true, message: '测试'}">测试loading</button>
     <button @click="testTextChange" @mousedown="testText = '你好'" v-drag>{{testText}}</button>
     <input />
     <button @click="checkbox">checkBox</button>
@@ -184,7 +184,7 @@ const tree = {
       ]
     }
   ]
-};
+}
 const musicLyric = `[00:00.000] 作词 : 迟木
 [00:01.000] 作曲 : 迟木
 [00:24]没有酒 而我醉好几夜
@@ -459,7 +459,8 @@ let noteLabelList = [
     updatedAt: "2020-11-27T07:52:16.000Z"
   }
 ];
-
+import Vue from 'vue'
+import LoadingService from '../packages/assets/js/directive/loading/utils'
 export default {
   name: "app",
   data() {
@@ -526,6 +527,8 @@ export default {
   mounted() {
     // this.testConfirm()
     // this.testProgress()
+    // let loadingService = new LoadingService()
+    // loadingService.init(true)
   },
 
   methods: {
@@ -614,6 +617,10 @@ export default {
       this.musicSrc =
         "http://m8.music.126.net/20201209151658/fca87ecb505ace967c2668ff720815f9/ymusic/0e58/0453/5609/920c678a2c39b263f1c4ac58e2593712.mp3";
       this.$refs["music-box"].musicSwitch();
+    },
+
+    testLoading () {
+      console.log(456)
     }
   }
 };

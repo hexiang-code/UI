@@ -124,6 +124,7 @@ posterLoaded | 海报加载完成的回调 | - | void
 参数|说明|类型|可选值|默认值|是否必填
 --|:--:|:--:|--:|:--:|:--
 isShow | 幕布开关 | Boolean | true/false | false | 必填
+opacity | 透明度(>=0 && <=1>) | Number | - | 1 | 非必填
 ##### event
 事件名|说明|参数|返回值类型
 --|:--:|:--:|--:
@@ -146,6 +147,7 @@ position | 抽屉出现的位置 | String | left/right/top/bottom | right | 否
 isShow | 开关（支持.sync修饰符） | Boolean | true/false | false | 是
 isModal | 是否需要幕布背景遮罩 | Boolean | true/false | true | 否
 isNeedClose | 是否需要手动提前关闭（点击背景幕布即可提前关闭加载动画） | Boolean | true/false | true | 否
+opacity | 背景透明度（>=0 && <=1） | Number | - | 1 | 否
 ************
 #### tree
 ##### attribute

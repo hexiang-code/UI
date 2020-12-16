@@ -122,7 +122,7 @@
     }
 
     100% {
-      width: 90%;
+      width: 100%;
       opacity: 0;
     }
   }
@@ -333,4 +333,10 @@
 
   .ctx-menu li:last-child {
     border-bottom: none;
+  }
+
+  .btn-loading {
+    pointer-events: none;
+    opacity: .5;
+    cursor: wait;
   }

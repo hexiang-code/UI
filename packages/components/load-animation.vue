@@ -1,9 +1,9 @@
 <template>
   <transition name="baiyechuang">
     <div v-if="isShow" class="load-animation" @click.capture="curtainClose">
-      <curtain :isShow="isShow" v-if="isModal" @curtainClose="curtainClose" key="curtain"></curtain>
+      <curtain :isShow="isShow" v-if="isModal" @curtainClose="curtainClose" key="curtain" :opacity="opacity"></curtain>
       <div class="load-animtion__border border-animation" v-if="isShow">
-        <div class="load-animation__content condensation-light"> watting... </div>
+        <div class="load-animation__content condensation-light"> {{this.message}}... </div>
       </div>
     </div>
   </transition>
@@ -30,6 +30,17 @@ export default {
     isNeedClose: {
       type: Boolean,
       default: true
+    },
+    message: {
+      type: String,
+      default: 'watting'
+    },
+    opacity: {
+      type: Number,
+      default: 1,
+      validator: function (val) {
+        return val >= 0 && val <= 1
+      }
     }
   },
 

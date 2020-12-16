@@ -1,16 +1,25 @@
 <template>
-  <div class="curtain" v-if="isShow" @click.stop="closed"></div>
+  <div class="curtain" v-if="isShow" @click.stop="closed" :style="`opacity: ${this.opacity};`"></div>
 </template>
 
 <script>
 export default {
   name: 'curtain',
   props: {
+    // 是否展示幕布
     isShow: {
       type: Boolean,
       required: true,
       default: false
-    } // 是否展示幕布
+    },
+    // 透明度
+    opacity: {
+      type: Number,
+      default: 1,
+      validator: function (val) {
+        return val >= 0 && val <= 1
+      }
+    }
   },
   methods: {
     // 关闭幕布
