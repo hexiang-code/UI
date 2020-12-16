@@ -150,10 +150,14 @@ export default {
   }
 
   .preview-leave-active {
-    animation: preview-image 1.5s linear forwards;
+    mask: linear-gradient(to right, #000 calc(1% * var(--seed)), transparent calc(1% * var(--seed)));
+    mask-size: 20px;
+    animation: transition-baiyechuang .6s reverse;
   }
 
   .preview-enter-active {
-    animation: open-translate-left .5s linear forwards;
+    mask: linear-gradient(to right, #000 calc(1% * var(--seed)), transparent calc(1% * var(--seed)));
+    mask-size: 20px;
+    animation: transition-baiyechuang .6s;
   }
 </style>

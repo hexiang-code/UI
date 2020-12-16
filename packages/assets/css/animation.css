@@ -209,33 +209,6 @@
   91%{--seed:91}92%{--seed:92}93%{--seed:93}94%{--seed:94}95%{--seed:95}96%{--seed:96}97%{--seed:97}98%{--seed:98}99%{--seed:99}100%{--seed:100}
 }
 
-/* 左旋转，在落下 */
-@keyframes preview-image {
-  0% {
-    transform: rotate(0deg);
-    transform-origin: 0 0;
-  }
-
-  30% {
-    transform: rotate(60deg);
-    transform-origin: 0 0;
-  }
-
-  40% {
-    transform: rotate(50deg);
-    transform-origin: 0 0;
-  }
-
-  50% {
-    transform: rotate(40deg);
-    transform-origin: 0 0;
-  }
-
-  100% {
-    transform: translateY(100%);
-  }
-}
-
 /* 弹窗背景开关动画 */
 @keyframes dialog-bg-open {
   0% {
