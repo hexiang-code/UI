@@ -29,8 +29,9 @@ class LoadingService {
       this.realTextContent = this.el.textContent
       this.el.textContent = this.message
     } else {
-      this.el.classList.remove('btn-loading', 'condensation-light')
       if (this.realTextContent) this.el.textContent = this.realTextContent
+      this.el.classList.remove('btn-loading', 'condensation-light')
+      
     }
   }
 

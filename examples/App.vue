@@ -41,7 +41,7 @@
     <button @click="albumVisible = !albumVisible" v-drag v-ctxmenu="{menuList: testMeauList1}">相册</button>
     <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
-    <button @click="testLoading" v-loading="{isLoading: false, message: '测试'}">测试loading</button>
+    <button @click="testLoading" v-loading="{isLoading: isTestLoading, message: '测试'}">测试loading</button>
     <button @click="testTextChange" @mousedown="testText = '你好'" v-drag>{{testText}}</button>
     <input />
     <button @click="checkbox">checkBox</button>
@@ -516,7 +516,8 @@ export default {
       musicLyric,
       musicSrc: "http://localhost:3000/assets/kafeidou/test-music.mp3",
       noteLabelList,
-      testOpenTarget: ''
+      testOpenTarget: '',
+      isTestLoading: false
     };
   },
 
@@ -531,6 +532,8 @@ export default {
     // let loadingService = new LoadingService()
     // loadingService.init(true)
     this.testOpenTarget = this.$refs['testOpen']
+    this.isTestLoading = true
+    setTimeout(() => this.isTestLoading = false, 3000)
   },
 
   methods: {
