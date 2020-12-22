@@ -1,4 +1,4 @@
-
+const loadingKey = '_loadingKey'
 import loadingService from './utils'
 const loading = Vue => {
   Vue.directive('loading', {
@@ -13,10 +13,10 @@ const loading = Vue => {
       }
       let loading =  new loadingService({el, type: "directive", message})
       loading.init(isLoading)
-      if(binding.def) binding.def.loading = loading
+      el[loadingKey] = loading
     },
     update: function (el, binding) {
-      let isLoading, loading = binding.def && binding.def.loading
+      let isLoading, loading = el[loadingKey]
       let { value } = binding
       if (typeof value === 'boolean') {
         isLoading = value

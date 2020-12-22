@@ -41,7 +41,9 @@
     <button @click="albumVisible = !albumVisible" v-drag v-ctxmenu="{menuList: testMeauList1}">相册</button>
     <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
-    <button @click="testLoading" v-loading="{isLoading: isTestLoading, message: '测试'}">测试loading</button>
+    <button @click="testLoading1" v-loading="{isLoading: isTestLoading && loadingType == 1, message: '测试1'}">测试loading1</button>
+    <button @click="testLoading2" v-loading="{isLoading: isTestLoading && loadingType == 2, message: '测试2'}">测试loading2</button>
+    <button @click="testLoading3" v-loading="{isLoading: isTestLoading && loadingType == 3, message: '测试3'}">测试loading3</button>
     <button @click="testTextChange" @mousedown="testText = '你好'" v-drag>{{testText}}</button>
     <input />
     <button @click="checkbox">checkBox</button>
@@ -459,8 +461,6 @@ let noteLabelList = [
     updatedAt: "2020-11-27T07:52:16.000Z"
   }
 ];
-import Vue from 'vue'
-import LoadingService from '../packages/directive/loading/utils'
 export default {
   name: "app",
   data() {
@@ -517,7 +517,8 @@ export default {
       musicSrc: "http://localhost:3000/assets/kafeidou/test-music.mp3",
       noteLabelList,
       testOpenTarget: '',
-      isTestLoading: false
+      isTestLoading: false,
+      loadingType: -1 
     };
   },
 
@@ -532,8 +533,6 @@ export default {
     // let loadingService = new LoadingService()
     // loadingService.init(true)
     this.testOpenTarget = this.$refs['testOpen']
-    this.isTestLoading = true
-    setTimeout(() => this.isTestLoading = false, 3000)
   },
 
   methods: {
@@ -624,9 +623,21 @@ export default {
       this.$refs["music-box"].musicSwitch();
     },
 
-    testLoading () {
-      console.log(456)
-    }
+    testLoading1 () {
+      this.isTestLoading = true
+      this.loadingType = 1
+      setTimeout(() => this.loadingType = -1, 3000)
+    },
+    testLoading2 () {
+      this.isTestLoading = true
+      this.loadingType = 2
+      setTimeout(() => this.loadingType = -1, 3000)
+    },
+    testLoading3 () {
+      this.isTestLoading = true
+      this.loadingType = 3
+      setTimeout(() => this.loadingType = -1, 3000)
+    },
   }
 };
 </script>
