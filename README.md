@@ -421,6 +421,7 @@ end | 播放结束 | playMode: 当前组件播放模式<br />random:随机播放
 up | 上一曲 | - | void
 next | 下一曲 | - | void
 getLyric | 如果歌曲格式不对的话，会派发该事件 | currentTime: 当前歌曲播放时间, cb: 歌词回调函数,cb的第一个参数会作为当前时间段的歌词 | void
+music-error | 播放出错事件 | musicError(this, $event) this: 当前播放器实例，$event：浏览器$event对象 | void
 
 ###### musicLyric例：
 ```
