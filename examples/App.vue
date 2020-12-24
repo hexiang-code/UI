@@ -528,10 +528,6 @@ export default {
   //   }
   // },
   mounted() {
-    // this.testConfirm()
-    // this.testProgress()
-    // let loadingService = new LoadingService()
-    // loadingService.init(true)
     this.testOpenTarget = this.$refs['testOpen']
   },
 

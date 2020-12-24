@@ -249,7 +249,7 @@ export default {
 
     // 音乐出现错误
     musicSrcError ($event) {
-      this.$emit('music-error', this, $event)
+      this.$emit('music-error', this.playMode, $event)
     },
 
     /**

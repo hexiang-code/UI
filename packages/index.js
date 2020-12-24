@@ -6,6 +6,8 @@ import { createMouseAnimation } from './utils/mouse-animation'
 import { directives } from './directive/index'
 import { filters } from './filters/filters'
 
+import LoadingService from './directive/loading/utils'
+
 import backgroundVideo from './components/background-video/background-video'
 import dialog from './components/dialog/dialog'
 import drawer from './components/drawer/drawer'
@@ -50,8 +52,8 @@ const elementArray = [
 const install = function (vue) {
   elementArray.forEach(item =>{
     vue.component(item.name, item)
-    filters(vue)
   })
+  filters(vue)
   directives(vue)
   createMouseAnimation()
 }
@@ -60,4 +62,30 @@ if (!window && typeof window !== 'undefined' ) install(window)
 
 
 
-export default install
+export default {
+  install,
+  
+  // 组件
+  backgroundVideo,
+  dialog,
+  drawer,
+  tree,
+  hxFormItem,
+  loadAnimation,
+  liveRem,
+  canvasBg,
+  hxSwitch,
+  slider,
+  album,
+  pagination,
+  hxMessage,
+  hxTable,
+  hxTableColumn,
+  hxDatePicker,
+  select,
+  options,
+  music,
+
+  // 服务
+  LoadingService
+}
