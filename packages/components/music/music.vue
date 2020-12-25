@@ -122,6 +122,11 @@ export default {
   watch: {
     volume (newVal) {
       if (this.$refs['music-box']) this.$refs['music-box'].volume = newVal / 100
+    },
+
+    // 每次音乐切换重置歌词
+    musicSrc () {
+      this.lyricText = ''
     }
   },
 
@@ -216,11 +221,6 @@ export default {
       this.duration = Math.ceil($event.target.duration)
       this.currentTime = 0
     },
-
-    // 音乐开关
-    // musicSwitch () {
-    //   this.isStratMusic = !this.isStratMusic
-    // },
 
     // 开始播放
     playMusic () {
