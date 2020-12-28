@@ -47,7 +47,26 @@
     <button @click="testTextChange" @mousedown="testText = '你好'" v-drag>{{testText}}</button>
     <input />
     <button @click="checkbox">checkBox</button>
-    <!-- <live-rem ref="rem" @liveRemTalk="liveRemTalk" :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}"></live-rem> -->
+
+    <!-- 音乐盒测试 -->
+    <hx-music
+      :musicLyric="musicLyric"
+      :musicSrc="musicSrc"
+      ref="music-box"
+      @end="musicEnd"
+      musicFaceSrc="https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
+      singer="迟木"
+      song="一千万"
+      :musicFix.sync="isMusicFix"
+    ></hx-music>
+
+    <live-rem 
+      ref="rem" 
+      @liveRemTalk="liveRemTalk" 
+      :meauList="liveRemMeauList"
+      @menuListClick="menuListClick"
+      :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}">
+      </live-rem>
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">
@@ -124,16 +143,6 @@
     <div class="test-open" ref="testOpen">
       <i class="iconfont notes-icon" v-open="{target: testOpenTarget}">&#xe67c;</i>
     </div>
-
-    <hx-music
-      :musicLyric="musicLyric"
-      :musicSrc="musicSrc"
-      ref="music-box"
-      @end="musicEnd"
-      musicFaceSrc="https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
-      singer="迟木"
-      song="一千万"
-    ></hx-music>
   </div>
 </template>
 
@@ -464,8 +473,6 @@ let noteLabelList = [
 export default {
   name: "app",
   data() {
-    let testDiv = document.createElement("div");
-    testDiv.innerHTML = "你好";
     return {
       testText: "测试文字",
       tree: tree,
@@ -518,17 +525,38 @@ export default {
       noteLabelList,
       testOpenTarget: '',
       isTestLoading: false,
-      loadingType: -1 
+      loadingType: -1,
+      liveRemMeauList: [
+        {
+          name: '上一曲',
+          icon: '&#xe61f;',
+          type: 'musicBack',
+          clickCallback: () => {
+            this.$liveRem.musicBox && this.$liveRem.musicBox.pauseMusic()
+          }
+        },
+        {
+          name: '下一曲',
+          icon: '&#xe651;',
+          type: 'musicForward'
+        }
+      ],
+      isMusicFix: false 
     };
   },
 
-  // watch: {
-  //   filterValue (value) {
-  //     this.$refs.tree.filterNode(value)
-  //   }
-  // },
+  watch: {
+    filterValue (value) {
+      this.$refs.tree.filterNode(value)
+    },
+
+    isMusicFix: function (val) {
+      val && setTimeout(() => this.musicFix(val), 1000) 
+    }
+  },
   mounted() {
     this.testOpenTarget = this.$refs['testOpen']
+    this.$liveRem = this.$refs['rem']
   },
 
   methods: {
@@ -634,6 +662,18 @@ export default {
       this.loadingType = 3
       setTimeout(() => this.loadingType = -1, 3000)
     },
+
+    musicFix (musicFix) {
+      this.musicBox = this.$refs['music-box']
+      if (this.musicBox && musicFix) {
+        document.body.appendChild(this.musicBox.$el)
+        this.$liveRem.musicBox = this.musicBox
+      }
+    },
+
+    menuListClick (meauItem) {
+      console.log(meauItem)
+    }
   }
 };
 </script>

@@ -263,3 +263,19 @@
     opacity: 1;
   }
 }
+
+ /* 模糊退出 */
+@keyframes blurOutSimilarClean {
+  85%, to { filter: blur(20px) }
+  to { 
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0 
+  }
+}
+
+@keyframes blurOutSaveSelf {
+    85%, to { filter: blur(20px) }
+    to { opacity: 0 }
+}

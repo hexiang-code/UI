@@ -1,5 +1,11 @@
 <template>
-  <div v-drag="{limit: 'window'}" class="live-rem" ref="liveRem" style="left:5px; bottom: 0px;" :class="{'guiChu guiChu2': isGuiChu}" @click.capture="liveRemClick">
+  <div v-drag="{limit: 'window'}" 
+    class="live-rem" ref="liveRem" 
+    style="left:5px; bottom: 0px;" 
+    :class="{'guiChu guiChu2': isGuiChu}"
+    @mouseenter="meauListVisibel = true" 
+    @mouseleave="meauListVisibel = false"
+    @click.capture="liveRemClick">
     <transition-group name="liveRem__slow-in" tag="div">
       <div class="message" key="message" v-show="isShowLeimu && messageVisible">
         <render-custom :content="this.renderCustom" />
@@ -91,7 +97,11 @@ export default {
   computed: {
     // 菜单列表
     meaus () {
-      return this.meauList.concat(meauList)
+      let meaus = this.meauList.concat(meauList)
+      if (meaus.length > 10) {
+        console.warn('only set 10 meaus')
+      }
+      return meaus.slice(0, 9)
     }
   },
 
@@ -221,8 +231,8 @@ export default {
       canvas.setAttribute('id', 'live2d')
       canvas.setAttribute('class', 'live2d')
       // @mouseover="meauListVisibel = true" @mouseleave="meauListVisibel = false"
-      canvas.addEventListener('mouseover', () => this.meauListVisibel = true)
-      canvas.addEventListener('mouseleave', () => setTimeout(() => this.meauListVisibel = false, 3000))
+      // canvas.addEventListener('mouseenter', () => this.meauListVisibel = true)
+      // canvas.addEventListener('mouseleave', () => setTimeout(() => this.meauListVisibel = false, 3000))
       if (width) {
         canvas.width = width
         this.$refs.liveRem.style.width = `${width}px`
@@ -236,12 +246,15 @@ export default {
 
     // 点击菜单
     menuClick (menuItem) {
-      let { type } = menuItem
+      let { type, clickCallback } = menuItem
       if (type == 'changeTexture') this.changeTexture()
       else if (type == 'communication') this.isTalk = !this.isTalk
       else if (type == 'goTop') {
         this.goTop()
-      } 
+      }
+      else if (clickCallback && typeof clickCallback === 'function') {
+        clickCallback.call(this)
+      }
       else this.$emit('menuListClick', menuItem)
     },
 
@@ -398,10 +411,23 @@ export default {
       }
       to {
         opacity: 1;
-        transform: rotate(($rotate - 1) * 30deg);
+        @if $rotate % 2 != 0 {
+          transform: rotate((($rotate + 1) / 2) * 30deg);
+        } @else {
+          transform: rotate(-($rotate / 2) * 30deg);
+        }
       }
     }
   }
+
+  @mixin contrary-cycle ($rotate: 1) {
+    @if $rotate % 2 != 0 {
+      transform: rotate(-(($rotate + 1) / 2) * 30deg);
+    } @else {
+      transform: rotate(($rotate / 2) * 30deg);
+    }
+  }
+
   .live-rem {
     position: fixed;
     left: 10px;
@@ -586,8 +612,7 @@ export default {
 
   .menu-list {
     position: absolute;
-    top: -10px;
-    left: 70px;
+    left: 60px;
     z-index: 4;
     width: 50px;
     list-style: none;
@@ -602,13 +627,17 @@ export default {
       padding: 5px;
       border-radius: 50%;
       color: #fff;
-      transform-origin: 0 150px;
+      transform-origin: 50% 150px;
       cursor: pointer;
     }
 
-    @for $i from 1 through 3 {
+    @for $i from 1 through 10 {
       li:nth-child(#{$i}) {
         @include cycle($i);
+      }
+
+      li:nth-child(#{$i}) i {
+        @include contrary-cycle($i);
       }
     }
   }

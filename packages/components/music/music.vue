@@ -65,7 +65,13 @@ export default {
     // 歌词
     musicLyric: {
       type: String
-    }
+    },
+
+    // 音乐盒是否固定
+    musicFix: {
+      type: Boolean,
+      value: false
+    } 
   },
 
   data () {
@@ -79,7 +85,7 @@ export default {
       lyricText: '', // 歌词
       lyricColor: '', // 歌词颜色
       playMode: playMode[0].mode, // 播放模式
-      isCanvasInit: false // 是否初始化音乐背景完毕
+      isCanvasInit: false, // 是否初始化音乐背景完毕
     }
   },
 
@@ -136,7 +142,12 @@ export default {
 
   render () {
     return (
-      <div class="music" ref="music">
+      <div class={['music', {'music_fix': this.musicFix}]} ref="music">
+        <i class={['iconfont music-fix', {'music-fix_active': this.musicFix}]} 
+          title="固定到全局播放"
+          onClick={() => this.musicFixMethod()}>
+          &#xe6a1;
+        </i>
         <div
           class={[ 'left', {'music_opacity': !this.isMusicChangeVisible && this.isStratMusic} ]}
           onMouseleave={() => this.isMusicChangeVisible = false }
@@ -184,7 +195,7 @@ export default {
       <audio 
           ref="music-box" 
           onCanplay={() => this.musicCanPlay()}
-          onTimeupdate={$event => this.musciProgress($event)}
+          onTimeupdate={$event => this.musicProgress($event)}
           onLoadedmetadata={$event => this.getDuration($event)}
           onEnded={() => this.musicEnd()}
           src={this.musicSrc}
@@ -225,15 +236,17 @@ export default {
     // 开始播放
     playMusic () {
       this.isStratMusic = true
+      this.$emit('music-start')
     },
 
     // 暂停播放
     pauseMusic () {
       this.isStratMusic = false
+      this.$emit('music-pause')
     },
 
     // 音乐播放进度
-    musciProgress ($event) {
+    musicProgress ($event) {
       this.currentTime = Math.floor($event.target.currentTime)
       this.matchLyric(this.currentTime)
     },
@@ -355,6 +368,11 @@ export default {
       this.$emit('getLyric', currentTime , lyric => {
         if (typeof lyric === 'string') this.lyricText = lyric
       })
+    },
+
+    // 音乐盒固定
+    musicFixMethod () {
+      this.$emit('update:musicFix', !this.musicFix)
     }
 
   }
@@ -545,5 +563,23 @@ export default {
       z-index: -1;
       opacity: 0.3;
     }
+
+    .music-fix {
+      position: absolute;
+      top: 2px;
+      left: 80px;
+      z-index: 1;
+      font-size: 14px;
+      cursor: pointer;
+      color: unset;
+    }
+
+    .music-fix_active {
+      color: $theme-color;
+    }
+  }
+
+  .music_fix {
+    animation: blurOutSimilarClean 1s forwards;
   }
 </style>
