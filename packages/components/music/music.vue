@@ -248,27 +248,47 @@ export default {
 
     // 开始播放
     playMusic () {
-      this.isStratMusic = true
-      this.$emit('music-start')
+      this._fadeInOutVolume('fadeIn').then(() => {
+        this.isStratMusic = true
+        this.$emit('music-start')
+      })
     },
 
     // 暂停播放
     pauseMusic () {
       // if (this.$refs['music-box']) this.$refs['music-box'].volume = newVal / 100
-      let { volume } = this
-      let index = 1, time = Math.ceil( fadeInTime / 100)
-      let timer = setInterval(() => {
-        let vol = volume - index * time
-        vol = vol < 0 ? 0 : vol
-        if (this.$refs['music-box']) this.$refs['music-box'].volume = Number(vol) / 100
-        index++
-        if (index >= time) {
-          window.clearInterval(timer)
-          this.isStratMusic = false
-          this.$emit('music-pause')
-        }
-      }, 100)
-      
+      this._fadeInOutVolume('fadeOut').then(() => {
+        this.isStratMusic = false
+        this.$emit('music-pause')
+      })
+    },
+
+    // 音乐淡入淡出
+    _fadeInOutVolume (type) {
+      return new Promise((resolve, reject) => {
+        let { volume } = this
+        let index = 1, time = Math.ceil( fadeInTime / 100)
+        let timer = setInterval(() => {
+          let vol
+          if (type == 'fadeOut') {
+            vol = volume - index * time
+            vol = vol < 0 ? 0 : vol
+          } else if (type == 'fadeIn') {
+            vol = index * time
+            vol = vol > volume ? volume : vol
+          } else {
+            reject()
+            window.clearInterval(timer)
+            return
+          }
+          if (this.$refs['music-box']) this.$refs['music-box'].volume = Number(vol) / 100
+          index++
+          if (index >= time) {
+            window.clearInterval(timer)
+            resolve()
+          }
+        }, 100)
+      })
     },
 
     // 音乐播放进度
