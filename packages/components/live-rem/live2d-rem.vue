@@ -1,7 +1,7 @@
 <template>
   <div v-drag="{limit: 'window'}" 
     class="live-rem" ref="liveRem" 
-    style="left:5px; bottom: 0px;" 
+    style="left:25px; bottom: 0px;" 
     :class="{'guiChu guiChu2': isGuiChu}"
     @mouseenter="meauListVisibel = true" 
     @mouseleave="meauListVisibel = false"
@@ -66,10 +66,26 @@ export default {
       default: false
     },
 
-    // 菜单
+    // 菜单 
     meauList: {
       type: Array,
-      default: () => []
+      default: () => [],
+      validator: val => {
+        if (Array.isArray(val)) {
+          return val.every(item => {
+            let { type, name, icon, clickCallback } = item
+            if (name && icon && (type || (clickCallback && typeof clickCallback === 'function'))) return true
+            else {
+              !name && console.error('liveRem meaulist name参数必填')
+              !icon && console.error('liveRem meaulist icon')
+              !type && (!clickCallback || typeof clickCallback !== 'function') && console.error('liveRem meaulist type或者clickCallback参数必需存在一个')
+              return false
+            }
+          })
+        } else {
+          return false
+        }
+      } 
     }
   },
   data () {

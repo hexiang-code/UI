@@ -58,6 +58,7 @@
       singer="迟木"
       song="一千万"
       :musicFix.sync="isMusicFix"
+      :volume.sync="musicVolumn"
     ></hx-music>
 
     <live-rem 
@@ -541,7 +542,8 @@ export default {
           type: 'musicForward'
         }
       ],
-      isMusicFix: false 
+      isMusicFix: false,
+      musicVolumn: 30 
     };
   },
 
@@ -666,7 +668,7 @@ export default {
     musicFix (musicFix) {
       this.musicBox = this.$refs['music-box']
       if (this.musicBox && musicFix) {
-        document.body.appendChild(this.musicBox.$el)
+        this.$liveRem.$el.appendChild(this.musicBox.$el)
         this.$liveRem.musicBox = this.musicBox
       }
     },

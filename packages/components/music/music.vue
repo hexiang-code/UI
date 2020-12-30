@@ -3,6 +3,7 @@ import silder from '../slider/slider'
 import { debounce } from '../../utils/utils'
 import { musicCanvasInit, stopOrStartMusicCanvas } from './music-canvas'
 import { randomColor } from '../../config/base-config'
+const fadeInTime = 1000 // 淡入淡出时间 单位ms
 const playMode = [
   {
     mode: 'random', // 随机播放
@@ -71,7 +72,17 @@ export default {
     musicFix: {
       type: Boolean,
       value: false
-    } 
+    },
+
+    // 音量
+    volume: {
+      type: Number,
+      default: 50,
+      required: true,
+      validator: val => {
+        return val >= 0 && val <= 100
+      }
+    }, 
   },
 
   data () {
@@ -81,7 +92,6 @@ export default {
       currentTime: 1, // 歌曲当前播放时间(单位s)
       isMusicChangeVisible: false, // 展示音乐切换icon
       isVolumeVisiable: false, // 是否展示音量滑块
-      volume: 50, // 音量
       lyricText: '', // 歌词
       lyricColor: '', // 歌词颜色
       playMode: playMode[0].mode, // 播放模式
@@ -126,8 +136,11 @@ export default {
   },
 
   watch: {
-    volume (newVal) {
-      if (this.$refs['music-box']) this.$refs['music-box'].volume = newVal / 100
+    volume: {
+      handler: function (newVal) {
+        if (this.$refs['music-box']) this.$refs['music-box'].volume = (newVal / 100)
+      },
+      immediate: true
     },
 
     // 每次音乐切换重置歌词
@@ -142,8 +155,8 @@ export default {
 
   render () {
     return (
-      <div class={['music', {'music_fix': this.musicFix}]} ref="music">
-        <i class={['iconfont music-fix', {'music-fix_active': this.musicFix}]} 
+      <div class={['music', this.musicFix ? 'music_hidden': 'music_visiable']} ref="music">
+        <i class='iconfont music-fix' 
           title="固定到全局播放"
           onClick={() => this.musicFixMethod()}>
           &#xe6a1;
@@ -185,14 +198,14 @@ export default {
                   vClose={{ closeCb: () => this.isVolumeVisiable = false}}
                   vShow={this.isVolumeVisiable}
                   // style={!this.isVolumeVisiable ? 'visibility: hidden' : ''}
-                  value={this.volume} onInput={val => this.volume = val}>
+                  value={this.volume} onInput={val => this.$emit('update:volume', val)}>
                 </hx-silder>
               </span>
               { this.formatTimeFromSencondToMinute(this.currentTime) }&nbsp;/&nbsp;{ this.formatTimeFromSencondToMinute(this.duration) }
             </div>
           </div>
         </div>
-      <audio 
+        <audio 
           ref="music-box" 
           onCanplay={() => this.musicCanPlay()}
           onTimeupdate={$event => this.musicProgress($event)}
@@ -241,8 +254,21 @@ export default {
 
     // 暂停播放
     pauseMusic () {
-      this.isStratMusic = false
-      this.$emit('music-pause')
+      // if (this.$refs['music-box']) this.$refs['music-box'].volume = newVal / 100
+      let { volume } = this
+      let index = 1, time = Math.ceil( fadeInTime / 100)
+      let timer = setInterval(() => {
+        let vol = volume - index * time
+        vol = vol < 0 ? 0 : vol
+        if (this.$refs['music-box']) this.$refs['music-box'].volume = Number(vol) / 100
+        index++
+        if (index >= time) {
+          window.clearInterval(timer)
+          this.isStratMusic = false
+          this.$emit('music-pause')
+        }
+      }, 100)
+      
     },
 
     // 音乐播放进度
@@ -566,20 +592,20 @@ export default {
 
     .music-fix {
       position: absolute;
-      top: 2px;
-      left: 80px;
+      top: 4px;
+      left: 2px;
       z-index: 1;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
-      color: unset;
-    }
-
-    .music-fix_active {
       color: $theme-color;
     }
   }
 
-  .music_fix {
-    animation: blurOutSimilarClean 1s forwards;
+  .music_visiable {
+    animation: blurOutSaveSelf 1s reverse forwards;
+  }
+
+  .music_hidden {
+    animation: blurOutSaveSelf 1s forwards;
   }
 </style>
