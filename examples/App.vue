@@ -45,6 +45,7 @@
     <button @click="testLoading2" v-loading="{isLoading: isTestLoading && loadingType == 2, message: '测试2'}">测试loading2</button>
     <button @click="testLoading3" v-loading="{isLoading: isTestLoading && loadingType == 3, message: '测试3'}">测试loading3</button>
     <button @click="testTextChange" @mousedown="testText = '你好'" v-drag>{{testText}}</button>
+    <button @click="isMusicFix = !isMusicFix" >音乐盒展示开关</button>
     <input />
     <button @click="checkbox">checkBox</button>
 
@@ -74,7 +75,7 @@
         <span slot="switchRight">11</span>
         <span slot="switchLeft">你好</span>
       </hx-switch>
-      <hx-slider v-model="sliderVal" :toFixed="2" :max="100" :min="0" direction="X"></hx-slider>
+      <hx-slider v-model="sliderVal" :toFixed="2" :max="100" :min="0" direction="X" :step="1"></hx-slider>
       {{sliderVal}}
     </div>
 
@@ -666,11 +667,11 @@ export default {
     },
 
     musicFix (musicFix) {
-      this.musicBox = this.$refs['music-box']
-      if (this.musicBox && musicFix) {
-        this.$liveRem.$el.appendChild(this.musicBox.$el)
-        this.$liveRem.musicBox = this.musicBox
-      }
+      // this.musicBox = this.$refs['music-box']
+      // if (this.musicBox && musicFix) {
+      //   this.$liveRem.$el.appendChild(this.musicBox.$el)
+      //   this.$liveRem.musicBox = this.musicBox
+      // }
     },
 
     menuListClick (meauItem) {

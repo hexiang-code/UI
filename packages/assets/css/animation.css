@@ -276,6 +276,17 @@
 }
 
 @keyframes blurOutSaveSelf {
-    85%, to { filter: blur(20px) }
-    to { opacity: 0 }
+  85%, to {
+    filter: blur(20px);
+    transform: translateY(100%);
+  }
+  to { opacity: 0 }
+}
+
+@keyframes blurInSaveSelf {
+  from {
+    transform: translateY(100%);
+    filter: blur(20px);
+    opacity: 0;
+  }
 }

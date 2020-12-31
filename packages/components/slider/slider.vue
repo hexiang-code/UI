@@ -1,9 +1,9 @@
 <template>
-  <div class="slider_row" ref="sliderRow" @click.stop="clickSlider($event)" v-if="direction == 'X'">
+  <div class="slider_row" ref="sliderRow" @click.stop="clickSlider($event)" v-if="direction == 'X'" @wheel.prevent="wheelEvent">
     <div class="slider-bar" ref="sliderBarRow"></div>
     <div ref="sliderBlockRow" class="slider-block" @click.stop v-drag:X="{moveCb: this.moveCb, initX: initOffSet}"></div>
   </div>
-    <div class="slider_column" ref="sliderColumn" @click.stop="clickSlider($event)" v-else>
+  <div class="slider_column" ref="sliderColumn" @click.stop="clickSlider($event)" v-else  @wheel.prevent="wheelEvent">
     <div class="slider-bar" ref="sliderBarColumn"></div>
     <div ref="sliderBlockColumn" class="slider-block" @click.stop v-drag:Y="{moveCb: this.moveCb, initY: sliderWidth - sliderBlockWidth - initOffSet}"></div>
   </div>
@@ -37,6 +37,7 @@ export default {
       },
       default: 0
     },
+
     toFixed: {
       type: Number,
       default: 2
@@ -49,6 +50,12 @@ export default {
       validator: function(val) {
         return ['X', 'Y'].includes(val)
       }
+    },
+
+    // 使用鼠标滚轮时步长,需要使用滚轮事件必须设置步长
+    step: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -152,6 +159,25 @@ export default {
       percent = percent <= this.max ? percent : this.max 
       // 当且仅当子组件内部滑块移动而改变党当前值时，才派发事件
       isNeedEmit && this.$emit('input', percent)
+    },
+
+    // 滚轮事件
+    wheelEvent ($event) {
+      if (this.step) {
+        let step = this.step
+        let addVal = this.value + Number(step.toFixed(this.toFixed)) 
+        let reduceVal = this.value - Number(step.toFixed(this.toFixed))
+        addVal = addVal > this.max ? this.max : addVal
+        reduceVal = reduceVal < this.min ? this.min : reduceVal
+        if ($event.deltaY > 0) {
+          if (this.direction == 'X') this.$emit('input', addVal)
+          if (this.direction == 'Y') this.$emit('input', reduceVal)
+        } 
+        if ($event.deltaY < 0) {
+          if (this.direction == 'X') this.$emit('input', reduceVal)
+          if (this.direction == 'Y') this.$emit('input', addVal)
+        }
+      }
     }
   }
 }
@@ -164,6 +190,7 @@ export default {
     height: 6px;
     border-radius: 3px;
     background-color: #e5e5e5;
+    cursor: pointer;
 
     .slider-block {
       position: absolute;
@@ -190,6 +217,7 @@ export default {
     width: 6px;
     border-radius: 3px;
     background-color: #e5e5e5;
+    cursor: pointer;
 
     .slider-block {
       position: absolute;

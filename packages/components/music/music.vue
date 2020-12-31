@@ -83,6 +83,15 @@ export default {
         return val >= 0 && val <= 100
       }
     }, 
+
+    // 播放模式
+    playMode: {
+      type: String,
+      default: playMode[0].mode,
+      validator: val => {
+        return playMode.map(item => item.mode).includes(val)
+      }
+    }
   },
 
   data () {
@@ -94,7 +103,6 @@ export default {
       isVolumeVisiable: false, // 是否展示音量滑块
       lyricText: '', // 歌词
       lyricColor: '', // 歌词颜色
-      playMode: playMode[0].mode, // 播放模式
       isCanvasInit: false, // 是否初始化音乐背景完毕
     }
   },
@@ -155,68 +163,73 @@ export default {
 
   render () {
     return (
-      <div class={['music', this.musicFix ? 'music_hidden': 'music_visiable']} ref="music">
-        <i class='iconfont music-fix' 
-          title="固定到全局播放"
-          onClick={() => this.musicFixMethod()}>
-          &#xe6a1;
-        </i>
-        <div
-          class={[ 'left', {'music_opacity': !this.isMusicChangeVisible && this.isStratMusic} ]}
-          onMouseleave={() => this.isMusicChangeVisible = false }
-          onMouseover={() => this.isMusicChangeVisible = true}>
-          { this.musicFaceSrc ? <img class="bg" src={this.musicFaceSrc} /> : '' }
-          <i class="iconfont up" 
-            onClick={() => this.changeMusic(1)}
-            vShow={this.isMusicChangeVisible}>&#xe61f;</i>
-          <i class="iconfont down" 
-            onClick={() => this.changeMusic(2)}
-            vShow={this.isMusicChangeVisible}>&#xe651;</i>
-          <i class="iconfont start" 
-            onClick={() => this.isStratMusic ? this.pauseMusic() : this.playMusic()} 
-            domProps={{innerHTML: this.isStratMusic ? '&#xe60f;' : '&#xe617;' }}></i>
-        </div>
-        <div class="right">
-          <div class="song-info">
-            { this.song ? <span class="song" title={this.song}>{this.song}</span> : '' }
-            { this.singer ? <span class="singer">—&nbsp;{this.singer}</span> : '' }
+      <transition name="music" 
+        onBeforeEnter={() => this.$emit('before-animation')}
+        onAfterLeave={() => this.$emit('after-animation')}>
+        <div class='music' vShow={this.musicFix} ref="music">
+          <i class='iconfont music-fix' 
+            title="固定到全局播放"
+            onClick={() => this.musicFixMethod()}>
+            &#xe6a1;
+          </i>
+          <div
+            class={[ 'left', {'music_opacity': !this.isMusicChangeVisible && this.isStratMusic} ]}
+            onMouseleave={() => this.isMusicChangeVisible = false }
+            onMouseover={() => this.isMusicChangeVisible = true}>
+            { this.musicFaceSrc ? <img class="bg" src={this.musicFaceSrc} /> : '' }
+            <i class="iconfont up" 
+              onClick={() => this.changeMusic(1)}
+              vShow={this.isMusicChangeVisible}>&#xe61f;</i>
+            <i class="iconfont down" 
+              onClick={() => this.changeMusic(2)}
+              vShow={this.isMusicChangeVisible}>&#xe651;</i>
+            <i class="iconfont start" 
+              onClick={() => this.isStratMusic ? this.pauseMusic() : this.playMusic()} 
+              domProps={{innerHTML: this.isStratMusic ? '&#xe60f;' : '&#xe617;' }}></i>
           </div>
-          <div class="lyric-info" style={this.isStratMusic && this.lyricText ? `opacity: 1;color: ${this.lyricColor};`: ''}>{this.lyricText}</div>
-          <div class="progress">
-            <hx-silder toFixed={0} max={this.duration} min={0} value={this.currentTime} 
-              onInput={val => this.playMusicFromTarget(val)}>
-            </hx-silder>
-            <div class="time">
-              <i class="iconfont mode-icon" onClick={() => this.modeChange()} domProps={this.playModeIcon}></i>
-              <span class="volume">
-                <i class="iconfont volume-icon" onClick={$event => this.volumeVisiable($event)}>&#xe72b;</i>
-                <hx-silder
-                  direction="Y"
-                  toFixed={0}
-                  max={100} 
-                  min={0}
-                  vClose={{ closeCb: () => this.isVolumeVisiable = false}}
-                  vShow={this.isVolumeVisiable}
-                  // style={!this.isVolumeVisiable ? 'visibility: hidden' : ''}
-                  value={this.volume} onInput={val => this.$emit('update:volume', val)}>
-                </hx-silder>
-              </span>
-              { this.formatTimeFromSencondToMinute(this.currentTime) }&nbsp;/&nbsp;{ this.formatTimeFromSencondToMinute(this.duration) }
+          <div class="right">
+            <div class="song-info">
+              { this.song ? <span class="song" title={this.song}>{this.song}</span> : '' }
+              { this.singer ? <span class="singer">—&nbsp;{this.singer}</span> : '' }
+            </div>
+            <div class="lyric-info" style={this.isStratMusic && this.lyricText ? `opacity: 1;color: ${this.lyricColor};`: ''}>{this.lyricText}</div>
+            <div class="progress">
+              <hx-silder toFixed={0} max={this.duration} min={0} value={this.currentTime}
+                onInput={val => this.playMusicFromTarget(val)}>
+              </hx-silder>
+              <div class="time">
+                <i class="iconfont mode-icon" onClick={() => this.modeChange()} domProps={this.playModeIcon}></i>
+                <span class="volume">
+                  <i class="iconfont volume-icon" onClick={$event => this.volumeVisiable($event)}>&#xe72b;</i>
+                  <hx-silder
+                    direction="Y"
+                    step={1}
+                    toFixed={0}
+                    max={100} 
+                    min={0}
+                    vClose={{ closeCb: () => this.isVolumeVisiable = false}}
+                    vShow={this.isVolumeVisiable}
+                    // style={!this.isVolumeVisiable ? 'visibility: hidden' : ''}
+                    value={this.volume} onInput={val => this.$emit('update:volume', val)}>
+                  </hx-silder>
+                </span>
+                { this.formatTimeFromSencondToMinute(this.currentTime) }&nbsp;/&nbsp;{ this.formatTimeFromSencondToMinute(this.duration) }
+              </div>
             </div>
           </div>
+          <audio 
+            ref="music-box" 
+            onCanplay={() => this.musicCanPlay()}
+            onTimeupdate={$event => this.musicProgress($event)}
+            onLoadedmetadata={$event => this.getDuration($event)}
+            onEnded={() => this.musicEnd()}
+            src={this.musicSrc}
+            onerror={$event =>this.musicSrcError($event)}
+            crossOrigin="anonymous">
+          </audio>
+          <canvas ref="mainCanvas" class="main-canvas" width="300" height="85"></canvas>
         </div>
-        <audio 
-          ref="music-box" 
-          onCanplay={() => this.musicCanPlay()}
-          onTimeupdate={$event => this.musicProgress($event)}
-          onLoadedmetadata={$event => this.getDuration($event)}
-          onEnded={() => this.musicEnd()}
-          src={this.musicSrc}
-          onerror={$event =>this.musicSrcError($event)}
-          crossOrigin="anonymous">
-        </audio>
-        <canvas ref="mainCanvas" class="main-canvas" width="300" height="85"></canvas>
-      </div>
+      </transition>
     )
   },
 
@@ -404,8 +417,9 @@ export default {
       let index = playMode.findIndex(item => item.mode == this.playMode)
       if (index > -1) {
         if (index === playMode.length - 1) index = 0
-        this.playMode = playMode[index+1].mode
-        this.$emit('playModeChange', this.playMode)
+        let playMode = playMode[index+1].mode
+        this.$emit('playModeChange', playMode)
+        this.$emit('update:playMode', playMode)
       }
     },
 
@@ -621,11 +635,18 @@ export default {
     }
   }
 
-  .music_visiable {
-    animation: blurOutSaveSelf 1s reverse forwards;
+  // .music_visiable {
+  //   animation: blurInSaveSelf 1s forwards;
+  // }
+
+  // .music_hidden {
+  //   animation: blurOutSaveSelf 1s forwards;
+  // }
+  .music-enter-active {
+    animation: blurInSaveSelf 1s forwards;
   }
 
-  .music_hidden {
+  .music-leave-active {
     animation: blurOutSaveSelf 1s forwards;
   }
 </style>
