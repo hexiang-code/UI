@@ -60,6 +60,7 @@
       song="一千万"
       :musicFix.sync="isMusicFix"
       :volume.sync="musicVolumn"
+      @music-error="musicError"
     ></hx-music>
 
     <live-rem 
@@ -523,7 +524,7 @@ export default {
       ],
       testMeauList1: "<span>你好</span>",
       musicLyric,
-      musicSrc: "http://localhost:3000/assets/kafeidou/test-music.mp3",
+      musicSrc: "http://localhost:3000/assets/kafeidou/test-music1.mp3",
       noteLabelList,
       testOpenTarget: '',
       isTestLoading: false,
@@ -648,6 +649,10 @@ export default {
       this.musicSrc =
         "http://m8.music.126.net/20201209151658/fca87ecb505ace967c2668ff720815f9/ymusic/0e58/0453/5609/920c678a2c39b263f1c4ac58e2593712.mp3";
       this.$refs["music-box"].musicSwitch();
+    },
+
+    musicError () {
+      console.log('music error')
     },
 
     testLoading1 () {
