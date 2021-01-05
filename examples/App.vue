@@ -524,7 +524,7 @@ export default {
       ],
       testMeauList1: "<span>你好</span>",
       musicLyric,
-      musicSrc: "http://localhost:3000/assets/kafeidou/test-music1.mp3",
+      musicSrc: "http://localhost:3000/assets/kafeidou/test-music.mp3",
       noteLabelList,
       testOpenTarget: '',
       isTestLoading: false,

@@ -224,7 +224,7 @@ export default {
             onLoadedmetadata={$event => this.getDuration($event)}
             onEnded={() => this.musicEnd()}
             src={this.musicSrc}
-            onerror={$event =>this.musicSrcError($event)}
+            onError={$event =>this.musicSrcError($event)}
             crossOrigin="anonymous">
           </audio>
           <canvas ref="mainCanvas" class="main-canvas" width="300" height="85"></canvas>
