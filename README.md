@@ -1,5 +1,7 @@
 [toc]
 # hexiang-ui
+### 示例
+欢迎访问[我的博客](https://www.hexiangzone.cn/index/notes/notesDetail?notesId=3)查看示例
 
 ### 项目初始化
 #### 安装
