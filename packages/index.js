@@ -8,7 +8,7 @@ import { filters } from './filters/filters'
 
 import LoadingService from './directive/loading/utils'
 
-import { pointAnimation } from '../../utils/pointAnimation'
+import { pointAnimation } from './utils/pointAnimation'
 
 import backgroundVideo from './components/background-video/background-video'
 import dialog from './components/dialog/dialog'
