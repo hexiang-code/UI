@@ -58,18 +58,17 @@
       musicFaceSrc="https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
       singer="迟木"
       song="一千万"
-      :musicFix.sync="isMusicFix"
       :volume.sync="musicVolumn"
       @music-error="musicError"
     ></hx-music>
 
-    <live-rem 
+    <!-- <live-rem 
       ref="rem" 
       @liveRemTalk="liveRemTalk" 
       :meauList="liveRemMeauList"
       @menuListClick="menuListClick"
       :welcomeBack="{audioSrc: '/live-model/rem/sound/lemm_welcome-back.mp3', text: '你回来啦~'}">
-      </live-rem>
+    </live-rem> -->
     <!-- <canvas-bg v-if="canvasVisiable"></canvas-bg> -->
     <div>
       <hx-switch v-model="switchVal" active-color="blue" inactive-color="red">

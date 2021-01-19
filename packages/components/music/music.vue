@@ -68,12 +68,6 @@ export default {
       type: String
     },
 
-    // 音乐盒是否固定
-    musicFix: {
-      type: Boolean,
-      value: false
-    },
-
     // 音量
     volume: {
       type: Number,
@@ -163,15 +157,8 @@ export default {
 
   render () {
     return (
-      <transition name="music" 
-        onBeforeEnter={() => this.$emit('before-animation')}
-        onAfterLeave={() => this.$emit('after-animation')}>
-        <div class='music' vShow={this.musicFix} ref="music">
-          <i class='iconfont music-fix' 
-            title="固定到全局播放"
-            onClick={() => this.musicFixMethod()}>
-            &#xe6a1;
-          </i>
+      <transition name="music">
+        <div class='music'>
           <div
             class={[ 'left', {'music_opacity': !this.isMusicChangeVisible && this.isStratMusic} ]}
             onMouseleave={() => this.isMusicChangeVisible = false }
@@ -428,13 +415,7 @@ export default {
       this.$emit('getLyric', currentTime , lyric => {
         if (typeof lyric === 'string') this.lyricText = lyric
       })
-    },
-
-    // 音乐盒固定
-    musicFixMethod () {
-      this.$emit('update:musicFix', !this.musicFix)
     }
-
   }
 }
 </script>
@@ -623,30 +604,5 @@ export default {
       z-index: -1;
       opacity: 0.3;
     }
-
-    .music-fix {
-      position: absolute;
-      top: 4px;
-      left: 2px;
-      z-index: 1;
-      font-size: 16px;
-      cursor: pointer;
-      color: $theme-color;
-    }
-  }
-
-  // .music_visiable {
-  //   animation: blurInSaveSelf 1s forwards;
-  // }
-
-  // .music_hidden {
-  //   animation: blurOutSaveSelf 1s forwards;
-  // }
-  .music-enter-active {
-    animation: blurInSaveSelf 1s forwards;
-  }
-
-  .music-leave-active {
-    animation: blurOutSaveSelf 1s forwards;
   }
 </style>

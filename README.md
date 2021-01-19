@@ -416,7 +416,6 @@ singer | 歌手名称 | String | - | - | 否
 song | 歌曲名称 | Sting | - | - | 否
 progressUnit | 歌曲进度条单位，m:分钟s:秒(小写) |  String | m/s | m | 否
 musicLyric | 歌词文件,必须符合lyric文件格式，如下例 | String | - | - | 否
-musicFix | 是否为全局播放 | Boolean | true/false | false | 否
 
 ##### event
 事件名|说明|参数|返回值类型
@@ -428,8 +427,6 @@ getLyric | 如果歌曲格式不对的话，会派发该事件 | currentTime: �
 music-error | 播放出错事件 | musicError(this, $event) this: 当前播放器实例，$event：浏览器$event对象 | void
 music-start | 开始播放钩子 | - | void
 music-pause | 暂停播放钩子 | - | void
-before-animation | 音乐盒入场动画之前钩子 | - | void
-after-animation | 音乐盒入场动画之前钩子 | - | void
 
 ###### musicLyric例：
 ```
