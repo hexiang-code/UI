@@ -5,17 +5,17 @@ class ImageLazy {
     this.intersectionObserver = null
     this.dataSrc = ''
     this.status = ''
+    if (window && window.IntersectionObserver) this.intersectionObserver = new IntersectionObserver(this.imageVisibel.bind(this))
+    else throw new Error('您的浏览器暂不支持图片懒加载')
   }
 
-  bind (el) {
-    if (window && window.IntersectionObserver) {
-      this.intersectionObserver = new IntersectionObserver(this.imageVisibel.bind(this))
-      this.intersectionObserver.observe(el)
-      this.dataSrc = el.src
-      el.src = this.options.loading
-      this.status = 'loading'
-      this.el = el
-    }
+  update (el) {
+    if (!this.intersectionObserver) return
+    this.intersectionObserver.observe(el)
+    this.dataSrc = el.src
+    el.src = this.options.loading
+    this.status = 'loading'
+    this.el = el
   }
 
   unbind () {
