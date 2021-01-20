@@ -44,11 +44,8 @@ function pointContent (canvas, targetNode, replaceNode, time, isRemoveTargetNode
         item.style.opacity = 0;
       })
       setTimeout(() => {
-        if (isRemoveTargetNode) {
-          replaceNode.parentNode.removeChild(replaceNode)
-        } else {
-          replaceNode.parentNode.replaceChild(targetNode, replaceNode)
-        }
+        if (isRemoveTargetNode) targetNode.style = 'display: none;'
+        replaceNode.parentNode.replaceChild(targetNode, replaceNode)
         resolve()
       }, time)
     })

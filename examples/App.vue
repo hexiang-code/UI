@@ -276,7 +276,7 @@ export default {
 
     async currentPageChange(curPage) {
       console.log(`当前在第${curPage}页`);
-      this.$refs["pagination"].pointAnimation(this.$refs["testPoint1"]);
+      this.$refs["pagination"].pointAnimation(this.$refs["testPoint1"], { isRemoveTargetNode: false });
     },
 
     albumReachBottom() {

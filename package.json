@@ -1,6 +1,6 @@
 {
   "name": "codehe-ui",
-  "version": "1.4.03",
+  "version": "1.4.04",
   "private": false,
   "main": "lib/codeheUi.common.js",
   "scripts": {
