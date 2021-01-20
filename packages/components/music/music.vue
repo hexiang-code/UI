@@ -177,7 +177,7 @@ export default {
           <div class="right">
             <div class="song-info">
               { this.song ? <span class="song" title={this.song}>{this.song}</span> : '' }
-              { this.singer ? <span class="singer">—&nbsp;{this.singer}</span> : '' }
+              { this.singer ? <span class="singer" title={this.singer}>—&nbsp;{this.singer}</span> : '' }
             </div>
             <div class="lyric-info" style={this.isStratMusic && this.lyricText ? `opacity: 1;color: ${this.lyricColor};`: ''}>{this.lyricText}</div>
             <div class="progress">
@@ -560,7 +560,7 @@ export default {
         margin-bottom: 16px;
 
         .song {
-          max-width: 150px;
+          max-width: 130px;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -571,8 +571,11 @@ export default {
         }
 
         .singer {
-          margin-left: 12px;
+          margin-left: 4px;
           white-space: nowrap;
+          max-width: 66px;
+          text-overflow: ellipsis;
+          overflow: hidden;
           font-size: 14px;
           color: #666;
           color: $theme-color;
