@@ -9,17 +9,20 @@ const html2CanvasOPtions = {
  * @param {vNode} targetNode 引用动画的vNode后者元素节点
  * @param {Number} time 动画持续时间
  */
-async function pointAnimation (targetNode, time = 2000, params) {
+async function pointAnimation (targetNode, time = 2000, options = {}) {
   if (!(targetNode instanceof HTMLElement)) targetNode = targetNode.$el
-  params = Object.assign({ scrollY: -window.pageYOffset }, html2CanvasOPtions, params)
+  if (typeof time !== 'number') {
+    options = time
+    time = 2000
+  }
+  let params = Object.assign({ scrollY: -window.pageYOffset }, html2CanvasOPtions, options.html2CanvasParams)
   let canvas = await html2canvas(targetNode, params)
   let replaceNode = document.createElement('div')
   replaceNode.style = `height: ${canvas.height}px`
   replaceNode.classList.add('content-canvas')
-  replaceNode.classList.add(targetNode.classList)
+  replaceNode.classList.add(targetNode.classList.value)
   targetNode.parentNode.replaceChild(replaceNode, targetNode)
-  await pointContent(canvas, targetNode, replaceNode, time)
-  return Promise.resolve()
+  return await pointContent(canvas, targetNode, replaceNode, time, options.isRemoveTargetNode)
 }
 
 /**
@@ -28,8 +31,9 @@ async function pointAnimation (targetNode, time = 2000, params) {
  * @param {HTMLElement} targetNode 被替换的dom
  * @param {HTMLElement} replaceNode 替换用的dom
  * @param {Number} time 动画持续时间
+ * @param {Boolean} isRemoveTargetNode 是否移除目标节点
  */
-function pointContent (canvas, targetNode, replaceNode, time) {
+function pointContent (canvas, targetNode, replaceNode, time, isRemoveTargetNode = false) {
   return new Promise(resolve => {
     let nodes = new NewFrame(canvas, canvasNums)
     replaceNode.appendChild(nodes)
@@ -40,7 +44,11 @@ function pointContent (canvas, targetNode, replaceNode, time) {
         item.style.opacity = 0;
       })
       setTimeout(() => {
-        replaceNode.parentNode.replaceChild(targetNode, replaceNode)
+        if (isRemoveTargetNode) {
+          replaceNode.parentNode.removeChild(replaceNode)
+        } else {
+          replaceNode.parentNode.replaceChild(targetNode, replaceNode)
+        }
         resolve()
       }, time)
     })

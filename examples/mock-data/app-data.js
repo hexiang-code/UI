@@ -286,7 +286,7 @@ let loggerList = [
     userAccount: null,
     userId: 8
   }
-];
+]
 
 let noteLabelList = [
   {
