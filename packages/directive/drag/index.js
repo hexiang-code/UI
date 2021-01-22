@@ -15,8 +15,8 @@ const drag = Vue => {
         let { arg , value: {
           initX, initY, moveCb, limit
         } = {} } = binding
-        if (String(initX)) el.style.left = `${initX}px`
-        if (String(initY)) el.style.top = `${initY}px`
+        if (initX && initX !== 0) el.style.left = `${initX}px`
+        if (initY && initY !== 0) el.style.top = `${initY}px`
         el.onmousedown = ($event) => {
           if (!arg) {
             disX = $event.pageX - el.offsetLeft
