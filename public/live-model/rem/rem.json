@@ -31,13 +31,16 @@
 		],
 		"flick_head": [
 			{
-				"file": "motions/Live2D_remu01.mtn"
+				"file": "motions/Live2D_remu01.mtn",
+				"sound": "sound/lemm_006.mp3"
 			},
 			{
-				"file": "motions/Live2D_remu02.mtn"
+				"file": "motions/Live2D_remu02.mtn",
+				"sound": "sound/lemm_003.mp3"
 			},
 			{
-				"file": "motions/Live2D_remu03.mtn"
+				"file": "motions/Live2D_remu03.mtn",
+				"sound": "sound/lemm_024.mp3"
 			},
 			{
 				"file": "motions/Live2D_remu04.mtn"
@@ -64,62 +67,60 @@
 		"tap_body": [
 			{
 				"file": "motions/Live2D_remu06.mtn",
-				"sound": "sound/lemm_030.mp3"
-			},
-			{
-				"file": "motions/Live2D_remu07.mtn",
-				"sound": "sound/lemm_025.mp3"
-			},
-			{
-				"file": "motions/Live2D_remu08.mtn",
-				"sound": "sound/lemm_045.mp3"
-			},
-			{
-				"file": "motions/Live2D_remu09.mtn",
-				"sound": "sound/lemm_046.mp3"
-			},
-			{
-				"file": "motions/Live2D_remu10.mtn",
-				"sound": "sound/lemm_051.mp3"
-			},
-			{
-				"file": "motions/Live2D_remu11.mtn",
 				"sound": "sound/lemm_063.mp3"
 			},
 			{
+				"file": "motions/Live2D_remu07.mtn",
+				"sound": "sound/lemm_053.mp3"
+			},
+			{
+				"file": "motions/Live2D_remu08.mtn",
+				"sound": "sound/sound/lemm_029.mp3"
+			},
+			{
+				"file": "motions/Live2D_remu09.mtn",
+				"sound": "sound/lemm_041.mp3"
+			},
+			{
+				"file": "motions/Live2D_remu10.mtn",
+				"sound": "sound/lemm_028.mp3"
+			},
+			{
+				"file": "motions/Live2D_remu11.mtn",
+				"sound": "sound/lemm_047.mp3"
+			},
+			{
 				"file": "motions/Live2D_remu12.mtn",
-				"sound": "sound/lemm_050.mp3"
+				"sound": "sound/lemm_022.mp3"
 			},
 			{
 				"file": "motions/Live2D_remu13.mtn",
-				"sound": "sound/lemm_074.mp3"
+				"sound": "sound/lemm_020.mp3"
 			},
 			{
 				"file": "motions/Live2D_remu14.mtn"
 			},
 			{
 				"file": "motions/Live2D_remu15.mtn",
-				"sound": "sound/lemm_057.mp3"
+				"sound": "sound/lemm_014.mp3"
 			},
 			{
 				"file": "motions/Live2D_remu16.mtn",
-				"sound": "sound/lemm_077.mp3"
+				"sound": "sound/lemm_055.mp3"
 			},
 			{
 				"file": "motions/Live2D_remu17.mtn",
-				"sound": "sound/lemm_077.mp3"
+				"sound": "sound/lemm_009.mp3"
 			},
 			{
 				"file": "motions/Live2D_remu18.mtn",
-				"sound": "sound/lemm_082.mp3"
+
 			},
 			{
 				"file": "motions/Live2D_remu19.mtn",
-				"sound": "sound/lemm_082.mp3"
 			},
 			{
 				"file": "motions/Live2D_remu20.mtn",
-				"sound": "sound/lemm_086.mp3"
 			}
 		],
 		"sleepy": [

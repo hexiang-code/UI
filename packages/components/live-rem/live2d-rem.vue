@@ -33,8 +33,9 @@
 </template>
 
 <script>
-import { MESSAGE, textureConfig, meauList } from './config'
+import { MESSAGE, textureConfig, meauList, voiceTips } from './config'
 import { startLive2d, loadAction } from './live2d-resource/startLive2d'
+import { getRandomItemFromArray } from '../../utils/utils'
 import Vue from 'vue'
 import renderCustom from './render-custom'
 let messageTimer // 提示计时器
@@ -190,6 +191,7 @@ export default {
       this.talkAbout = ''
     },
 
+    // 整点提示
     lovelyRemind () {
       let curS = new Date().getSeconds()
       let curM = new Date().getMinutes()
@@ -200,6 +202,10 @@ export default {
         let notifyText = ''
         if (curhours % 1 === 0 && curMinutes == 0) {
           notifyText = `${curhours}点了哟，休息一下保护下眼睛吧`
+          let voicTip = getRandomItemFromArray(voiceTips[curhours])
+          let { sound, text } = voicTip
+          sound && new Audio(sound).play()
+          text && this.showText({text, type: 'lovely'})
         }
         if (curhours == 9 && curMinutes == 0) {
           notifyText = '亲爱哒，到上班时间咯，要好好加油哟'

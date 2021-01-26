@@ -77,8 +77,20 @@ function formatDate(formatText, timestamp = +new Date()) {
   return returnText
 }
 
+/**
+ * 从数组中随机获取一项
+ * @param {Array} array 源数组
+ */
+function getRandomItemFromArray (array) {
+  if (!Array.isArray(array)) return
+  let len = array.length
+  let random = Math.floor(Math.random() * len)
+  return array[random]
+}
+
 export {
   debounce,
   throttle,
-  formatDate
+  formatDate,
+  getRandomItemFromArray
 }
