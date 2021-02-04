@@ -404,9 +404,9 @@ export default {
       let index = playMode.findIndex(item => item.mode == this.playMode)
       if (index > -1) {
         if (index === playMode.length - 1) index = 0
-        let playMode = playMode[index+1].mode
-        this.$emit('playModeChange', playMode)
-        this.$emit('update:playMode', playMode)
+        let _playMode = playMode[index+1].mode
+        this.$emit('playModeChange', _playMode)
+        this.$emit('update:playMode', _playMode)
       }
     },
 
