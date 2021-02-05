@@ -157,7 +157,7 @@ export default {
       let percent = Number(new Number((move/sliderW) * (this.max - this.min) + this.min).toFixed(this.toFixed))
       percent = percent >= this.min ? percent : this.min 
       percent = percent <= this.max ? percent : this.max 
-      // 当且仅当子组件内部滑块移动而改变党当前值时，才派发事件
+      // 当且仅当子组件内部滑块移动而改变当前值时，才派发事件
       isNeedEmit && this.$emit('input', percent)
     },
 

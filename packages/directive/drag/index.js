@@ -1,4 +1,4 @@
-import { limitTranslate } from './utils'
+import { limitTranslate, getInitDestence } from './utils'
 
 /**
  * 拖拽指令
@@ -13,17 +13,21 @@ const drag = Vue => {
       (el, binding, vnode) => {
         let disX, disY
         let { arg , value: {
-          initX, initY, moveCb, limit
+          initX, initY, moveCb, limit = 'parent'
         } = {} } = binding
         if (initX && initX !== 0) el.style.left = `${initX}px`
         if (initY && initY !== 0) el.style.top = `${initY}px`
-        el.onmousedown = ($event) => {
+        function mousedownHandle ($event) {
+          $event.stopPropagation()
+          let _getInitDestence = getInitDestence($event, el)
           if (!arg) {
-            disX = $event.pageX - el.offsetLeft
-            disY = $event.pageY - el.offsetTop
+            // disX = $event.pageX - el.offsetLeft
+            // disY = $event.pageY - el.offsetTop
+            disX = _getInitDestence('X')
+            disY = _getInitDestence('Y')
           }
-          if (arg == 'X') disX = $event.pageX - el.offsetLeft
-          if (arg == 'Y') disY = $event.pageY - el.offsetTop
+          if (arg == 'X') disX = _getInitDestence('X')
+          if (arg == 'Y') disY = _getInitDestence('Y')
           document.onmousemove = ($event) => {
             let move = new Proxy({x: 0, y: 0}, {
               get () {
@@ -36,7 +40,7 @@ const drag = Vue => {
                 return Reflect.set(...arguments)
               }
             })
-            if (disX) {
+            if (disX != undefined && disX != null) {
               let translateX = $event.pageX - disX
               translateX = limitTranslate(translateX, limit, el, 1)
               if (`${translateX}px` != el.style.left) {
@@ -44,7 +48,7 @@ const drag = Vue => {
                 el.style.left = `${translateX}px`
               }
             } 
-            if (disY) {
+            if (disY != undefined && disY != null) {
               let translateY = $event.pageY - disY
               translateY = limitTranslate(translateY, limit, el, 2)
               if (`${translateY}px` != el.style.top) {
@@ -56,7 +60,9 @@ const drag = Vue => {
           document.onmouseup = () => {
             document.onmousemove = null
           }
-        }
+        } 
+        
+        el.addEventListener('mousedown', mousedownHandle, true)
       }
     )
 }

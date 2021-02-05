@@ -75,7 +75,7 @@
         <span slot="switchRight">11</span>
         <span slot="switchLeft">你好</span>
       </hx-switch>
-      <hx-slider v-model="sliderVal" :toFixed="2" :max="100" :min="0" direction="X" :step="1"></hx-slider>
+      <hx-slider v-model="sliderVal" :toFixed="2" :max="100" :min="0" direction="Y" :step="1"></hx-slider>
       {{sliderVal}}
     </div>
 

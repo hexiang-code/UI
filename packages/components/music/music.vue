@@ -158,7 +158,7 @@ export default {
   render () {
     return (
       <transition name="music">
-        <div class='music'>
+        <div class="music">
           <div
             class={[ 'left', {'music_opacity': !this.isMusicChangeVisible && this.isStratMusic} ]}
             onMouseleave={() => this.isMusicChangeVisible = false }

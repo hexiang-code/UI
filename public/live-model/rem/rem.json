@@ -113,14 +113,13 @@
 				"sound": "sound/lemm_009.mp3"
 			},
 			{
-				"file": "motions/Live2D_remu18.mtn",
-
+				"file": "motions/Live2D_remu18.mtn"
 			},
 			{
-				"file": "motions/Live2D_remu19.mtn",
+				"file": "motions/Live2D_remu19.mtn"
 			},
 			{
-				"file": "motions/Live2D_remu20.mtn",
+				"file": "motions/Live2D_remu20.mtn"
 			}
 		],
 		"sleepy": [
