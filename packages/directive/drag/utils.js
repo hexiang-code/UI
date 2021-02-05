@@ -27,15 +27,15 @@ const limitTranslate = (translate, limit = 'parent', curNode, mode = 1) => {
 }
 
 /**
- * 
+ * 计算鼠标悬浮位置到元素边框的距离
  * @param {Event} $event mousedown的event事件
  * @param {HTMLELement} curEl 当前的目标节点 
  * @param {String} type X: 计算X轴上的初始位置，Y:计算Y轴上的初始位置
  * @returns {Number}
  */
-const getInitDestence = ($event, curEl, type = 'X') => {
+const computedDestence = ($event, curEl) => {
   let _curElPostion = _getElPosition(curEl)
-  return function () {
+  return function (type = 'X') {
     // 如果目标元素没有定位方式，则为当前元素增加默认定位方式relative
     if (!_curElPostion) curEl.style.position = 'relative'
     // 不管是x/y轴上面的移动，只要当前元素的定位方式为relative, 则返回pageX/pageY
@@ -60,11 +60,12 @@ const getInitDestence = ($event, curEl, type = 'X') => {
                     : $event.pageY - originY
           } else {
             // 如果是relative 或者absolute定位
+            // 这里不能用offsetTop, 是因为offsetTop是子元素到直接父元素的距离，这里遍历祖先节点找到第一个拥有定位的祖先节点
             let { x: curELOriginX, y: curELOriginY } = _getOriginDestence(curEl)
             let { x: parentOriginX, y: parentOriginY } = _getOriginDestence(parentNode)
             return type == 'X' 
-                    ? parentOriginX - curELOriginX
-                    : parentOriginY - curELOriginY
+                    ? $event.pageX - (curELOriginX - parentOriginX)
+                    : $event.pageY - (curELOriginY - parentOriginY)
           }
         }
       }
@@ -102,5 +103,5 @@ const _getOriginDestence = el => {
 
 export {
   limitTranslate,
-  getInitDestence
+  computedDestence
 } 

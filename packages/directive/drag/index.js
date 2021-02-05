@@ -1,4 +1,4 @@
-import { limitTranslate, getInitDestence } from './utils'
+import { limitTranslate, computedDestence } from './utils'
 
 /**
  * 拖拽指令
@@ -19,15 +19,15 @@ const drag = Vue => {
         if (initY && initY !== 0) el.style.top = `${initY}px`
         function mousedownHandle ($event) {
           $event.stopPropagation()
-          let _getInitDestence = getInitDestence($event, el)
+          let _computedDestence = computedDestence($event, el)
           if (!arg) {
             // disX = $event.pageX - el.offsetLeft
             // disY = $event.pageY - el.offsetTop
-            disX = _getInitDestence('X')
-            disY = _getInitDestence('Y')
+            disX = _computedDestence('X')
+            disY = _computedDestence('Y')
           }
-          if (arg == 'X') disX = _getInitDestence('X')
-          if (arg == 'Y') disY = _getInitDestence('Y')
+          if (arg == 'X') disX = _computedDestence('X')
+          if (arg == 'Y') disY = _computedDestence('Y')
           document.onmousemove = ($event) => {
             let move = new Proxy({x: 0, y: 0}, {
               get () {
@@ -62,7 +62,7 @@ const drag = Vue => {
           }
         } 
         
-        el.addEventListener('mousedown', mousedownHandle, true)
+        el.addEventListener('mousedown', mousedownHandle, false)
       }
     )
 }
