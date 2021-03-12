@@ -22,7 +22,7 @@
           {
             this.$parent.$scopedSlots.header ? this.$parent.$scopedSlots.header() : ''
           }
-          {this.$parent.createTree(h, this.tree.children)}
+          { this.$parent.createTree(h, this.tree.children) }
           {
             this.$parent.$scopedSlots.bottom ? this.$parent.$scopedSlots.bottom() : ''
           }

@@ -1,5 +1,5 @@
-import './assets/css/animation.css'
-import './assets/css/base.css'
+import './assets/css/animation.scss'
+import './assets/css/base.scss'
 process.env.NODE_ENV == 'development' && import('./assets/css/globalStyle.scss')
 process.env.NODE_ENV == 'development' && import('./assets/css/baseIcon.scss')
 import { createMouseAnimation } from './utils/mouse-animation'

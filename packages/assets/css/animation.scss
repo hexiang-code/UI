@@ -290,3 +290,33 @@
     opacity: 0;
   }
 }
+
+/* 小手图标闪烁 */
+@keyframes twinkle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: .6;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+/* 文字荧光 */
+@keyframes text-twinkle {
+  0% {
+    opacity: .3;
+    transform: scaleZ(2);
+    transform: scale3d(1, 1, 1);
+  }
+
+  90% {
+    transform: scale3d(1, 1, 1.05);
+  }
+
+  100% {
+    text-shadow: 3px -3px 5px #91bef0, 3px -3px 5px #AA66CC, 3px -3px 5px #91bef0;
+  }
+}
