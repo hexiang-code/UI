@@ -320,3 +320,17 @@
     text-shadow: 3px -3px 5px #91bef0, 3px -3px 5px #AA66CC, 3px -3px 5px #91bef0;
   }
 }
+
+// 卡片翻转动画
+@keyframes flip-card {
+  0% {
+    transform: translateY(0) rotateX(0);
+    transform-origin: 50% 0%;
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%) rotateX(180deg);
+    transform-origin: 50% 100%;
+    opacity: 0;
+  }
+}

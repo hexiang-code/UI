@@ -205,7 +205,7 @@ export default {
           let voicTip = getRandomItemFromArray(voiceTips[curhours])
           let { sound, text } = voicTip
           sound && new Audio(sound).play()
-          text && this.showText({text, type: 'lovely'})
+          text && this.showToast({text, type: 'lovely'})
         }
         if (curhours == 9 && curMinutes == 0) {
           notifyText = '亲爱哒，到上班时间咯，要好好加油哟'
