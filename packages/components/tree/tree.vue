@@ -31,7 +31,7 @@
     }
   }
   export default {
-    name: 'tree',
+    name: 'hx-tree',
     props: {
       // 数据源
       tree: {
@@ -55,7 +55,7 @@
         }
       }, 
       // 是否展示复选框
-      isShowCheckBox: {
+      isShowCheckbox: {
         type: Boolean,
         value: false
       }
@@ -94,7 +94,7 @@
             <div class="tree-main__label">
               <transition name="checkbox">
                 { 
-                  this.isShowCheckBox ? 
+                  this.isShowCheckbox ? 
                     <span class={ parentData['isCheck'] ? 
                       'tree-main__check-box tree-main__check-box_checked' : 
                         'tree-main__check-box' }
@@ -176,7 +176,7 @@
           <div class='tree-main__children-label'>
             <transition name="checkbox">
               { 
-                this.isShowCheckBox ? 
+                this.isShowCheckbox ? 
                 <span class={ childData['isCheck'] ? 
                   'tree-main__check-box tree-main__check-box_checked' : 
                   'tree-main__check-box' }
@@ -187,7 +187,7 @@
             </transition>
             <a class="tree-main__title-text" onClick={() => this.childNodeClick(childData)} title={childData[label]}>{childData[label]}</a>
             {
-              this.$scopedSlots.operation && isExpandAll ? 
+              this.$scopedSlots.operation ? 
                 this.$scopedSlots.operation(childData) : 
                 ''
             }
@@ -376,6 +376,7 @@
       padding: 5px 0 5px 20px;
       font-size: 14px;
       cursor: pointer;
+      box-sizing: border-box;
     }
     
     .tree-main__children-label:hover {
