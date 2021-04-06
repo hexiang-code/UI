@@ -156,9 +156,9 @@ opacity | 背景透明度（>=0 && <=1） | Number | - | 1 | 否
 参数|说明|类型|可选值|默认值|是否必填
 --|:--|:--|:--:|:--:|:--
 tree | 数据源（见下表配置） | Object | - | - | 是
-isExpandAll | 是否展开全部子树(子树display:none，并非懒加载) | Boolean | - | false | 否
-renderKey | 渲染指定key(见下表配置) | Object | - | {} | 否
-isShowCheckBox | 是否展示复选框 | Boolean | true/false | false | 否
+is-expand-all | 是否展开全部子树(子树display:none，并非懒加载) | Boolean | - | false | 否
+render-key | 渲染指定key(见下表配置) | Object | - | {} | 否
+is-show-checkbox | 是否展示复选框 | Boolean | true/false | false | 否
 ###### tree配置表
 参数|说明|类型|可选值|默认值|是否必填
 --|:--:|:--:|--:|:--:|:--
@@ -218,10 +218,10 @@ children | 指定子树为节点对象的某个属性值 | Array | - | - | 是
 ##### event
 事件名|说明|参数|返回值类型
 --|:--:|:--:|--:
-nodeClick | 节点点击事件(事件顺序：节点点击 -> 子节点点击) | 当前节点数据 | void
-childNodeClick | 子节点点击事件(事件顺序同上) | 当前节点数据 | void
-parentNodeClick | 父节点点击事件(事件顺序同上) | 当前节点数据 | void
-nodeChange | 点击复选框事件 | 当前节点数据, 选中的节点id数组 | void 
+node-click | 节点点击事件(事件顺序：节点点击 -> 子节点点击) | 当前节点数据 | void
+child-node-click | 子节点点击事件(事件顺序同上) | 当前节点数据 | void
+parent-nodeClick | 父节点点击事件(事件顺序同上) | 当前节点数据 | void
+check-change | 点击复选框事件 | 当前节点数据, 选中的节点id数组 | void 
 
 ###### Scoped Slot
 name | 说明

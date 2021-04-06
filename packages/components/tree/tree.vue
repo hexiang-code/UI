@@ -122,8 +122,8 @@
 
       // 父节点点击事件
       parentNodeClick ($event, nodeData) {
-        this.$emit('nodeClick', nodeData)
-        this.$emit('parentNodeClick', nodeData)
+        this.$emit('node-click', nodeData)
+        this.$emit('parent-node-click', nodeData)
         let iconClassList = $event.currentTarget.firstChild.classList
         if (iconClassList && iconClassList.contains('tree-main__icon_open')) {
           iconClassList.add('tree-main__icon_close')  
@@ -165,8 +165,8 @@
 
       // 子节点点击事件
       childNodeClick (childNode) {
-        this.$emit('nodeClick', childNode)
-        this.$emit('childNodeClick', childNode)
+        this.$emit('node-click', childNode)
+        this.$emit('child-node-click', childNode)
       },
 
       // 创建子节点
@@ -261,7 +261,7 @@
           }
         }
         selectFn(parentData)
-        this.$emit('nodeChange', parentData, selIdArray)
+        this.$emit('check-change', parentData, selIdArray)
       }
     }
   }
