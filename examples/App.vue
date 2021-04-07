@@ -16,12 +16,12 @@
     <drawer :isShow.sync="testDrawer" :isModal="true">
       <input v-model="filterValue" @blur="blur" />
       <div class="bookmarks-header__search" @dblclick="deleteBtn">search</div>
-      <tree
+      <hx-tree
         :tree="tree"
         :isExpandAll="false"
         ref="tree"
-        :isShowCheckBox="isShowCheckBox"
-        @nodeChange="nodeChange"
+        :isShowCheckbox="isShowCheckBox"
+        @check-change="nodeChange"
       >
         <template #header>
           <div>头部</div>
@@ -35,7 +35,7 @@
             <span @click.stop="deleteBtn(treeItem)">删除</span>
           </div>
         </template>
-      </tree>
+      </hx-tree>
     </drawer>
     <button @click="visiable = visiable" v-drag v-ctxmenu="{menuList}">弹框</button>
     <button @click="albumVisible = !albumVisible" v-drag v-ctxmenu="{menuList: testMeauList1}">相册</button>
@@ -270,8 +270,8 @@ export default {
       console.log(msg);
     },
 
-    nodeChange(node) {
-      console.log(node);
+    nodeChange(node, ids) {
+      console.log(node, ids);
     },
 
     async currentPageChange(curPage) {

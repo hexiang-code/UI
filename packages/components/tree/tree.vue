@@ -241,27 +241,19 @@
       checkBoxClick (parentData) {
         // 父节点选中时，子节点全部同步父节点选中状态
         let parentIsCheck = parentData.isCheck
-        // 收集选中子树的id
-        let selIdArray = []
-        const selectFn = (nodeData) => {
-          this.$set(nodeData, 'isCheck', !parentIsCheck)
-          parentIsCheck && nodeData.id && selIdArray.push({
-            isPNode: true,
-            id: nodeData.id
-          })
+        const selectFn = (nodeData, isSel) => {
+          this.$set(nodeData, 'isCheck', isSel === undefined ? !parentIsCheck : isSel)
+          parentIsCheck = parentData.isCheck
+
           if (nodeData.children && nodeData.children.length > 0) {
             nodeData.children.forEach(item => {
-              this.$set(item, 'isCheck', !parentIsCheck)
-              parentIsCheck && item.id && selIdArray.push({
-                isPNode: false,
-                id: item.id
-              })
-              if (item.children && item.children.length > 0) selectFn(item)
+              this.$set(item, 'isCheck', parentIsCheck)
+              if (item.children && item.children.length > 0) selectFn(item, parentIsCheck)
             })
           }
         }
         selectFn(parentData)
-        this.$emit('check-change', parentData, selIdArray)
+        this.$emit('check-change', parentData)
       }
     }
   }
