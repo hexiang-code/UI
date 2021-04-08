@@ -72,16 +72,16 @@ export default {
 
   methods: {
     comfirm() {
-      this.$emit("update:dialogVisiable", false);
+      this.$emit("update:dialog-visiable", false);
       this.$emit("confirm");
     },
     // 点击取消事件
     cancel() {
-      this.$emit("update:dialogVisiable", false);
+      this.$emit("update:dialog-visiable", false);
     },
     dialogClose() {
       this.cancel();
-      this.$emit("dialogClose", false);
+      this.$emit("dialog-close", false);
     }
   }
 };

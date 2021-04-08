@@ -27,7 +27,7 @@
           <div>头部</div>
         </template>
         <template #bottom>
-          <div>底部</div>
+          <div @click="selectNode">底部</div>
         </template>
         <template #operation="treeItem">
           <div class="operation-btn">
@@ -170,7 +170,7 @@ export default {
       visiable: false,
       testDrawer: false,
       filterValue: "",
-      isShowCheckBox: false,
+      isShowCheckBox: true,
       isShowLoadAnimation: true,
       switchVal: false,
       sliderVal: 9,
@@ -371,6 +371,10 @@ export default {
 
     menuListClick (meauItem) {
       console.log(meauItem)
+    },
+
+    selectNode () {
+      this.$refs['tree'].setNodeStatus({id: 2}, false)
     }
   }
 };

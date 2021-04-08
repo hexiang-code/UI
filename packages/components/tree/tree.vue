@@ -254,6 +254,23 @@
         }
         selectFn(parentData)
         this.$emit('check-change', parentData)
+      },
+
+      // 设置节点选中状态
+      setNodeStatus (node, status = true) {
+        let { id } = node
+        let selectNode = this._findNode(this.tree.children, id, node)
+        selectNode && this.$set(selectNode, 'isCheck', status)
+        selectNode && this.$emit('check-change', selectNode)
+      },
+
+      // 在树中寻找节点
+      _findNode (list, id, node) {
+        for (let item of list) {
+          if (id && item.id == id) return item
+          else if (node && JSON.stringify(item) == JSON.stringify(node)) return item
+          else if (item.children && item.children.length > 0) return this._findNode(item.children, id, node)
+        }
       }
     }
   }
