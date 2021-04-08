@@ -1,8 +1,8 @@
 <template>
-      <div class="login-input">
-        <p class="login-label" :style="labelWidthStyle">
+      <div class="form-item">
+        <p class="form-label" :style="labelWidthStyle">
           {{label}}:
-          <img class="login-label__icon" :src="labelIconSrc" />
+          <img class="form-label__icon" :src="labelIconSrc" />
         </p>
         <slot></slot>
       </div>
@@ -44,13 +44,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/css/_globalStyle.scss';
-.login-input {
+.form-item {
   display: flex;
   height: 60px;
   align-items: center;
 }
 
-.login-label {
+.form-label {
   position: relative;
   display: inline-block;
   width: 140px;
@@ -60,7 +60,7 @@ export default {
   color: $theme-color;
 }
 
-.login-label__icon {
+.form-label__icon {
   position: absolute;
   width: 30px;
   height: 30px;
