@@ -113,9 +113,9 @@
                   }
                 </div>
                 {
-                  this.$scopedSlots.operation ? 
-                    h('div', this.$scopedSlots.operation(parentData)) : 
-                    ''
+                  this.$scopedSlots.operation 
+                    ? h('div', this.$scopedSlots.operation(parentData)) 
+                    : ''
                 }
               </div>
             </div>
@@ -176,7 +176,7 @@
       },
 
       // 创建子节点
-      createChildNode (h, childData, isExpandAll) {
+      createChildNode (h, childData) {
         let { label } = this.renderKey
         return (
           <div class='tree-main__children-label'>
@@ -191,7 +191,7 @@
                 '' 
               }
             </transition>
-            <a class="tree-main__title-text" onClick={() => this.childNodeClick(childData)} title={childData[label]}>
+            <a class="tree-main__title-text" onClick={() => this.childNodeClick(childData)}>
               {
                 this.$scopedSlots.leafContent 
                   ? this.$scopedSlots.leafContent(childData)  
@@ -199,9 +199,9 @@
               }
             </a>
             {
-              this.$scopedSlots.operation ? 
-                this.$scopedSlots.operation(childData) : 
-                ''
+              this.$scopedSlots.operation 
+                ? this.$scopedSlots.operation(childData) 
+                : ''
             }
           </div>
           )
