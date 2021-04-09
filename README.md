@@ -235,6 +235,7 @@ name | 说明
 operation | 子树操作区域插槽，参数为当前节点数据
 header | 树组件头部区域
 bottom | 树组件底部区域
+tipsContent | tree叶子节点内容插槽
 **********
 #### dialog: 弹框组件
 ##### attribute

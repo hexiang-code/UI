@@ -35,6 +35,9 @@
             <span @click.stop="deleteBtn(treeItem)">删除</span>
           </div>
         </template>
+        <template #leafContent="{ label }">
+          <span v-tips="{ content: label }">{{ label + '1' }}</span>
+        </template>
       </hx-tree>
     </drawer>
     <button @click="visiable = visiable" v-drag v-ctxmenu="{menuList}" v-tips="{ content: tipsContent }">弹框</button>

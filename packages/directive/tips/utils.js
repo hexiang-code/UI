@@ -24,7 +24,6 @@ class RenderTips {
 
       watch: {
         content () {
-          console.log(this._class)
           this.$nextTick(() => {
             // top: 元素顶端到视口上边的距离，bottom元素底端到视口上边的距离
             // 都是以视口上边做基准的

@@ -105,7 +105,13 @@
               </transition>
               <div class="tree-main__label-title" onClick={($event) => this.parentNodeClick($event, parentData)}>
                 <i class={ ['iconfont tree-main__icon', isExpandAll ? 'tree-main__icon_open' : 'tree-main__icon_close'] }>&#xe61e;</i>
-                <div class="tree-main__title-text">{parentData[label]}</div>
+                <div class="tree-main__title-text">
+                  { 
+                    this.$scopedSlots.leafContent 
+                      ? this.$scopedSlots.leafContent(parentData)  : 
+                      parentData[label] 
+                  }
+                </div>
                 {
                   this.$scopedSlots.operation ? 
                     h('div', this.$scopedSlots.operation(parentData)) : 
@@ -185,7 +191,13 @@
                 '' 
               }
             </transition>
-            <a class="tree-main__title-text" onClick={() => this.childNodeClick(childData)} title={childData[label]}>{childData[label]}</a>
+            <a class="tree-main__title-text" onClick={() => this.childNodeClick(childData)} title={childData[label]}>
+              {
+                this.$scopedSlots.leafContent 
+                  ? this.$scopedSlots.leafContent(childData)  
+                  : childData[label] 
+              }
+            </a>
             {
               this.$scopedSlots.operation ? 
                 this.$scopedSlots.operation(childData) : 

@@ -56,6 +56,8 @@
   max-height: 300px;
   border: 1px solid $theme-color;
   border-radius: 5px;
+  z-index: 10000;
+  background-color: #fff;
 }
 
 .tips-arrow_up::after {
