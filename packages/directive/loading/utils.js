@@ -31,7 +31,6 @@ class LoadingService {
     } else {
       if (this.realTextContent) this.el.textContent = this.realTextContent
       this.el.classList.remove('btn-loading', 'condensation-light')
-      
     }
   }
 

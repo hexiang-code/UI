@@ -14,7 +14,7 @@ function createCtxMenu (h, ctx, menuList, clientX, clientY) {
 function getMenuList (h, ctx, menuList) {
   // 如果menuList是vNode，直接渲染menuList
   if (Object.prototype.hasOwnProperty.call(menuList, 'componentOptions')) {
-  return <li>{ menuList }</li>
+    return <li>{ menuList }</li>
   } else if (Array.isArray(menuList)) { // 如果是数组
     return (
       menuList.map(menu => {

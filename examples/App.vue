@@ -37,7 +37,7 @@
         </template>
       </hx-tree>
     </drawer>
-    <button @click="visiable = visiable" v-drag v-ctxmenu="{menuList}">弹框</button>
+    <button @click="visiable = visiable" v-drag v-ctxmenu="{menuList}" v-tips="{ content: tipsContent }">弹框</button>
     <button @click="albumVisible = !albumVisible" v-drag v-ctxmenu="{menuList: testMeauList1}">相册</button>
     <button @click="testDrawer = !testDrawer" v-drag>抽屉</button>
     <button @click="canvasVisiable = !canvasVisiable" v-drag>背景</button>
@@ -47,7 +47,7 @@
     <button @click="testTextChange" @mousedown="testText = '你好'" v-drag>{{testText}}</button>
     <button @click="isMusicFix = !isMusicFix" >音乐盒展示开关</button>
     <input />
-    <button @click="checkbox">checkBox</button>
+    <button @click="checkbox">checkbox</button>
 
     <!-- 音乐盒测试 -->
     <hx-music
@@ -233,7 +233,8 @@ export default {
         }
       ],
       isMusicFix: true,
-      musicVolumn: 30 
+      musicVolumn: 30,
+      tipsContent: '你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好'
     };
   },
 
@@ -380,6 +381,13 @@ export default {
 };
 </script>
 
+<style>
+.tips-test {
+  padding: 12px;
+  color: red;
+}
+</style>
+
 <style lang="scss" scoped>
 @mixin cycle($rotate: 1) {
   animation: cycle-#{$rotate} 0.5s linear forwards;
@@ -400,7 +408,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 100px;
 }
 
 .bookmarks-header__search {

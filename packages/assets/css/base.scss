@@ -1,3 +1,5 @@
+@import "./globalStyle";
+
 .element-transition {
   transition: all .3s;
 }
@@ -42,4 +44,63 @@
   pointer-events: none;
   opacity: .5;
   cursor: wait;
+}
+
+.tips-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 12px;
+  font-size: 12px;
+  max-width: 500px;
+  max-height: 300px;
+  border: 1px solid $theme-color;
+  border-radius: 5px;
+}
+
+.tips-arrow_up::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -7px;
+  z-index: 3;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 8px solid #fff;
+}
+
+.tips-arrow_up {
+  position: absolute;
+  top: -10px;
+  left: 5px;
+  z-index: 1;
+  width: 0px;
+  height: 0px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 10px solid $theme-color;
+}
+
+
+.tips-arrow_down::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -7px;
+  z-index: 3;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid #fff;
+}
+
+.tips-arrow_down {
+  position: absolute;
+  bottom: -10px;
+  left: 5px;
+  z-index: 1;
+  width: 0px;
+  height: 0px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid $theme-color;
 }

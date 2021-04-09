@@ -4,6 +4,8 @@ import open from './open'
 import contextMenu from './context-menu'
 import close from './close'
 import loading from './loading'
+import tips from './tips'
+
 export const directives = vue => {
   close(vue)
   drag(vue)
@@ -11,4 +13,5 @@ export const directives = vue => {
   open(vue)
   contextMenu(vue)
   loading(vue)
+  tips(vue)
 }

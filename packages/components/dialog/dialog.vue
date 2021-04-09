@@ -115,6 +115,8 @@ export default {
       font-size: 18px;
       color: #303133;
       text-align: left;
+      color: $theme-color;
+      font-weight: bold;
     }
 
     .dialog__content {
